@@ -1,0 +1,15 @@
+{
+  "direction": "006",
+  "tier": "simple",
+  "name": "entity_retriever_multimodal",
+  "status": "ok",
+  "source": "source-tree/006-kg-llm-reasoning/results/sota_copy/e2e_retrieval.json",
+  "metrics": {
+    "n": 38,
+    "overall_accuracy": 1.0
+  },
+  "blocker": null,
+  "note": "Local KG retrieval, not DocBench.",
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

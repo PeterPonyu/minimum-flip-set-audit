@@ -1,0 +1,103 @@
+%% Self-contained captions. No cross-references, no section numbers: each
+%% caption must be readable on its own if the figure is lifted out.
+
+\newcommand{\CapFlips}{%
+How far each conclusion is from being overturned, counted in gradings. Each row
+is one paired contrast from a question-answering evaluation in which the same
+questions were answered under \ConditionsWord{} retrieval conditions and each
+answer was graded right or wrong. Two conclusions are measured per contrast: the direction,
+overturned when the leading condition stops leading, and the verdict, overturned
+when an exact paired test crosses the conventional threshold of \AlphaLevel{} in
+whichever direction it currently sits. Position is the smallest number of
+individual gradings that would have to have come out the other way, found by
+exhaustive search over reachable tables rather than by a greedy walk, so each is
+a minimum and not a bound on one. A cross marks a contrast whose difference is
+exactly zero and which therefore has no direction to reverse. The shaded region
+is fewer than \KillThreshold{} gradings, the threshold fixed in advance as the
+point below which a conclusion counts as resting on individual records. Rows
+where the two markers are far apart are contrasts whose direction and whose
+verdict are nothing like equally secure.%
+}
+
+\newcommand{\CapRegrade}{%
+One answer, and the conclusion it carries. The same \RegradeAnswers{} answers of
+a question-answering evaluation were scored by \Graders{} graders, which agree
+on all but \RegradeContested{} of them. The contested answer is question
+\RegradeQuestion{} under the condition that adds image-derived attributes to
+retrieval, where the model replied \RegradeResponse{} against a gold value of
+\RegradeGold{}: the stored grader marks it wrong on a strict string match and a
+numeric-tolerant grader marks it right. The left panel gives the number of
+answers graded correct under each retrieval condition on the \SubsetN{}
+image-dependent questions of the widely-documented-entity set, under both
+graders; only the multimodal condition moves, and it moves by one answer. The
+right panel gives the contrast those counts produce. Under the stored grader the
+multimodal condition is behind the text-only one; under the numeric-tolerant
+grader the two are exactly level. Neither grader is endorsed here. The point is
+that the reported direction is decided by which one is used.%
+}
+
+\newcommand{\CapFloor}{%
+What each test could have returned, against what it did return. An exact paired
+test on binary outcomes is a binomial test on the discordant pairs alone, so the
+smallest p-value it can produce is fixed by how many questions the two
+conditions disagreed on, before any answer is graded. Each point is one contrast
+from a question-answering evaluation; the horizontal position is that floor, the
+vertical position is the p-value obtained, and the marker area is the discordant
+count. The dashed diagonal is equality, and open markers are contrasts sitting
+on it: every discordant pair fell the same way, so the test returned the most
+extreme value available to it. A cross marks a contrast on which the two
+conditions never disagreed; it also sits on the diagonal, but for a reason that
+says nothing about how any answer came out, and it is excluded from the count of
+contrasts at their floor. Solid rules mark the conventional threshold of
+\AlphaLevel{} on both axes. Points in the shaded region are contrasts whose
+floor lies above the threshold: they could not have been called significant
+however the answers came out, so their non-significance describes the question
+set rather than the conditions compared.%
+}
+
+\newcommand{\CapLeaveOneOut}{%
+Dropping one question at a time, which is a different question from re-grading
+one answer. Each row is one paired contrast from a question-answering
+evaluation. Each question in turn is removed and the contrast recomputed on the
+remainder; position is the share of those deletions after which the conclusion
+still stands, given as a count where it is not unanimous. The direction is
+counted as standing if the same condition still leads, and the verdict if an
+exact paired test still falls on the same side of the conventional threshold of
+\AlphaLevel{}. Most contrasts survive every deletion, which is what makes the
+few that do not worth naming: deletion is a blunter instrument than re-grading,
+and a conclusion that a single deletion can move was already resting on very
+little.%
+}
+
+\newcommand{\CapContrastsTable}{%
+Every paired contrast the evaluation produced, with what it would take to
+overturn each. Rows are the \Contrasts{} contrasts among \ConditionsWord{}
+retrieval conditions, over two question sets, each split into the image-dependent
+questions, the text-answerable ones, and both together. Differences are in
+percentage points and are positive when the first condition named leads.
+P-values are two-sided exact paired tests; the floor beside each is the smallest
+value that test could have returned given how many questions the two conditions
+disagreed on, and a p-value equal to its floor means every disagreement fell the
+same way. The two flip columns are the smallest number of individual gradings
+that would have to have come out otherwise for the direction to reverse and for
+the verdict to cross \AlphaLevel{}, each found by exhaustive search. The final
+column adjusts the p-values across all \Contrasts{} contrasts as a single
+family, the correction the records name as the one that would raise the bar. A
+direction column of zero marks a difference of exactly zero, which has no
+direction to reverse.%
+}
+
+\newcommand{\CapPreregTable}{%
+The three conclusions named in advance, and one that was not. Each row is a
+statement the evaluation's own records make, followed by the smallest number of
+individual gradings that would have to have come out otherwise for it to stop
+holding. Where that number is one, the candidate column gives how many distinct
+single gradings would each suffice on their own; several candidates do not make
+a conclusion sturdier, they mean several answers each carry it alone. The final
+column is how many of the single-question deletions leave the conclusion in
+place. The first three rows were fixed before the search was written: two are
+about which condition leads, the third about whether a test calls a difference
+significant. The final row is the verdict on the same contrast as the second
+row, separated out because the direction of that difference and the verdict on
+it are not the same distance from being overturned.%
+}

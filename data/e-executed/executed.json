@@ -1,0 +1,100 @@
+{
+  "direction": "006",
+  "complement": true,
+  "not_official_r": true,
+  "execution": "laptop_cpu_render_from_disk",
+  "ssh": false,
+  "gpu": false,
+  "download": false,
+  "commit": false,
+  "ollama_rerun": false,
+  "forged_llm_qa_ok": false,
+  "used_hand_authored_94_4": false,
+  "note": "hand-authored famous multimodal 0.944 MUST NOT be quoted; real-caption panel is 0.389 vs text 0.444 (sources: source-tree/006-kg-llm-reasoning/results/summary.json vs paper_measurement_caption_condition.json).",
+  "s8_opened": false,
+  "can_as_executed": [
+    "P006-A famous vs long-tail × {no_kg, text_kg, multimodal_kg} n=18 from paper_measurement_caption_condition.json + results_real summaries",
+    "P006-B retrieval 38/38 footnote from e2e_retrieval.json (backed by results_real summaries)",
+    "P006-C llm_qa_blocker one-liner; ollama_reachable=false"
+  ],
+  "cannot_as_executed": [
+    "did not forge llm_qa_ok.json",
+    "did not download DocBench / MMLongBench-Doc / SlideVQA",
+    "did not mix RAG-Anything 63.4 with MMGraphRAG 76.8",
+    "did not treat retrieval 1.0 or the 41-byte mini-doc as DocBench Acc",
+    "did not use the hand-authored-caption 0.944 / 94.4% run as the real-caption result (real-caption is 0.389 vs text 0.444)",
+    "did not reopen S8",
+    "did not SSH or put 006 on the 4090",
+    "did not mint an official DocBench row"
+  ],
+  "files_written": [
+    "source-tree/006-kg-llm-reasoning/results/sota_copy/complements/p006a_caption_condition.json",
+    "source-tree/006-kg-llm-reasoning/results/sota_copy/complements/p006a_caption_condition.png",
+    "data/e-retrieval/p006b_retrieval_38_38.json",
+    "source-tree/006-kg-llm-reasoning/results/sota_copy/complements/p006c_llm_qa_blocker.json",
+    "data/e-executed/executed.json"
+  ],
+  "numbers_quoted": [
+    {
+      "field": "famous.no_kg",
+      "value": 0.4444444444444444,
+      "display": 0.444,
+      "source": "data/e-measure/paper_measurement_caption_condition.json",
+      "backing": "data/e-famous-summary/summary.json"
+    },
+    {
+      "field": "famous.text_kg",
+      "value": 0.4444444444444444,
+      "display": 0.444,
+      "source": "data/e-measure/paper_measurement_caption_condition.json",
+      "backing": "data/e-famous-summary/summary.json"
+    },
+    {
+      "field": "famous.multimodal_kg",
+      "value": 0.3888888888888889,
+      "display": 0.389,
+      "source": "data/e-measure/paper_measurement_caption_condition.json",
+      "backing": "data/e-famous-summary/summary.json"
+    },
+    {
+      "field": "longtail.no_kg",
+      "value": 0.3333333333333333,
+      "display": 0.333,
+      "source": "data/e-measure/paper_measurement_caption_condition.json",
+      "backing": "data/e-longtail-summary/summary.json"
+    },
+    {
+      "field": "longtail.text_kg",
+      "value": 0.2222222222222222,
+      "display": 0.222,
+      "source": "data/e-measure/paper_measurement_caption_condition.json",
+      "backing": "data/e-longtail-summary/summary.json"
+    },
+    {
+      "field": "longtail.multimodal_kg",
+      "value": 0.5555555555555556,
+      "display": 0.556,
+      "source": "data/e-measure/paper_measurement_caption_condition.json",
+      "backing": "data/e-longtail-summary/summary.json"
+    },
+    {
+      "field": "retrieval_famous",
+      "value": "38/38",
+      "source": "source-tree/006-kg-llm-reasoning/results/sota_copy/e2e_retrieval.json",
+      "backing": "data/e-famous-summary/summary.json"
+    },
+    {
+      "field": "retrieval_longtail",
+      "value": "38/38",
+      "source": "source-tree/006-kg-llm-reasoning/results/sota_copy/e2e_retrieval.json",
+      "backing": "data/e-longtail-summary/summary.json"
+    },
+    {
+      "field": "hand_authored_famous_lb_multimodal_unused",
+      "value": 0.9444444444444444,
+      "used": false,
+      "source": "source-tree/006-kg-llm-reasoning/results/summary.json"
+    }
+  ],
+  "written_utc": "2026-08-16T12:56:03Z"
+}

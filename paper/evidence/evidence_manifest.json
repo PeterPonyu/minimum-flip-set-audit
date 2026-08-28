@@ -1,0 +1,132 @@
+{
+  "schema": "evidence-manifest/v1",
+  "state": "BOUND",
+  "bound_utc": "2026-08-28T15:05:10Z",
+  "allowed_roots": [
+    "data",
+    "paper/evidence"
+  ],
+  "allowed_roots_note": "Archived layout. Artifacts the paper produced itself stay beside the paper; everything else was copied into data/. Digests describe the archived bytes; files whose recorded paths were redacted are listed in REDACTION.md with both digests.",
+  "entries": [
+    {
+      "id": "E-FAMOUS",
+      "path": "data/e-famous/raw_responses.jsonl",
+      "role": "per_record",
+      "note": "one row per question and condition on the famous set, each carrying the grading this study counts",
+      "bytes": 78294,
+      "sha256": "f83fef56548eb4ee6058c90d0d21d21b22fdc2c28db4c58b9f5d401c39ab2a77"
+    },
+    {
+      "id": "E-LONGTAIL",
+      "path": "data/e-longtail/raw_responses.jsonl",
+      "role": "per_record",
+      "note": "the same rows for the long-tail set",
+      "bytes": 79206,
+      "sha256": "7bca93ed4e23e8a38d963dd84afc26bee7804be0b5c742fe69de72f0ecd27e8e"
+    },
+    {
+      "id": "E-FAMOUS-SUMMARY",
+      "path": "data/e-famous-summary/summary.json",
+      "role": "derived_table",
+      "note": "the accuracies the famous run recorded for itself, and the settings it ran under",
+      "bytes": 1390,
+      "sha256": "c843d50a4955d606dd8de04a2543d3fe9ac5523cc2ed1881620482eb5443e5dd"
+    },
+    {
+      "id": "E-LONGTAIL-SUMMARY",
+      "path": "data/e-longtail-summary/summary.json",
+      "role": "derived_table",
+      "note": "the same for the long-tail run",
+      "bytes": 1392,
+      "sha256": "4f297d50dd3ddd8521d89a535abaa855e6d7c90a171ddede575d6db45bbefe1f"
+    },
+    {
+      "id": "E-STATS",
+      "path": "data/e-stats/inferential_stats.json",
+      "role": "derived_table",
+      "note": "the six paired contrasts the project reported, with the exact test and the intervals it computed for each",
+      "bytes": 26309,
+      "sha256": "2aedebd44d74f4c5dc09ff5d6bce2e0ac48dc65415c0c71cc1ca7600786aabde"
+    },
+    {
+      "id": "E-REGRADE",
+      "path": "data/e-regrade/regrade_independent.json",
+      "role": "derived_table",
+      "note": "the same rows scored by three graders, and the single answer on which they disagree",
+      "bytes": 5390,
+      "sha256": "093946749aae8e5cb127375de97280046d7d986239977f51545bbe868b74e7c7"
+    },
+    {
+      "id": "E-MEASURE",
+      "path": "data/e-measure/paper_measurement_caption_condition.json",
+      "role": "recorded_state",
+      "note": "the measurement table as the project fixed it, with its own statement of what it does not establish",
+      "bytes": 1005,
+      "sha256": "3451160deab5dc314953f4649ce606149da716a6f46fa4247797026a54625885"
+    },
+    {
+      "id": "E-EXECUTED",
+      "path": "data/e-executed/executed.json",
+      "role": "recorded_state",
+      "note": "the record of which caption source was used and which was declined, with the accuracy the declined one gave",
+      "bytes": 3892,
+      "sha256": "03f8556cf5627f6b2ae281c234f2919252398d50704af5c5800733d721c49bf7"
+    },
+    {
+      "id": "E-RETRIEVAL",
+      "path": "data/e-retrieval/p006b_retrieval_38_38.json",
+      "role": "derived_table",
+      "note": "the retrieval footnote, recorded with the index state that keeps it a footnote",
+      "bytes": 1283,
+      "sha256": "1039ef73cb149c32d551a275f5f94bed0a5defe137edae87eb9d6706238808b5"
+    },
+    {
+      "id": "E-STATIC",
+      "path": "data/e-static/static.json",
+      "role": "recorded_state",
+      "note": "the trivial tier, recorded as missing with no table on disk",
+      "bytes": 269,
+      "sha256": "91227418f9eb99fa69cbeeade24b5154403e5f20c4dce85bed4467574de5b6cd"
+    },
+    {
+      "id": "E-NAIVE",
+      "path": "data/e-naive/naive.json",
+      "role": "recorded_state",
+      "note": "the text-only retrieval tier and the scale its accuracy is measured at",
+      "bytes": 355,
+      "sha256": "283ce11222a77f46cf38cb7f96512a87014fb025f120191c567f120826beb227"
+    },
+    {
+      "id": "E-SIMPLE",
+      "path": "data/e-simple/simple.json",
+      "role": "recorded_state",
+      "note": "the multimodal retrieval tier, recorded with the note that it is not the reference benchmark",
+      "bytes": 386,
+      "sha256": "33f67068f00a3e8cb8b300d404d3eb48a73d6e14b4f17158c9335cd1a6df010f"
+    },
+    {
+      "id": "E-PRIMARY",
+      "path": "data/e-primary/paper_primary.json",
+      "role": "recorded_state",
+      "note": "the reference-comparison tier, recorded as partial with the reason and the instruction not to forge the missing part",
+      "bytes": 1025,
+      "sha256": "d6f6053440c0ce6bad2e7ca3788a195336e17cd1f5b054f448348f5af04345fa"
+    },
+    {
+      "id": "E-SOTA",
+      "path": "data/e-sota/sota_copy.json",
+      "role": "recorded_state",
+      "note": "the full-replication tier, recorded as blocked on data that was never downloaded",
+      "bytes": 315,
+      "sha256": "f856273e0ef3202fc8a29c3d45b1701d60fdd759c5e6436fc0dc79ab6afafd78"
+    },
+    {
+      "id": "E-BLOCKER",
+      "path": "data/e-blocker/llm_qa_blocker.json",
+      "role": "recorded_state",
+      "note": "the blocked question-answering component, recording the unreachable service and that no score was invented in its place",
+      "bytes": 484,
+      "sha256": "aa0d722720e9a9a4abbc22781fb556437e85a2676f0521b10f66507065590ec6"
+    }
+  ]
+}

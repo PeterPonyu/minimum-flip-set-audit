@@ -1,0 +1,217 @@
+{
+  "direction": "006",
+  "tier": "sota_copy",
+  "name": "regrade_independent",
+  "status": "ok",
+  "script": "regrade_independent.py",
+  "not_official_sota": true,
+  "note": "CPU regrade of existing results_real/ and results_real_longtail/. No Ollama. Does not write llm_qa_ok.json.",
+  "grader_agreement": {
+    "famous": {
+      "agree": 114,
+      "n": 114
+    },
+    "longtail": {
+      "agree": 114,
+      "n": 114
+    }
+  },
+  "i17_flip": {
+    "dataset": "famous",
+    "question_id": "I17",
+    "condition": "multimodal_kg",
+    "response": "3.9",
+    "gold": [
+      "4",
+      "four"
+    ],
+    "stored_correct": false,
+    "strict": false,
+    "substr": false,
+    "numeric": true,
+    "note": "Pisa tilt: response 3.9 vs gold 4/four; numeric grader flips multimodal_kg from miss to hit"
+  },
+  "three_grader_table": [
+    {
+      "dataset": "famous",
+      "grader": "strict",
+      "subset": "image_load_bearing",
+      "n": 18,
+      "no_kg": 0.4444444444444444,
+      "text_kg": 0.4444444444444444,
+      "multimodal_kg": 0.3888888888888889,
+      "no_kg_pct": "44.4%",
+      "text_kg_pct": "44.4%",
+      "multimodal_kg_pct": "38.9%",
+      "mm_minus_text_pt": -5.555555555555553,
+      "verdict": "HARM"
+    },
+    {
+      "dataset": "famous",
+      "grader": "strict",
+      "subset": "text_only",
+      "n": 20,
+      "no_kg": 0.8,
+      "text_kg": 1.0,
+      "multimodal_kg": 1.0,
+      "no_kg_pct": "80.0%",
+      "text_kg_pct": "100.0%",
+      "multimodal_kg_pct": "100.0%"
+    },
+    {
+      "dataset": "famous",
+      "grader": "substr",
+      "subset": "image_load_bearing",
+      "n": 18,
+      "no_kg": 0.4444444444444444,
+      "text_kg": 0.4444444444444444,
+      "multimodal_kg": 0.3888888888888889,
+      "no_kg_pct": "44.4%",
+      "text_kg_pct": "44.4%",
+      "multimodal_kg_pct": "38.9%",
+      "mm_minus_text_pt": -5.555555555555553,
+      "verdict": "HARM"
+    },
+    {
+      "dataset": "famous",
+      "grader": "substr",
+      "subset": "text_only",
+      "n": 20,
+      "no_kg": 0.8,
+      "text_kg": 1.0,
+      "multimodal_kg": 1.0,
+      "no_kg_pct": "80.0%",
+      "text_kg_pct": "100.0%",
+      "multimodal_kg_pct": "100.0%"
+    },
+    {
+      "dataset": "famous",
+      "grader": "numeric",
+      "subset": "image_load_bearing",
+      "n": 18,
+      "no_kg": 0.4444444444444444,
+      "text_kg": 0.4444444444444444,
+      "multimodal_kg": 0.4444444444444444,
+      "no_kg_pct": "44.4%",
+      "text_kg_pct": "44.4%",
+      "multimodal_kg_pct": "44.4%",
+      "mm_minus_text_pt": 0.0,
+      "verdict": "no effect"
+    },
+    {
+      "dataset": "famous",
+      "grader": "numeric",
+      "subset": "text_only",
+      "n": 20,
+      "no_kg": 0.8,
+      "text_kg": 1.0,
+      "multimodal_kg": 1.0,
+      "no_kg_pct": "80.0%",
+      "text_kg_pct": "100.0%",
+      "multimodal_kg_pct": "100.0%"
+    },
+    {
+      "dataset": "longtail",
+      "grader": "strict",
+      "subset": "image_load_bearing",
+      "n": 18,
+      "no_kg": 0.3333333333333333,
+      "text_kg": 0.2222222222222222,
+      "multimodal_kg": 0.5555555555555556,
+      "no_kg_pct": "33.3%",
+      "text_kg_pct": "22.2%",
+      "multimodal_kg_pct": "55.6%",
+      "mm_minus_text_pt": 33.333333333333336,
+      "verdict": "HELP"
+    },
+    {
+      "dataset": "longtail",
+      "grader": "strict",
+      "subset": "text_only",
+      "n": 20,
+      "no_kg": 0.4,
+      "text_kg": 1.0,
+      "multimodal_kg": 1.0,
+      "no_kg_pct": "40.0%",
+      "text_kg_pct": "100.0%",
+      "multimodal_kg_pct": "100.0%"
+    },
+    {
+      "dataset": "longtail",
+      "grader": "substr",
+      "subset": "image_load_bearing",
+      "n": 18,
+      "no_kg": 0.3333333333333333,
+      "text_kg": 0.2222222222222222,
+      "multimodal_kg": 0.5555555555555556,
+      "no_kg_pct": "33.3%",
+      "text_kg_pct": "22.2%",
+      "multimodal_kg_pct": "55.6%",
+      "mm_minus_text_pt": 33.333333333333336,
+      "verdict": "HELP"
+    },
+    {
+      "dataset": "longtail",
+      "grader": "substr",
+      "subset": "text_only",
+      "n": 20,
+      "no_kg": 0.4,
+      "text_kg": 1.0,
+      "multimodal_kg": 1.0,
+      "no_kg_pct": "40.0%",
+      "text_kg_pct": "100.0%",
+      "multimodal_kg_pct": "100.0%"
+    },
+    {
+      "dataset": "longtail",
+      "grader": "numeric",
+      "subset": "image_load_bearing",
+      "n": 18,
+      "no_kg": 0.3333333333333333,
+      "text_kg": 0.2222222222222222,
+      "multimodal_kg": 0.5555555555555556,
+      "no_kg_pct": "33.3%",
+      "text_kg_pct": "22.2%",
+      "multimodal_kg_pct": "55.6%",
+      "mm_minus_text_pt": 33.333333333333336,
+      "verdict": "HELP"
+    },
+    {
+      "dataset": "longtail",
+      "grader": "numeric",
+      "subset": "text_only",
+      "n": 20,
+      "no_kg": 0.55,
+      "text_kg": 1.0,
+      "multimodal_kg": 1.0,
+      "no_kg_pct": "55.0%",
+      "text_kg_pct": "100.0%",
+      "multimodal_kg_pct": "100.0%"
+    }
+  ],
+  "flips_strict_to_numeric_image": {
+    "famous": {
+      "no_kg": [],
+      "text_kg": [],
+      "multimodal_kg": [
+        "I17"
+      ]
+    },
+    "longtail": {
+      "no_kg": [],
+      "text_kg": [],
+      "multimodal_kg": []
+    }
+  },
+  "datasets": {
+    "famous": {
+      "source": "results_real/raw_responses.jsonl",
+      "n_records": 114
+    },
+    "longtail": {
+      "source": "results_real_longtail/raw_responses.jsonl",
+      "n_records": 114
+    }
+  },
+  "written_utc": "2026-08-18T15:22:02Z"
+}

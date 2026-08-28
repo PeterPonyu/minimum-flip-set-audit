@@ -1,0 +1,150 @@
+%% Independent methods file. Not woven into main.tex prose.
+%% Every quantity described here resolves to a hash-bound entry in the manifest
+%% before it may be cited in Results.
+
+\subsection{What was already on disk}
+
+Nothing in this study was generated for it. No model was run, no answer was
+produced, and no question was written. Every quantity below comes from records
+written by runs that finished before this analysis began, and each record is
+bound to the manuscript by its SHA-256 digest; the analysis code re-hashes each
+file before reading it and stops the build on any mismatch.
+
+The evaluation being re-read is small and simple. A question set of
+\Questions{} questions was answered by a \Model{} instruction model at
+temperature \Temperature{} under \ConditionsWord{} retrieval conditions --- no
+retrieval, retrieval over a text-only knowledge graph, and retrieval over the
+same graph with image-derived attributes attached --- and each answer was
+graded right or wrong against a gold string. The latter two are the
+graph-structured form of retrieval-augmented
+generation~\cite{lewis2020retrieval,edge2024local} and differ only in whether
+the graph carries attributes derived from images. Two such question sets exist, one
+built around widely documented entities and one around less documented ones,
+giving \Answers{} graded answers in total. Each set is split by a recorded
+per-question flag into the \SubsetN{} questions whose answer depends on the
+image and the \TextOnlyN{} that can be answered from text alone.
+
+The design is paired: the same question is answered under every condition, so a
+contrast between two conditions is decided entirely by the questions the two
+conditions disagree on. Everything in this paper follows from that.
+
+\subsection{The four counts a contrast reduces to}
+
+For two conditions over a set of questions, each question falls into exactly one
+of four cells: both conditions right, the first right alone, the second right
+alone, or neither right. The difference in accuracy, the exact test and its
+interval are all functions of those four counts and of nothing else.
+
+Changing one grading --- deciding that one answer under one condition should
+have been marked the other way --- moves one question from one cell to an
+adjacent one. So the set of tables reachable from the observed one by $k$
+grading changes is exactly the set reachable in $k$ steps of that move, and the
+question this paper asks has an exact answer rather than an estimate.
+
+\subsection{Two conclusions per contrast, and two distances}
+
+A contrast can carry two different claims, and they are unseated by different
+things. The first is a direction: which condition is ahead. The second is a
+verdict: whether an exact test calls the difference significant at the
+conventional threshold of \AlphaLevel{}. This study measures the distance to
+each separately, because its central observation is that they are frequently not
+the same distance.
+
+The direction is unseated when the difference reaches zero or reverses. The
+verdict is unseated when the p-value crosses the threshold, in whichever
+direction it currently sits: a significant result is unseated by becoming
+non-significant, and a non-significant one by becoming significant. The second
+half of that is not symmetry for its own sake. A verdict of ``no effect'' is
+reported and acted on exactly as a verdict of ``effect'' is, so it is entitled
+to the same audit.
+
+\subsection{Finding the minimum, rather than bounding it}
+
+The search is exhaustive over reachable states rather than greedy over answers.
+Because a contrast is fully described by four non-negative counts summing to
+$n$, the reachable tables form a small graph, and a breadth-first walk outward
+from the observed table returns the first state satisfying the stopping
+condition. That state is at the true minimum distance, so the numbers reported
+here are minima and not upper bounds on minima.
+
+Where the minimum is one, the paper enumerates every individual grading that
+would suffice on its own, so a reader can see which answers carry a conclusion
+rather than being told how many. Several candidates do not make a conclusion
+sturdier: it means there are several answers, any one of which carries it alone.
+
+\subsection{What the test could have returned}
+
+An exact test on paired binary data is a binomial test at one half on the
+discordant pairs alone~\cite{mcnemar1947note}, which is the standard choice for
+comparing two systems on a shared test set~\cite{dror2018hitchhiker}, so the
+smallest p-value it can
+return is fixed by the number of discordant pairs before any answer is graded.
+That floor is reported for every contrast. A contrast whose floor lies above the
+threshold could not have been called significant however the answers came out,
+and its non-significance is therefore a fact about the question set rather than
+about the conditions being compared.
+
+Intervals are Clopper--Pearson on the discordant split mapped onto the paired
+difference~\cite{clopper1934use}, matching the construction the records already
+carry. Where a contrast has no discordant pairs the test is undefined and its
+p-value is reported as one rather than as an error.
+
+\subsection{Deletion, as a separate question}
+
+Beside each flip distance the paper reports a leave-one-out
+count~\cite{efron1979bootstrap}: how many of the $n$ single-question deletions
+leave the direction, and separately the verdict, as it was. This measures
+something different. A flip asks what a different grading of the same question
+set would have done; a deletion asks what a different question set would have
+done. A conclusion can be robust to one and fragile to the other, and both are
+reported for every contrast rather than one standing in for the other.
+
+\subsection{Multiplicity}
+
+The records report \Contrasts{} paired contrasts and state that their p-values
+are unadjusted. This paper adds the adjustment the record names as the one that
+would raise the bar~\cite{holm1979simple} and reports it beside each raw value.
+The adjustment is applied to the whole family of \Contrasts{}, because that is
+the family that was computed; no subset of it is treated as though it had been
+specified in advance.
+
+\subsection{Checks the build enforces}
+
+Several sentences in this paper are enforced as build-time checks rather than
+asserted in prose, and the analysis code stops rather than reporting a number
+that would contradict them.
+
+Every one of the \Contrasts{} contrasts is recomputed from the per-answer rows
+and checked against the recorded version on three quantities separately: the
+number of questions, the difference in accuracy, and the exact p-value. The
+discordant split is checked as well as the difference, because a table matching
+on the difference alone could produce the same p-value by coincidence. The
+recorded verdict is checked to follow from the recorded test rather than being
+taken on its word.
+
+The reshaping from per-answer rows into paired tables refuses a question that
+was not answered under every condition, refuses a condition that answers the
+same question twice, and refuses a question whose subset flag differs between
+conditions --- each of which would let a pair be formed across the wrong things.
+Each run's own summary is checked to still restate the rows in its own
+directory, and the fixed measurement table the project recorded as its result is
+checked to still come from those rows.
+
+The regrade record is checked to contain exactly one contested grading, and to
+be the one the manuscript names. The value the project recorded as not to be
+used is checked to still be recorded that way. The tiers reported here as absent
+or incomplete are checked to still be in that state, the blocked component is
+checked to still be blocked with no score substituted for it, and the retrieval
+result is checked to still carry the index state that keeps it a footnote.
+
+\subsection{What is deliberately not computed}
+
+No answer is regenerated and no grading is decided here; the contested grading
+discussed below is one the records already contain, applied as the record states
+it, not a judgement made by this paper. The reference benchmark this line of
+work would eventually be measured against was never downloaded, the tier that
+would hold that comparison is recorded as \PrimaryTier{} and the tier above it
+as \SotaTier{}, and no value is imputed for either. The \BlockedComponent{}
+component is recorded as blocked on a service that was unreachable, and its
+scores \ForgedState{} invented in its place. Nothing in this paper substitutes
+for any of them.

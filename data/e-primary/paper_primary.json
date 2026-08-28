@@ -1,0 +1,41 @@
+{
+  "direction": "006",
+  "tier": "paper_primary",
+  "name": "llm_qa_caption_condition",
+  "status": "partial",
+  "source": "data/e-measure/paper_measurement_caption_condition.json",
+  "metrics": {
+    "famous_lb": {
+      "no_kg": {
+        "n": 18,
+        "accuracy": 0.4444444444444444
+      },
+      "text_kg": {
+        "n": 18,
+        "accuracy": 0.4444444444444444
+      },
+      "multimodal_kg": {
+        "n": 18,
+        "accuracy": 0.3888888888888889
+      }
+    },
+    "longtail_lb": {
+      "no_kg": {
+        "n": 18,
+        "accuracy": 0.3333333333333333
+      },
+      "text_kg": {
+        "n": 18,
+        "accuracy": 0.2222222222222222
+      },
+      "multimodal_kg": {
+        "n": 18,
+        "accuracy": 0.5555555555555556
+      }
+    }
+  },
+  "blocker": "Full KG-LLM QA requires Ollama (OPENAI_API_KEY is not wired in this smoke)",
+  "note": "M table from results_real; live Ollama full QA is residual. Do not forge llm_qa_ok.",
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

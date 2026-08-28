@@ -1,0 +1,15 @@
+{
+  "direction": "006",
+  "tier": "naive",
+  "name": "entity_retriever_text_only",
+  "status": "ok",
+  "source": "source-tree/006-kg-llm-reasoning/results/sota_copy/e2e_retrieval.json",
+  "metrics": {
+    "n": 38,
+    "text_only_accuracy": 1.0
+  },
+  "blocker": null,
+  "note": null,
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

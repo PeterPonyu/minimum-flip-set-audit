@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+title: >-
+  Code and data for: Count the gradings, not the questions: how far each conclusion of a small paired evaluation is from being overturned
+message: If you use this code or data, please cite this archive and the manuscript.
+type: dataset
+authors:
+  - given-names: Zeyu
+    family-names: Fu
+    email: fuzeyu99@126.com
+    orcid: 'https://orcid.org/0009-0001-8329-0108'
+    affiliation: 'Army Medical University, Chongqing, China'
+abstract: >-
+  Per-answer question-answering records under three retrieval conditions, the recorded paired contrasts, an independent three-grader regrade, figure code and manuscript source for a study that computes, by exhaustive search, the smallest number of individual gradings that would overturn the direction and separately the verdict of every contrast the evaluation reported.
+keywords:
+  - fragility index
+  - paired comparison
+  - evaluation
+  - statistical power
+  - annotation disagreement
+  - retrieval-augmented generation
+  - negative result
+license: MIT
+version: 0.1.0
+date-released: '2026-08-28'
+# No DOI: this work has not been deposited in a public archive.
+# The field is added when the archive exists, not before.

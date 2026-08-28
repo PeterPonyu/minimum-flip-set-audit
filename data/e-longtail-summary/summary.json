@@ -1,0 +1,66 @@
+{
+  "run_meta": {
+    "script": "run_experiment_real.py",
+    "dataset": "longtail",
+    "model": "qwen2.5:3b",
+    "num_ctx": 1024,
+    "temperature": 0,
+    "ollama_version": "ollama version is 0.30.4",
+    "started_at": "2026-07-14T01:46:50.959653+00:00",
+    "n_questions": 38,
+    "retrieval_accuracy": 1.0,
+    "captions_used": "visual_caption_real",
+    "entity_linking": "learned_retriever (BAAI/bge-small-en-v1.5, cosine similarity)"
+  },
+  "overall": {
+    "no_kg": {
+      "n": 38,
+      "accuracy": 0.3684210526315789
+    },
+    "text_kg": {
+      "n": 38,
+      "accuracy": 0.631578947368421
+    },
+    "multimodal_kg": {
+      "n": 38,
+      "accuracy": 0.7894736842105263
+    }
+  },
+  "by_subset": {
+    "image_load_bearing": {
+      "no_kg": {
+        "n": 18,
+        "accuracy": 0.3333333333333333
+      },
+      "text_kg": {
+        "n": 18,
+        "accuracy": 0.2222222222222222
+      },
+      "multimodal_kg": {
+        "n": 18,
+        "accuracy": 0.5555555555555556
+      }
+    },
+    "text_only": {
+      "no_kg": {
+        "n": 20,
+        "accuracy": 0.4
+      },
+      "text_kg": {
+        "n": 20,
+        "accuracy": 1.0
+      },
+      "multimodal_kg": {
+        "n": 20,
+        "accuracy": 1.0
+      }
+    }
+  },
+  "retrieval": {
+    "n": 38,
+    "n_correct": 38,
+    "accuracy": 1.0,
+    "misses": []
+  },
+  "finished_at": "2026-07-14T01:47:23.562308+00:00"
+}

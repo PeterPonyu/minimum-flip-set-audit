@@ -1,0 +1,18 @@
+# Archived bindings. Tab-separated: id<TAB>path<TAB>role<TAB>note
+#
+# id	path	role	note
+E-FAMOUS	data/e-famous/raw_responses.jsonl	per_record	one row per question and condition on the famous set, each carrying the grading this study counts
+E-LONGTAIL	data/e-longtail/raw_responses.jsonl	per_record	the same rows for the long-tail set
+E-FAMOUS-SUMMARY	data/e-famous-summary/summary.json	derived_table	the accuracies the famous run recorded for itself, and the settings it ran under
+E-LONGTAIL-SUMMARY	data/e-longtail-summary/summary.json	derived_table	the same for the long-tail run
+E-STATS	data/e-stats/inferential_stats.json	derived_table	the six paired contrasts the project reported, with the exact test and the intervals it computed for each
+E-REGRADE	data/e-regrade/regrade_independent.json	derived_table	the same rows scored by three graders, and the single answer on which they disagree
+E-MEASURE	data/e-measure/paper_measurement_caption_condition.json	recorded_state	the measurement table as the project fixed it, with its own statement of what it does not establish
+E-EXECUTED	data/e-executed/executed.json	recorded_state	the record of which caption source was used and which was declined, with the accuracy the declined one gave
+E-RETRIEVAL	data/e-retrieval/p006b_retrieval_38_38.json	derived_table	the retrieval footnote, recorded with the index state that keeps it a footnote
+E-STATIC	data/e-static/static.json	recorded_state	the trivial tier, recorded as missing with no table on disk
+E-NAIVE	data/e-naive/naive.json	recorded_state	the text-only retrieval tier and the scale its accuracy is measured at
+E-SIMPLE	data/e-simple/simple.json	recorded_state	the multimodal retrieval tier, recorded with the note that it is not the reference benchmark
+E-PRIMARY	data/e-primary/paper_primary.json	recorded_state	the reference-comparison tier, recorded as partial with the reason and the instruction not to forge the missing part
+E-SOTA	data/e-sota/sota_copy.json	recorded_state	the full-replication tier, recorded as blocked on data that was never downloaded
+E-BLOCKER	data/e-blocker/llm_qa_blocker.json	recorded_state	the blocked question-answering component, recording the unreachable service and that no score was invented in its place

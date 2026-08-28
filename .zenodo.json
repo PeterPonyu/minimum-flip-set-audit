@@ -1,0 +1,23 @@
+{
+  "title": "Count the gradings, not the questions: how far each conclusion of a small paired evaluation is from being overturned",
+  "description": "Per-answer question-answering records under three retrieval conditions, the recorded paired contrasts, an independent three-grader regrade, figure code and manuscript source for a study that computes, by exhaustive search, the smallest number of individual gradings that would overturn the direction and separately the verdict of every contrast the evaluation reported. Code is MIT; manuscript text, figures and recorded result data are CC-BY-4.0. Third-party simulators and datasets are not redistributed.",
+  "upload_type": "dataset",
+  "access_right": "open",
+  "license": "MIT",
+  "creators": [
+    {
+      "name": "Fu, Zeyu",
+      "orcid": "0009-0001-8329-0108",
+      "affiliation": "Army Medical University, Chongqing, China"
+    }
+  ],
+  "keywords": [
+    "fragility index",
+    "paired comparison",
+    "evaluation",
+    "statistical power",
+    "annotation disagreement",
+    "retrieval-augmented generation",
+    "negative result"
+  ]
+}

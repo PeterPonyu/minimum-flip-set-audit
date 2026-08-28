@@ -1,0 +1,16 @@
+{
+  "package_id": "006-rag-anything",
+  "tier": "ASSET_GATED",
+  "status": "blocker",
+  "component": "full_LLM_QA",
+  "reason": "Full KG-LLM QA requires Ollama (OPENAI_API_KEY is not wired in this smoke)",
+  "checks": {
+    "ollama_binary": true,
+    "ollama_reachable": false,
+    "openai_api_key": false,
+    "model": "qwen2.5:3b"
+  },
+  "runnable_when": "ollama_reachable with qwen2.5:3b (or FIRE_OLLAMA_MODEL)",
+  "written_utc": "2026-08-16T07:16:51Z",
+  "forged_scores": false
+}

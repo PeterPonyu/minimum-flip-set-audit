@@ -1,0 +1,12 @@
+{
+  "direction": "006",
+  "tier": "static",
+  "name": "first_page",
+  "status": "missing",
+  "source": null,
+  "metrics": null,
+  "blocker": "No first-page baseline table on disk.",
+  "note": null,
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

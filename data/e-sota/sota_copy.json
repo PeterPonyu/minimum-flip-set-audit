@@ -1,0 +1,12 @@
+{
+  "direction": "006",
+  "tier": "sota_copy",
+  "name": "rag_anything_docbench",
+  "status": "blocked",
+  "source": null,
+  "metrics": null,
+  "blocker": "DocBench / MMLongBench not downloaded; mineru full index ASSET_GATED.",
+  "note": null,
+  "not_official_sota": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}

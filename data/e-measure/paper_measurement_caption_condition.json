@@ -1,0 +1,38 @@
+{
+  "direction": "006",
+  "paper_kind": [
+    "M"
+  ],
+  "claim": "Real blind captions: famous load-bearing multimodal does not beat text. Long-tail mm−text_kg +33.3pt is NOT an established help (exact McNemar p=0.070 NS, n=18); see inferential_stats.json. The only significant contrast is long-tail text-only text_kg−no_kg +60.0pt (p=0.00049), near-definitional/scooped.",
+  "famous_lb": {
+    "no_kg": {
+      "n": 18,
+      "accuracy": 0.4444444444444444
+    },
+    "text_kg": {
+      "n": 18,
+      "accuracy": 0.4444444444444444
+    },
+    "multimodal_kg": {
+      "n": 18,
+      "accuracy": 0.3888888888888889
+    }
+  },
+  "longtail_lb": {
+    "no_kg": {
+      "n": 18,
+      "accuracy": 0.3333333333333333
+    },
+    "text_kg": {
+      "n": 18,
+      "accuracy": 0.2222222222222222
+    },
+    "multimodal_kg": {
+      "n": 18,
+      "accuracy": 0.5555555555555556
+    }
+  },
+  "official_docbench": "missing",
+  "do_not_mix_with_mmgraphrag_76_8": true,
+  "written_utc": "2026-08-20T13:15:27Z"
+}
