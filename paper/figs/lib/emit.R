@@ -1,10 +1,53 @@
 # Writing figures and the generated tex. Nothing here decides anything; it only
 # formats what the panels and the statistics already computed.
 
+# The fraction of the text width the manuscript includes a figure at.  Reading
+# it from body.tex rather than repeating it here is what keeps the canvas and
+# the manuscript from drifting apart: a figure that is re-included at a
+# different width fails the next build instead of silently rescaling its type.
+include_fraction <- function(name) {
+  body <- paste(readLines(file.path("tex", "body.tex"), warn = FALSE), collapse = "\n")
+  pattern <- sprintf("\\\\includegraphics(?:\\[([^]]*)\\])?\\{%s\\.pdf\\}", name)
+  found <- regmatches(body, gregexpr(pattern, body, perl = TRUE))[[1]]
+  if (length(found) != 1L) {
+    stop(sprintf("%s: expected exactly one \\includegraphics in body.tex, found %d",
+                 name, length(found)))
+  }
+  option <- sub(pattern, "\\1", found, perl = TRUE)
+  if (!grepl("\\\\linewidth", option)) {
+    stop(sprintf("%s: manuscript must include the figure at a \\linewidth fraction", name))
+  }
+  scalar <- sub("^.*width\\s*=\\s*([0-9.]*)\\\\linewidth.*$", "\\1", option)
+  if (identical(scalar, "")) 1 else as.numeric(scalar)
+}
+
 save_fig <- function(plot, name, width, height) {
+  # Fail early if a panel forgot to source the shared, embedded-font theme.
+  figure_font_family()
+  # The canvas has to be the width the figure is actually printed at.  Any
+  # other width is rescaled by TeX, and the type in it no longer matches the
+  # shared scale -- which is how the same nominal label ends up a different
+  # size in two figures of the same paper.  Only the height is a per-figure
+  # decision.
+  expected <- FIGURE_TEXT_WIDTH_IN * include_fraction(name)
+  if (!isTRUE(all.equal(width, expected, tolerance = 1e-6))) {
+    stop(sprintf("%s: canvas width %.3f in must be the printed width %.3f in",
+                 name, width, expected))
+  }
   ggplot2::ggsave(file.path("figs", "out", paste0(name, ".pdf")), plot,
                   width = width, height = height, units = "in", device = cairo_pdf)
   invisible(NULL)
+}
+
+# Use the same family in every layer, including symbols supplied as ordinary
+# Unicode text or resolved by plotmath.  Keeping this check next to the device
+# call makes it harder for a future panel to silently fall back to a
+# host-dependent default.
+figure_font_family <- function() {
+  if (!exists("FIGURE_FONT_FAMILY", inherits = TRUE)) {
+    stop("FIGURE_FONT_FAMILY must be declared by figs/rtx_theme.R")
+  }
+  FIGURE_FONT_FAMILY
 }
 
 # Signed quantities are set in maths mode. Two reasons: a text hyphen is not a

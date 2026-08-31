@@ -7,8 +7,9 @@ deposit. Describing the rules below without reproducing the paths they remove is
 the point of this file, so the left column names each class of string rather
 than quoting it.
 
-The rewrite is textual and total: it substitutes path strings and nothing else.
-Rules are applied longest match first.
+The rewrite is textual and total: it substitutes path strings and refreshes the
+explicit source/hash links in derived receipts, without changing a numeric or
+structural value. Rules are applied longest match first.
 
 | replaced | with |
 |---|---|
@@ -38,10 +39,10 @@ The digest on the left is the file as the run wrote it; the digest on the right
 is the file in this archive, and it is the one the manifest binds and the build
 verifies.
 
-| path | substitutions | original sha256 | archived sha256 |
-|---|---|---|---|
-| `data/e-executed/executed.json` | 23 | `aa2ca54ecba38ccc…` | `03f8556cf5627f6b…` |
-| `data/e-retrieval/p006b_retrieval_38_38.json` | 7 | `d1e213e98e87ca40…` | `1039ef73cb149c32…` |
-| `data/e-naive/naive.json` | 1 | `18aaf726056bd651…` | `283ce11222a77f46…` |
-| `data/e-simple/simple.json` | 1 | `1d85e81ec46761bd…` | `33f67068f00a3e8c…` |
-| `data/e-primary/paper_primary.json` | 1 | `f9f6110a3dd5455a…` | `d6f6053440c0ce6b…` |
+| path | path substitutions | receipt-link refreshes | original sha256 | archived sha256 |
+|---|---:|---:|---|---|
+| `data/e-executed/executed.json` | 23 | 0 | `aa2ca54ecba38ccc…` | `03f8556cf5627f6b…` |
+| `data/e-retrieval/p006b_retrieval_38_38.json` | 7 | 0 | `d1e213e98e87ca40…` | `1039ef73cb149c32…` |
+| `data/e-naive/naive.json` | 1 | 0 | `18aaf726056bd651…` | `283ce11222a77f46…` |
+| `data/e-simple/simple.json` | 1 | 0 | `1d85e81ec46761bd…` | `33f67068f00a3e8c…` |
+| `data/e-primary/paper_primary.json` | 1 | 0 | `f9f6110a3dd5455a…` | `d6f6053440c0ce6b…` |

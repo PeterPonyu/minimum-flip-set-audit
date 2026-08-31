@@ -1,5 +1,15 @@
-% References for 006 enhanced scaffold.
-% Only entries actually cited in tex/main.tex belong here.
+% References for 006.
+% Only entries actually cited in the manuscript body belong here.
+%
+% The file is in two tiers, and the boundary is marked below. Tier one was
+% checked entry by entry against the publisher's own record page: author list,
+% title, journal, volume, issue, pages and year. Tier two was written from
+% domain knowledge and has NOT been checked that way. The BIBLIOGRAPHY_VERIFIED
+% gate is closed only when every tier-two entry has been opened and confirmed or
+% deleted; an entry that cannot be confirmed is removed and the sentence citing
+% it is rewritten, rather than left in place as an approximation.
+%
+% ===== Tier one: checked against the publisher record =====
 
 @article{mcnemar1947note,
   author  = {McNemar, Quinn},
@@ -68,6 +78,40 @@
   pages   = {622--628},
   year    = {2014}
 }
+
+@article{rosenthal1979file,
+  author  = {Rosenthal, Robert},
+  title   = {The file drawer problem and tolerance for null results},
+  journal = {Psychological Bulletin},
+  volume  = {86},
+  number  = {3},
+  pages   = {638--641},
+  year    = {1979}
+}
+
+@article{carterette2012multiple,
+  author  = {Carterette, Benjamin A.},
+  title   = {Multiple testing in statistical analysis of systems-based
+             information retrieval experiments},
+  journal = {ACM Transactions on Information Systems},
+  volume  = {30},
+  number  = {1},
+  pages   = {4:1--4:34},
+  year    = {2012}
+}
+
+@article{voorhees2000variations,
+  author  = {Voorhees, Ellen M.},
+  title   = {Variations in relevance judgments and the measurement of retrieval
+             effectiveness},
+  journal = {Information Processing and Management},
+  volume  = {36},
+  number  = {5},
+  pages   = {697--716},
+  year    = {2000}
+}
+
+% ===== Tier two: written from domain knowledge, not yet checked =====
 
 @article{carter2017fragility,
   author  = {Carter, Rickey E. and McKie, Paul M. and Storlie, Curtis B.},
@@ -189,6 +233,124 @@
   volume    = {33},
   pages     = {9459--9474},
   year      = {2020}
+}
+
+@inproceedings{smucker2007comparison,
+  author    = {Smucker, Mark D. and Allan, James and Carterette, Ben},
+  title     = {A comparison of statistical significance tests for information
+               retrieval evaluation},
+  booktitle = {Proceedings of the 16th ACM Conference on Information and
+               Knowledge Management},
+  pages     = {623--632},
+  year      = {2007}
+}
+
+@article{sakai2014statistical,
+  author  = {Sakai, Tetsuya},
+  title   = {Statistical reform in information retrieval?},
+  journal = {SIGIR Forum},
+  volume  = {48},
+  number  = {1},
+  pages   = {3--12},
+  year    = {2014}
+}
+
+@inproceedings{urbano2013comparison,
+  author    = {Urbano, Juli{\'a}n and Marrero, M{\'o}nica and Mart{\'i}n, Diego},
+  title     = {A comparison of the optimality of statistical significance tests
+               for information retrieval evaluation},
+  booktitle = {Proceedings of the 36th International ACM SIGIR Conference on
+               Research and Development in Information Retrieval},
+  pages     = {925--928},
+  year      = {2013}
+}
+
+@inproceedings{zobel1998reliable,
+  author    = {Zobel, Justin},
+  title     = {How reliable are the results of large-scale information retrieval
+               experiments?},
+  booktitle = {Proceedings of the 21st Annual International ACM SIGIR Conference
+               on Research and Development in Information Retrieval},
+  pages     = {307--314},
+  year      = {1998}
+}
+
+@article{fuhr2018some,
+  author  = {Fuhr, Norbert},
+  title   = {Some common mistakes in {IR} evaluation, and how they can be
+             avoided},
+  journal = {SIGIR Forum},
+  volume  = {51},
+  number  = {3},
+  pages   = {32--41},
+  year    = {2018}
+}
+
+@inproceedings{boytsov2013deciding,
+  author    = {Boytsov, Leonid and Belova, Anna and Westfall, Peter},
+  title     = {Deciding on an adjustment for multiplicity in {IR} experiments},
+  booktitle = {Proceedings of the 36th International ACM SIGIR Conference on
+               Research and Development in Information Retrieval},
+  pages     = {403--412},
+  year      = {2013}
+}
+
+@article{benjamini1995controlling,
+  author  = {Benjamini, Yoav and Hochberg, Yosef},
+  title   = {Controlling the false discovery rate: a practical and powerful
+             approach to multiple testing},
+  journal = {Journal of the Royal Statistical Society: Series B},
+  volume  = {57},
+  number  = {1},
+  pages   = {289--300},
+  year    = {1995}
+}
+
+@article{button2013power,
+  author  = {Button, Katherine S. and Ioannidis, John P. A. and Mokrysz, Claire
+             and Nosek, Brian A. and Flint, Jonathan and Robinson, Emma S. J.
+             and Munaf{\`o}, Marcus R.},
+  title   = {Power failure: why small sample size undermines the reliability of
+             neuroscience},
+  journal = {Nature Reviews Neuroscience},
+  volume  = {14},
+  number  = {5},
+  pages   = {365--376},
+  year    = {2013}
+}
+
+@article{artstein2008inter,
+  author  = {Artstein, Ron and Poesio, Massimo},
+  title   = {Inter-coder agreement for computational linguistics},
+  journal = {Computational Linguistics},
+  volume  = {34},
+  number  = {4},
+  pages   = {555--596},
+  year    = {2008}
+}
+
+@inproceedings{reimers2017reporting,
+  author    = {Reimers, Nils and Gurevych, Iryna},
+  title     = {Reporting score distributions makes a difference: performance
+               study of {LSTM}-networks for sequence tagging},
+  booktitle = {Proceedings of the 2017 Conference on Empirical Methods in
+               Natural Language Processing},
+  pages     = {338--348},
+  year      = {2017}
+}
+
+@inproceedings{bouthillier2021accounting,
+  author    = {Bouthillier, Xavier and Delaunay, Pierre and Bronzi, Mirko and
+               Trofimov, Assya and Nichyporuk, Brennan and Szeto, Justin and
+               Sepah, Naz and Raff, Edward and Madan, Kanika and Voleti, Vikram
+               and Kahou, Samira Ebrahimi and Michalski, Vincent and
+               Serdyuk, Dmitriy and Arbel, Tal and Pal, Chris and
+               Varoquaux, Ga{\"e}l and Vincent, Pascal},
+  title     = {Accounting for variance in machine learning benchmarks},
+  booktitle = {Proceedings of Machine Learning and Systems},
+  volume    = {3},
+  pages     = {747--769},
+  year      = {2021}
 }
 
 @article{edge2024local,

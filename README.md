@@ -31,8 +31,8 @@ The build re-hashes every artifact before reading it and stops if any byte has
 moved. Figures and printed numbers are regenerated from those bytes rather than
 transcribed, so the manuscript cannot quietly disagree with its own data.
 
-Requires `python3`, `Rscript` with `digest`, `ggplot2`, `jsonlite`, `patchwork`
-and `scales`, and a TeX distribution with `latexmk`.
+Requires `python3`, `Rscript` with `digest`, `ggplot2`, `jsonlite`,
+`patchwork`, `scales` and `systemfonts`, and a TeX distribution with `latexmk`.
 
 ## Status
 

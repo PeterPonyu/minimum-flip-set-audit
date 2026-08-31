@@ -69,6 +69,115 @@ and a conclusion that a single deletion can move was already resting on very
 little.%
 }
 
+\newcommand{\CapPlane}{%
+The plane every grading change moves in. A paired contrast between two
+conditions reduces to four counts, and the two an exact test reads are the
+discordant pair: the questions the arm alone answered correctly, and the
+questions the reference alone did. Regrading one answer moves that pair one unit
+along one axis and can do nothing else, so each dot is a table reachable from
+the observed one and adjacent dots are one grading apart. Dark dots are tables
+at which the conclusion named above the panel no longer holds. The open circle
+is the table the evaluation actually produced, and the dashed outline is the set
+of tables exactly as many gradings away as the nearest dark dot, cut back to the
+tables that exist, so it touches the failure region without entering it. All
+three panels are the same lattice over \SubsetN{} questions. The two on the
+right are the same contrast, the same four counts and the same observed point,
+read as two different claims: the direction survives \HelpK{} gradings and the
+verdict attached to it survives \HelpVerdictK{}. A direction fails on a
+half-plane, so its
+distance is the lead in discordant pairs; a verdict fails on a region whose
+boundary bends, because the test reads how many questions the conditions
+disagreed on as well as how the disagreements fell. Two distances measured from
+one point to two differently shaped regions have no reason to agree.%
+}
+
+\newcommand{\CapDecouple}{%
+The two distances a contrast carries, plotted against each other. Each marker is
+one paired contrast from a question-answering evaluation, positioned by the
+smallest number of individual gradings that would move its verdict across the
+conventional threshold of \AlphaLevel{} and by the smallest number that would
+reverse its direction. The dashed diagonal is where the two agree and the thin
+lines beside it are \DecoupledGap{} gradings either side. Markers in the shaded
+lower region are contrasts whose direction is the easier of the two to overturn.
+A cross marks a contrast whose difference is exactly zero and which therefore
+has no direction to reverse; a small numeral beside a marker is how many
+contrasts share that position. Markers appear on both sides of the diagonal,
+which is the point: neither claim is systematically the sturdier one, so knowing
+one distance does not tell a reader the other, and a results table reporting a
+difference and a p-value in one row reports two claims with two different
+supports as though they stood together.%
+}
+
+\newcommand{\CapAlpha}{%
+The same family read against every threshold rather than one. The upper panel
+counts, for each level on the horizontal axis, how many of the \Contrasts{}
+contrasts reach it, how many survive a family-wise correction across all of
+them, and how many could not have reached it whatever the answers were, that
+last being fixed by how rarely the two conditions disagreed. The lower panel
+gives the median number of gradings that would move a verdict at that level. The
+vertical rule is \AlphaLevel{}, the level the records used and the level every
+other figure here is read against. The counts move as the threshold moves and
+the shape does not: at every level a substantial share of the contrasts is
+outside what the design could resolve, so the observations reported here are
+about the evaluation rather than about the conventional choice of threshold. The
+sweep recomputes each distance in closed form; the exhaustive search is run at
+the recorded level, where the build checks the two against each other.%
+}
+
+\newcommand{\CapCellsTable}{%
+The four counts each contrast reduces to. Rows are the \Contrasts{} paired
+contrasts among \ConditionsWord{} retrieval conditions, over two question sets,
+each split into the image-dependent questions, the text-answerable ones, and
+both together. For each, the number of questions both conditions answered
+correctly, the number the first-named condition alone answered correctly, the
+number the second alone did, and the number neither did. The final column is the
+sum of the middle two, which is the only part of the table an exact paired test
+reads. Every quantity reported anywhere in this paper is a function of these
+four numbers and the sample size, so this table is what a reader would need to
+recompute any of them.%
+}
+
+\newcommand{\CapDesignTable}{%
+What a paired comparison can say, as a function of disagreement alone. An exact
+paired test on binary outcomes is a binomial test at one half on the questions
+the two conditions disagreed about, so both columns in the middle are fixed
+before any answer is graded. The second gives the smallest p-value the test can
+return on that many discordant pairs, obtained when every one of them falls the
+same way. The third gives the smallest majority among them that reaches the
+conventional threshold of \AlphaLevel{}, and reads \emph{unreachable} where no
+split of that many pairs can. The final column is how many of the \Contrasts{}
+contrasts in this evaluation have that discordant count. Nothing in the first
+three columns depends on this evaluation: the table is arithmetic on the
+binomial and can be read off by anyone comparing two systems on shared items.%
+}
+
+\newcommand{\CapGradersTable}{%
+The same answers under \Graders{} grading rules. Every answer of both question
+sets was scored against its gold string three ways --- exact match, substring
+match, and a rule tolerant of numeric formatting --- and the table gives the
+accuracy each rule produces for each retrieval condition, on the image-dependent
+and text-answerable splits of both sets. Eleven of the twelve rows are identical
+across the three rules. The exception is the multimodal condition on the
+image-dependent split of the widely-documented set, where the numeric-tolerant
+rule scores one more answer correct than the other two, and that single answer
+is the one the rest of this paper is about. The table is included so that claim
+can be checked rather than accepted: the disagreement between graders is visible
+here as the only place any number moves.%
+}
+
+\newcommand{\CapCandidatesTable}{%
+The answers each one-grading conclusion is resting on, named. Where the smallest
+number of gradings that would overturn a conclusion is one, every individual
+grading that would suffice on its own can be enumerated, and this is that
+enumeration for the two such conclusions in this study. Each block is one
+conclusion, and its rows give the condition under which a grading would change,
+how many questions qualify, and which. A reader can take any single question
+listed, decide its grading for themselves, and the conclusion heading that block
+stops holding.
+Several candidates do not make a conclusion sturdier: they mean several answers
+each carry it alone.%
+}
+
 \newcommand{\CapContrastsTable}{%
 Every paired contrast the evaluation produced, with what it would take to
 overturn each. Rows are the \Contrasts{} contrasts among \ConditionsWord{}

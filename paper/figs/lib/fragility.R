@@ -86,6 +86,134 @@ verdict_fragility <- function(cells, alpha) {
   min_flips(cells, holds)
 }
 
+# The same two distances, reached without searching.
+#
+# Everything below is a second route to the numbers the search already returns.
+# It exists so the derivation in the methods section can be checked rather than
+# believed: the two procedures share no code, the build runs both on every
+# contrast, and it stops if they ever part. The search remains the definition
+# and is what produces the reported values.
+
+# The p-value depends on the discordant split and on nothing else, so it can be
+# asked for directly rather than through a table that carries two counts the
+# test will not read.
+split_p <- function(b, c) {
+  mcnemar_exact_p(c(both = 0L, arm_only = as.integer(b), ref_only = as.integer(c),
+                    neither = 0L))
+}
+
+# The direction needs no search at all. Unseating it costs one flip per unit of
+# the lead, and the lead is the numerator of the difference already reported.
+sign_distance <- function(cells) {
+  abs(cells[["arm_only"]] - cells[["ref_only"]])
+}
+
+# The smallest majority among m discordant pairs that the exact test calls
+# significant, tabulated for every m up to n at once. The value is
+# non-decreasing in m and rises by at most one at a time, so one pass suffices;
+# both properties are checked rather than assumed, because they are what makes
+# the pass linear.
+critical_majority <- function(n, alpha) {
+  out <- rep(NA_integer_, n + 1L)
+  w <- 0L
+  for (m in 0:n) {
+    w <- max(w, as.integer(ceiling(m / 2)))
+    while (w <= m && split_p(w, m - w) > alpha) w <- w + 1L
+    if (w <= m) {
+      previous <- if (m > 0L) out[[m]] else NA_integer_
+      if (!is.na(previous) && (w < previous || w > previous + 1L)) {
+        stop("the critical majority is not stepping by one; the linear pass is unsound")
+      }
+      out[[m + 1L]] <- w
+    } else {
+      w <- 0L
+    }
+  }
+  out
+}
+
+# The verdict distance, as a minimum over one number rather than a walk over
+# tables. For a target discordant count the cost is convex and piecewise linear
+# in how the pairs split, and it is flat at |m - m'| between the two split
+# points that preserve one coordinate, so the cheapest admissible split is
+# whichever endpoint of that flat stretch survives clamping. NA where no
+# reachable table carries the other verdict.
+verdict_distance <- function(cells, alpha) {
+  b <- cells[["arm_only"]]
+  c_ <- cells[["ref_only"]]
+  n <- sum(cells)
+  significant <- mcnemar_exact_p(cells) <= alpha
+  majority <- critical_majority(n, alpha)
+
+  cost <- function(m2, b2) abs(b - b2) + abs(c_ - (m2 - b2))
+  cheapest_in <- function(m2, lo, hi) {
+    lo <- max(0L, as.integer(lo))
+    hi <- min(as.integer(m2), as.integer(hi))
+    if (lo > hi) return(NA_integer_)
+    flat <- sort(c(b, m2 - c_))
+    as.integer(min(cost(m2, min(max(flat[[1]], lo), hi)),
+                   cost(m2, min(max(flat[[2]], lo), hi))))
+  }
+
+  best <- NA_integer_
+  for (m2 in 0:n) {
+    w <- majority[[m2 + 1L]]
+    here <- if (significant) {
+      # Any split the test would not call significant will do. Where no split
+      # of m2 pairs could be significant, that is all of them.
+      if (is.na(w)) cheapest_in(m2, 0L, m2) else cheapest_in(m2, m2 - w + 1L, w - 1L)
+    } else if (is.na(w)) {
+      NA_integer_
+    } else {
+      # Either side may carry the majority, so both rays are candidates.
+      candidates <- c(cheapest_in(m2, w, m2), cheapest_in(m2, 0L, m2 - w))
+      candidates <- candidates[!is.na(candidates)]
+      if (length(candidates)) min(candidates) else NA_integer_
+    }
+    if (!is.na(here) && (is.na(best) || here < best)) best <- as.integer(here)
+  }
+  best
+}
+
+# The smallest number of discordant pairs on which the test can return anything
+# below the threshold. A paired design with fewer questions than this cannot
+# produce a significant result however its answers come out.
+significance_needs <- function(alpha) {
+  m <- 0L
+  while (attainable_floor(m) > alpha) m <- m + 1L
+  m
+}
+
+# The scan above stops at the first majority the test calls significant and
+# treats every larger one as significant too. That is a property of the binomial
+# tail and not of this code, so it is checked over the whole range in use rather
+# than relied on.
+assert_tail_monotone <- function(n) {
+  for (m in 0:n) {
+    previous <- NULL
+    for (w in seq.int(ceiling(m / 2), max(m, ceiling(m / 2)))) {
+      here <- split_p(w, m - w)
+      if (!is.null(previous) && here > previous + 1e-12) {
+        stop("the exact p-value is not decreasing in the majority at m = ", m)
+      }
+      previous <- here
+    }
+  }
+  invisible(TRUE)
+}
+
+# Run both routes against each other. Called once per contrast, so a derivation
+# that stops matching the search stops the build instead of reaching the page.
+assert_closed_form <- function(cells, alpha, searched_sign, searched_verdict, label) {
+  if (!identical(as.integer(searched_sign), as.integer(sign_distance(cells)))) {
+    stop(label, ": the search and the closed form disagree about the direction")
+  }
+  if (!identical(as.integer(searched_verdict), as.integer(verdict_distance(cells, alpha)))) {
+    stop(label, ": the search and the closed form disagree about the verdict")
+  }
+  invisible(TRUE)
+}
+
 # Which answers a one-grading conclusion is resting on.
 #
 # When the minimum is one, the paper should be able to name the answers rather

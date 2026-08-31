@@ -25,7 +25,7 @@ the build instead of producing a stale number.
 | `data/e-sota/sota_copy.json` | recorded_state | 315 | `f856273e0ef3202f…` |
 | `data/e-blocker/llm_qa_blocker.json` | recorded_state | 484 | `aa0d722720e9a9a4…` |
 
-Some of these files recorded the paths of the machine that produced them. Those path strings were rewritten before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
+Some of these files recorded the paths of the machine that produced them. Those path strings and source links were refreshed before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
 
 ## Not redistributed
 

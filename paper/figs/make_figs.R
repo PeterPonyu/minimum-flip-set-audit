@@ -112,17 +112,25 @@ for (dataset in names(WIDE)) {
         stop(label, ": the recorded verdict does not follow from the recorded test")
       }
 
+      # Both distances are found by exhaustive search, and both are also
+      # derivable in closed form. The manuscript states the derivation, so the
+      # build checks it against the search on every contrast rather than
+      # asking a reader to take it on trust.
+      k_sign <- sign_fragility(cells)$k
+      k_verdict <- verdict_fragility(cells, ALPHA)$k
+      assert_closed_form(cells, ALPHA, k_sign, k_verdict, label)
+
       loo <- leave_one_out(rows, arm, reference, ALPHA)
       inventory[[length(inventory) + 1L]] <- data.frame(
         dataset = dataset, subset = subset, arm = arm, reference = reference,
         n = sum(cells), discordant = discordant(cells),
+        both = cells[["both"]], neither = cells[["neither"]],
         arm_only = cells[["arm_only"]], ref_only = cells[["ref_only"]],
         acc_arm = accuracy(cells, "arm"), acc_ref = accuracy(cells, "reference"),
         diff_pt = acc_diff_pt(cells), p = mcnemar_exact_p(cells),
         significant = mcnemar_exact_p(cells) <= ALPHA,
         floor = attainable_floor(discordant(cells)),
-        k_sign = sign_fragility(cells)$k,
-        k_verdict = verdict_fragility(cells, ALPHA)$k,
+        k_sign = k_sign, k_verdict = k_verdict,
         loo_sign = loo$same_sign, loo_verdict = loo$same_verdict,
         stringsAsFactors = FALSE)
     }
@@ -130,6 +138,16 @@ for (dataset in names(WIDE)) {
 }
 inventory <- do.call(rbind, inventory)
 inventory$capable <- inventory$floor <= ALPHA
+
+# The methods section derives a bound on the number of questions a paired design
+# needs before significance is available to it at all, and reduces the verdict
+# search to one pass by leaning on the binomial tail. Both are checked over the
+# range this study actually uses.
+assert_tail_monotone(max(inventory$n))
+SIGNIFICANCE_NEEDS <- significance_needs(ALPHA)
+if (!identical(SIGNIFICANCE_NEEDS, as.integer(ceiling(log2(2 / ALPHA))))) {
+  stop("the derived bound on questions needed for significance does not match the tabulated floor")
+}
 
 # A difference of exactly zero has no direction to reverse, so its distance to a
 # reversal is zero by definition and not by fragility. Those contrasts are kept
@@ -385,7 +403,36 @@ REGRADED_MM <- accuracy(REGRADED_CELLS, "arm")
 ## Figures. Each panel reads the objects above and writes one file.
 ## ---------------------------------------------------------------------------
 
-for (unit in c("fig1_flips.R", "fig2_regrade.R", "fig3_floor.R", "fig4_loo.R")) {
+## ---------------------------------------------------------------------------
+## The same family, read against thresholds other than the recorded one.
+## ---------------------------------------------------------------------------
+
+# Everything else here is read against the level the records used. A reader is
+# entitled to ask which of the observations are about the evaluation and which
+# about that number, so the family is recomputed across a range of them. This is
+# where the closed form earns its place: twenty-five levels would be twenty-five
+# families of searches, and it is one pass per contrast per level instead.
+SWEEP_LOW <- 0.001
+SWEEP_HIGH <- 0.2
+ALPHA_SWEEP <- do.call(rbind, lapply(
+  10^seq(log10(SWEEP_LOW), log10(SWEEP_HIGH), length.out = 25),
+  function(alpha) {
+    distances <- mapply(function(b, c_, n) {
+      verdict_distance(c(both = n - b - c_, arm_only = b, ref_only = c_,
+                         neither = 0L), alpha)
+    }, inventory$arm_only, inventory$ref_only, inventory$n)
+    data.frame(alpha = alpha,
+               significant = sum(inventory$p <= alpha),
+               incapable = sum(inventory$floor > alpha),
+               survives_holm = sum(inventory$holm <= alpha),
+               median_k = median(distances, na.rm = TRUE))
+  }))
+
+# Numbered in the order a reader meets them, so a panel file and the figure it
+# becomes carry the same number.
+FIGURES <- c("fig1_plane.R", "fig2_flips.R", "fig3_decouple.R", "fig4_regrade.R",
+             "fig5_floor.R", "fig6_alpha.R", "fig7_loo.R")
+for (unit in FIGURES) {
   source(file.path("figs", "panels", unit))
 }
 
@@ -443,6 +490,13 @@ write_generated(c(
   macro("SmallestK", count_word(SMALLEST_K)),
   macro("KillState", if (KILL_FIRES) "fired" else "did not fire"),
 
+  macro("SignificanceNeedsM", count_word(SIGNIFICANCE_NEEDS)),
+  macro("SweepLow", formatC(SWEEP_LOW, format = "f", digits = 3)),
+  macro("SweepHigh", formatC(SWEEP_HIGH, format = "f", digits = 2)),
+  macro("SweepLevels", count_word(nrow(ALPHA_SWEEP))),
+  macro("IncapableSweepMin", min(ALPHA_SWEEP$incapable)),
+  macro("MedianKSweepMax", max(ALPHA_SWEEP$median_k)),
+  macro("MedianKSweepMin", min(ALPHA_SWEEP$median_k)),
   macro("Incapable", sum(!inventory$capable)),
   macro("AtFloor", sum(inventory$at_floor)),
   macro("AtFloorNS", sum(inventory$at_floor & !inventory$significant)),
@@ -531,5 +585,116 @@ write_generated(c(
   "\\end{tabular}"
 ), "generated_table_prereg.tex")
 
-message(sprintf("wrote 4 figures to figs/out and 3 generated tex files to tex/ (smallest flip set: %d)",
-                SMALLEST_K))
+## The four cells every contrast reduces to. The table above reports the
+## discordant count, which is what the tests read; this reports the split it
+## came from, which is what a reader would need to recompute anything here.
+
+write_generated(c(
+  "\\begin{tabular}{llrrrrrr}",
+  "\\toprule",
+  "& & & \\multicolumn{4}{c}{Questions answered correctly by} & \\\\",
+  "\\cmidrule(lr){4-7}",
+  paste("Questions & Contrast & $n$ & Both & Arm & Ref. & Neither &",
+        "Disc. \\\\"),
+  "\\midrule",
+  paste0(inventory$short_label, " & ",
+         CONDITION_NAMES[inventory$arm], " vs ", CONDITION_NAMES[inventory$reference], " & ",
+         inventory$n, " & ", inventory$both, " & ", inventory$arm_only, " & ",
+         inventory$ref_only, " & ", inventory$neither, " & ",
+         inventory$discordant, " \\\\"),
+  "\\bottomrule",
+  "\\end{tabular}"
+), "generated_table_cells.tex")
+
+## What the design admits, as a function of the discordant count alone. Every
+## row is arithmetic on the binomial and holds for any paired comparison at this
+## threshold, so the table is a lookup rather than a result.
+
+design_m <- 0:max(inventory$discordant)
+design_majority <- critical_majority(max(design_m), ALPHA)
+write_generated(c(
+  "\\begin{tabular}{rrlr}",
+  "\\toprule",
+  "Discordant & Smallest attainable & Majority needed & Contrasts \\\\",
+  "pairs $m$ & $p$-value & for significance & with this $m$ \\\\",
+  "\\midrule",
+  paste0(design_m, " & ",
+         vapply(vapply(design_m, attainable_floor, numeric(1)), pval, character(1)), " & ",
+         ifelse(is.na(design_majority[design_m + 1L]), "unreachable",
+                paste0(design_majority[design_m + 1L], " of ", design_m)), " & ",
+         vapply(design_m, function(m) sum(inventory$discordant == m), integer(1)),
+         " \\\\"),
+  "\\bottomrule",
+  "\\end{tabular}"
+), "generated_table_design.tex")
+
+## The three graders, on the same answers. The manuscript's central example is
+## the single answer they disagree about, so the table that makes it checkable
+## is the one that shows how little else moves.
+
+grader_rows <- regrade$three_grader_table
+grader_rows <- grader_rows[order(grader_rows$dataset != "famous",
+                                 grader_rows$subset != "image_load_bearing",
+                                 match(grader_rows$grader, c("strict", "substr", "numeric"))), ]
+GRADER_NAMES <- c(strict = "strict match", substr = "substring match",
+                  numeric = "numeric tolerance")
+write_generated(c(
+  "\\begin{tabular}{lllrrr}",
+  "\\toprule",
+  "& & & \\multicolumn{3}{c}{Accuracy under each retrieval condition} \\\\",
+  "\\cmidrule(lr){4-6}",
+  "Questions & Split & Grader & none & text & multimodal \\\\",
+  "\\midrule",
+  paste0(ifelse(grader_rows$dataset == "famous", "Famous", "Long-tail"), " & ",
+         ifelse(grader_rows$subset == "image_load_bearing", "image", "text"), " & ",
+         GRADER_NAMES[grader_rows$grader], " & ",
+         fmt(grader_rows$no_kg, 3), " & ", fmt(grader_rows$text_kg, 3), " & ",
+         fmt(grader_rows$multimodal_kg, 3), " \\\\"),
+  "\\bottomrule",
+  "\\end{tabular}"
+), "generated_table_graders.tex")
+
+## Which answers a one-grading conclusion is resting on, named rather than
+## counted. This is the table the paper's argument reduces to: a reader can take
+## any single question listed here, decide the grading for themselves, and watch
+## the conclusion in the first column stop holding.
+
+# Question identifiers are a letter prefix and a number, so sorting them as
+# strings would print I11 before I2 and invite a reader checking one of them to
+# look in the wrong place.
+by_number <- function(ids) ids[order(as.integer(gsub("[^0-9]", "", ids)))]
+
+# The conclusion is a heading spanning the row rather than a column of its own.
+# Written as a column it is the widest thing in the table and pushes the list of
+# questions -- which is the part worth reading -- into a strip too narrow to
+# read.
+candidate_block <- function(conclusion, label) {
+  found <- conclusion$candidates
+  if (!nrow(found)) return(character(0))
+  parts <- sprintf("\\multicolumn{3}{l}{\\emph{%s}} \\\\", label)
+  for (condition in CONDITIONS) {
+    ids <- by_number(found$question_id[found$condition == condition])
+    if (!length(ids)) next
+    parts <- c(parts, paste0(
+      "\\quad ", CONDITION_NAMES[[condition]], " & ", length(ids), " & ",
+      paste(ids, collapse = ", "), " \\\\"))
+  }
+  parts
+}
+
+write_generated(c(
+  "\\begin{tabular}{lrp{0.52\\linewidth}}",
+  "\\toprule",
+  "Condition regraded & Count & Questions whose single regrading suffices \\\\",
+  "\\midrule",
+  candidate_block(harm,
+                  "Multimodal is behind text, widely-documented set: the direction"),
+  "\\midrule",
+  candidate_block(help_verdict,
+                  "Less-documented image-dependent difference: the verdict"),
+  "\\bottomrule",
+  "\\end{tabular}"
+), "generated_table_candidates.tex")
+
+message(sprintf("wrote %d figures to figs/out and 7 generated tex files to tex/ (smallest flip set: %d)",
+                length(FIGURES), SMALLEST_K))

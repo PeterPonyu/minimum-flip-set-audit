@@ -25,6 +25,14 @@ floors$attained <- factor(
 span <- range(c(floors$floor, floors$p))
 LIMITS <- 10^(log10(span) + c(-0.3, 0.3))
 
+# Decade labels are written out rather than produced by scales::label_log().
+# That labeller returns a plotmath expression, and plotmath resolves its minus
+# sign through the device's own symbol handling instead of the theme family, so
+# Cairo answers by embedding a second font for the exponents alone. The ASCII
+# exponent is the form the other papers already use on a log axis.
+DECADES <- 10^seq(-6, 0)
+DECADE_LABELS <- c("1e-6", "1e-5", "1e-4", "1e-3", "1e-2", "1e-1", "1")
+
 p <- ggplot(floors, aes(x = floor, y = p)) +
   annotate("rect", xmin = ALPHA, xmax = LIMITS[2], ymin = LIMITS[1], ymax = LIMITS[2],
            fill = "grey88") +
@@ -35,9 +43,9 @@ p <- ggplot(floors, aes(x = floor, y = p)) +
   scale_shape_manual(values = c(19, 1, 4), name = NULL, drop = FALSE) +
   scale_size_continuous(range = c(1.1, 3.4), name = "Discordant pairs",
                         breaks = c(0, 4, 8, 12, 20)) +
-  scale_x_log10(limits = LIMITS, breaks = 10^seq(-6, 0), labels = scales::label_log(),
+  scale_x_log10(limits = LIMITS, breaks = DECADES, labels = DECADE_LABELS,
                 expand = c(0, 0)) +
-  scale_y_log10(limits = LIMITS, breaks = 10^seq(-6, 0), labels = scales::label_log(),
+  scale_y_log10(limits = LIMITS, breaks = DECADES, labels = DECADE_LABELS,
                 expand = c(0, 0)) +
   annotation_logticks(sides = "bl", linewidth = 0.25,
                       short = unit(2, "pt"), mid = unit(3, "pt"), long = unit(4, "pt")) +
@@ -55,4 +63,4 @@ p <- ggplot(floors, aes(x = floor, y = p)) +
         legend.key.size = unit(9, "pt"), legend.spacing.y = unit(2, "pt"),
         legend.margin = margin(t = -2, b = 0))
 
-save_fig(p, "fig3_floor", width = 4.4, height = 4.6)
+save_fig(p, "fig5_floor", width = 0.62 * FIGURE_TEXT_WIDTH_IN, height = 4.6)

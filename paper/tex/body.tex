@@ -1,0 +1,700 @@
+%% The manuscript body, shared by every binding of this paper.
+%% The class, the front matter and the bibliography style belong to the
+%% binding; everything a reader reads belongs here, once.
+\section{Introduction}
+
+A small evaluation reports that one condition beats another. Underneath that
+sentence is a table of questions, each marked right or wrong, and the sentence
+is true because of how a few of those marks fell. How few is a question with an
+exact answer, and it is almost never asked.
+
+This paper asks it of one completed evaluation. A question set of \Questions{}
+items was answered by an instruction model under \ConditionsWord{} retrieval
+conditions and graded against gold strings, twice over --- once on widely
+documented entities and once on less documented ones --- for \Answers{} graded
+answers. The project that produced those runs computed \Contrasts{} paired
+contrasts from them and recorded which it considered to have found something.
+Nothing here re-runs any of that. The rows are on disk, the recorded contrasts
+are on disk, and the only new object is a count: for each conclusion, the
+smallest number of individual gradings that would have to have come out the
+other way for it to stop holding.
+
+The count is exact rather than estimated. A paired contrast between two
+conditions reduces to four numbers --- how many questions both got right, how
+many each got right alone, how many neither got right --- and every quantity
+computed from it, including the exact test, is a function of those four. One
+grading change moves one question from one of the four to an adjacent one. So
+the tables reachable by $k$ grading changes are exactly those reachable in $k$
+steps, the space is small, and a breadth-first walk returns the true minimum.
+
+Three conclusions were named before the search was written, and the answers are
+not alike. The reported finding that the multimodal condition trails the
+text-only one on image-dependent questions rests on \HarmK{} grading, and
+\HarmCandidates{} of the \HarmGradings{} individual gradings on that subset
+would each on their own erase it. The reported \HelpDiff{}-point difference in
+the other direction needs \HelpK{} gradings to reverse. The one contrast that
+survives correction for multiplicity needs \SigK{}. The prespecified kill for
+this study was that all three come out at \KillThreshold{} or more, in which
+case the claim that these conclusions turn on individual records would have
+failed; it \KillState{}, and the smallest is \SmallestK{}.
+
+Two things make this more than an arithmetic exercise. The first is that the
+single grading is not hypothetical. An independent regrade of the same answers
+by three graders finds exactly \RegradeContested{} answer they disagree about,
+and it is one of the \HarmCandidates{}: applied as the record states it, the
+reported difference moves from \HarmDiff{} to \RegradedDiff{} percentage points.
+The conclusion and its negation are separated by one adjudication of one string.
+
+The second is that a contrast carries two conclusions, not one, and they are not
+equally secure. The \HelpDiff{}-point difference needs \HelpK{} gradings to
+change direction, which is comparatively sturdy at this scale. Its verdict ---
+that an exact test does not call it significant --- needs \HelpVerdictK{}. On
+the same four counts, from the same \SubsetN{} questions, the direction is
+\HelpRatio{} times further from being overturned than the significance statement
+attached to it. Among the \Directional{} contrasts that have a direction to
+reverse at all, the two distances differ by \DecoupledGap{} gradings or more in
+\DecoupledCount{} of them. Reporting a contrast as ``not significant''
+and reporting it as ``smaller'' are not the same claim and are not equally
+supported, and nothing in a conventional results table distinguishes them.
+
+A third observation falls out of the same rows and is arguably the most
+uncomfortable. Of the \Contrasts{} contrasts, \Incapable{} have a smallest
+attainable p-value above the threshold: the two conditions disagreed on so few
+questions that no assignment of those disagreements could have produced a
+significant result. Their non-significance is a fact about the question set and
+carries no information about the conditions being compared. A further
+\AtFloor{} returned exactly the most extreme value available to them, so they
+were at the limit of what the design could say.
+
+None of this adjudicates the underlying comparison, and this paper makes no
+claim about whether the retrieval conditions differ. The reference benchmark
+this line of work would be measured against was never obtained, the tier that
+would hold that comparison is recorded as \PrimaryTier{} and the tier above it
+as \SotaTier{}, and the counting below does not stand in for either. The
+contribution is the count and what it exposes: at this scale a conclusion is a
+property of individual gradings, and a results table that prints a difference
+and a p-value while omitting how many gradings each rests on has withheld the
+part a reader would need in order to know what they are looking at.
+
+\section{Related work}
+
+\subsection{Counting the observations a significant result rests on}
+
+The idea that a verdict should be reported alongside the number of observations
+that sustain it originates in clinical epidemiology. Feinstein proposed
+appraising a contrast of two proportions by asking how many patients would have
+to be reclassified before the contrast stopped being significant, and named the
+answer a unit fragility index~\cite{feinstein1990unit}. Walsh and colleagues
+turned the idea into a survey instrument: across \(399\) randomised controlled
+trials reporting at least one significant dichotomous outcome, they moved
+patients in the smaller event group from non-event to event until Fisher's exact
+test crossed \(0.05\), and found a median of eight~\cite{walsh2014statistical}.
+A quarter of those trials required three or fewer. The statistic has been
+criticised as a monotone re-expression of the p-value that penalises small
+trials for being small~\cite{carter2017fragility}, and that criticism is worth
+stating precisely, because it delimits what any counting statistic can claim: a
+count is not an independent line of evidence about the effect, it is a
+restatement of the same evidence on a scale a reader can hold in mind.
+
+The meta-analytic ancestor is older still. Rosenthal asked how many unpublished
+null studies would have to be sitting in file drawers before a significant
+pooled result became non-significant, and reported that tolerance as a
+number~\cite{rosenthal1979file}. The shared move in all three is to convert a
+threshold crossing into a count of the units that would have to differ, and the
+shared motivation is that a count communicates robustness in a way a p-value
+near a threshold does not.
+
+Three features distinguish the setting treated here from all of them. Their
+designs are unpaired: two arms, two independent groups of units. Their search is
+one-directional and incremental, walking the count upward until the threshold is
+crossed, which returns a value that is attained but not certified as smallest.
+And their question is exclusively about the verdict, because in a trial the
+direction of an effect is not what the reader is being asked to trust. A paired
+evaluation inverts the last of these: the direction of the difference is
+frequently the sentence a reader carries away, and it can be fragile
+independently of the verdict attached to it.
+
+\subsection{Significance testing in retrieval and language evaluation}
+
+The retrieval community has examined the reliability of its own comparisons for
+decades. Zobel asked how far large-scale experimental results
+generalise~\cite{zobel1998reliable}, and Voorhees showed that although
+individual relevance judgments vary widely between assessors, system
+\emph{rankings} built from different judgment sets correlate
+highly~\cite{voorhees2000variations}. That finding is important context for what
+follows, and it cuts in a specific direction: stability of a ranking over many
+topics is a different property from stability of a single contrast over a few
+dozen gradings, and the first does not imply the second.
+
+Which test to apply, and what it licenses, has its own literature. Smucker,
+Allan and Carterette compared the common choices and argued for randomisation
+and bootstrap over the t-test's parametric
+competitors~\cite{smucker2007comparison}; Urbano, Marrero and Martín examined
+their optimality~\cite{urbano2013comparison}. Carterette treated multiplicity as
+the central threat when many systems are compared on one
+collection~\cite{carterette2012multiple}, and Boytsov, Belova and Westfall
+worked through the practical choice of an adjustment~\cite{boytsov2013deciding};
+the family-wise and false-discovery procedures they draw
+on~\cite{holm1979simple,benjamini1995controlling} are the ones applied here.
+Sakai has argued repeatedly for reporting effect sizes and confidence intervals
+rather than significance alone~\cite{sakai2014statistical}, and Fuhr catalogued
+the recurring errors that motivate that
+argument~\cite{fuhr2018some}. Comparable arguments have been made for
+natural-language evaluation: Dror and colleagues surveyed the choice of test for
+language tasks~\cite{dror2018hitchhiker}, Card and colleagues showed how little
+power common benchmark comparisons actually have~\cite{card2020little}, Reimers
+and Gurevych showed that single-run scores conceal seed
+variance~\cite{reimers2017reporting}, and Bouthillier and colleagues quantified
+the variance sources a benchmark comparison must survive to mean
+anything~\cite{bouthillier2021accounting}. The broader statistical-practice
+critique this work sits inside is well
+established~\cite{ioannidis2005why,simmons2011false,button2013power,wasserstein2016asa,gelman2014statistical,amrhein2019scientists}.
+
+What this literature supplies is diagnosis and remedy at the level of the test:
+choose a better test, correct for multiplicity, report an interval, collect more
+topics. What it does not supply is a statement, in the units the evaluation was
+actually recorded in, of how many individual gradings a particular reported
+conclusion depends on. That is the gap the statistic developed here occupies,
+and it is complementary rather than competing: the count is read beside the
+interval and the corrected p-value, not instead of them.
+
+\subsection{Graded answers as the unit of evidence}
+
+Treating an individual grading as the unit that can move also connects to work
+on annotation reliability. Inter-coder agreement has long been understood as a
+precondition for interpreting an evaluation rather than a formality to be
+reported once~\cite{artstein2008inter}, and Voorhees's assessor study is an early
+demonstration that the underlying judgments are genuinely
+unstable~\cite{voorhees2000variations}. More recently, Northcutt, Athalye and
+Mueller showed that label errors are pervasive enough in widely used test sets
+to reorder published model rankings~\cite{northcutt2021pervasive}, and the
+benchmark-critique literature has argued that scores are routinely read as more
+meaningful than their construction
+supports~\cite{bowman2021will,raji2021everything}. The count reported here makes
+that connection quantitative for one evaluation: when the number of gradings a
+conclusion depends on is smaller than the number of gradings independent graders
+disagree about, the conclusion and the disagreement are the same size, and the
+comparison between them is arithmetic rather than rhetorical.
+
+\section{Methods}
+\input{methods}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig1_plane.pdf}
+\caption{\CapPlane}
+\label{fig:plane}
+\end{figure}
+
+\section{How far each conclusion is from being overturned}
+
+Fig.~\ref{fig:plane} draws the headline conclusions in the plane the method
+lives in, and it is worth reading before any number is quoted. The two right
+panels are the same contrast, the same four counts and the same observed point,
+read as two different claims; the outline around that point reaches \HelpK{}
+gradings in one and \HelpVerdictK{} in the other. That is not a property of the
+data so much as of the two regions being measured to, and it is the whole reason
+this paper reports two distances per contrast instead of one.
+
+Table~\ref{tab:contrasts} gives all \Contrasts{} contrasts,
+Table~\ref{tab:cells} gives the four counts each of them reduces to, and
+Fig.~\ref{fig:flips} plots the two distances for each. Every recorded
+difference and every recorded p-value reproduced from the per-answer rows, and
+so did every discordant split; the build would have stopped otherwise, and what
+follows is therefore a re-reading of the project's own numbers rather than a
+second measurement of them. Both distances were additionally recomputed from
+Propositions~\ref{prop:direction} and~\ref{prop:verdict} and agreed with the
+search on every contrast.
+
+The three prespecified conclusions are in Table~\ref{tab:prereg}. Taking them in
+turn.
+
+The first is that on the image-dependent questions of the widely-documented set,
+the multimodal condition is behind the text-only one: \HarmMM{} against
+\HarmText{} over \SubsetN{} questions, a difference of \HarmDiff{} percentage
+points on \HarmDiscordant{} discordant pairs, with an exact p-value of
+\HarmP{}. The minimum flip set is \HarmK{} grading, and the enumeration is
+worth more than the count: \HarmCandidates{} of the \HarmGradings{} individual
+gradings on that subset would each, alone, be enough to remove the difference or
+reverse it. Slightly more than half of the individual judgements underlying that
+subset are each independently sufficient to erase its reported direction.
+
+The second is that on the image-dependent questions of the less-documented set,
+the multimodal condition is ahead: \HelpMM{} against \HelpText{}, a difference
+of \HelpDiff{} percentage points, exact p-value \HelpP{}, which the records
+report as not significant and which this paper does not treat as an established
+effect. Its direction needs \HelpK{} gradings to reverse. That is the sturdiest
+direction among the three at this subset size, and it is still \HelpK{} answers
+out of \SubsetNWord{}.
+
+The third is the only contrast in the study that survives adjustment across the
+family of \Contrasts{}: on the text-answerable questions of the less-documented
+set, the text-retrieval condition beats no retrieval by \SigDiff{} percentage
+points with an exact p-value of \SigP{}, or \SigHolm{} after correction. Its
+verdict needs \SigK{} gradings and its direction needs \SigSignK{}. This is what
+a comparatively secure result looks like at this scale, and it is also the least
+interesting one available: it says that supplying a fact makes a model more
+likely to state that fact.
+
+\begin{table}[tbp]
+\centering
+\caption{\CapPreregTable}
+\label{tab:prereg}
+\small
+\input{generated_table_prereg}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig2_flips.pdf}
+\caption{\CapFlips}
+\label{fig:flips}
+\end{figure}
+
+The first of these is also the cleanest illustration of
+Proposition~\ref{prop:direction}. Its \HarmDiff{}-point difference on \SubsetN{}
+questions is a lead of one question in the discordant cells, and the proposition
+says the distance to its reversal is that lead. A reader shown the percentage
+and the sample size has been shown the count already, in a form that requires
+division to recover; a reader shown the count needs nothing.
+
+\subsection{The direction and the verdict are not equally secure}
+
+The fourth row of Table~\ref{tab:prereg} is not one of the three, and it is the
+result this paper would keep if it could keep only one. The
+\HelpDiff{}-point difference whose direction needs \HelpK{} gradings has a
+verdict --- not significant at \AlphaLevel{} --- that needs \HelpVerdictK{}, and
+\HelpVerdictCandidates{} distinct single gradings would each be enough to make
+it significant. Its floor is \HelpFloor{}, so it was capable of significance and
+simply did not reach it.
+
+The same four counts, read two ways, give a claim that \HelpK{} answers could
+not shake and a claim that \HelpVerdictK{} answer could. Which of the two a
+reader takes away is decided by the conventions of the table it is printed in,
+and a table reporting $p = \HelpP{}$ with no further annotation invites the
+reading that has the weaker support.
+
+Across the study this is the common case rather than the exception.
+Fig.~\ref{fig:decouple} plots the two distances against each other for the
+whole family. In \DecoupledCount{} of the \Directional{} contrasts that have a
+direction to reverse, the two differ by \DecoupledGap{} gradings or more, and
+they differ in both directions: \FragileSign{} contrasts have a direction that
+\FragileMax{} gradings or fewer would reverse, \FragileVerdict{} have a verdict
+that \FragileMax{} or fewer would flip, and no contrast is in both groups.
+Points fall on both sides of the diagonal. There is no general rule that one is
+sturdier. There is only the fact that they are different questions, and that
+reporting one number for both loses the distinction.
+
+The reason the two can separate at all is structural rather than accidental, and
+Fig.~\ref{fig:plane} shows it. The direction fails on a half-plane, so its
+distance is the lead in discordant pairs and nothing else. The verdict fails on
+a region whose boundary bends, because the exact test reads the discordant count
+as well as the split, so a flip that moves a pair from one side to the other and
+a flip that removes a pair altogether are worth different amounts to it. Two
+distances measured to two differently shaped regions from the same point have no
+reason to agree, and the finding here is that at this scale they routinely do
+not.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.62\linewidth]{fig3_decouple.pdf}
+\caption{\CapDecouple}
+\label{fig:decouple}
+\end{figure}
+
+\subsection{The single flip is on record}
+
+Fig.~\ref{fig:regrade} makes the first conclusion concrete. The same
+\RegradeAnswers{} answers were scored by \Graders{} graders, which agree on all
+but \RegradeContested{}. Table~\ref{tab:graders} gives every accuracy the three
+rules produce, and its usefulness is how little of it moves: eleven of its
+twelve rows are identical across all three graders. The disagreement is question
+\RegradeQuestion{} under the multimodal condition: the model answered
+\RegradeResponse{} where the gold value is \RegradeGold{}, which a strict string
+match marks wrong and a numeric-tolerant match marks right. It is one of the
+\HarmCandidates{} gradings the search identified.
+
+Applying it as the record states moves the multimodal condition from
+\HarmMM{} to \RegradedMM{} on those \SubsetN{} questions and the contrast from
+\HarmDiff{} to \RegradedDiff{} percentage points. The reported direction does
+not weaken; it disappears. Under one grader the multimodal condition is behind,
+under the other the two are exactly level, and the two graders differ on how to
+read one numeric string.
+
+This paper does not endorse either grader, and the choice between them is a real
+methodological question rather than a formality --- whether a tolerance is
+appropriate depends on what the question was asking, and that is a judgement
+about the item. The point is upstream of the choice. A reported direction that
+is decided by an unstated grading convention was never a property of the
+conditions being compared, and the way to notice that before publishing is to
+count, because the count is what makes a grading convention visible as a
+load-bearing part of the result.
+
+That the flip turned up in an independent regrade rather than in the search is
+also the reason to trust the search. The two procedures had nothing to do with
+each other: one enumerated gradings that would change a conclusion, the other
+re-scored answers under different string-matching rules, and they met at the
+same answer.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig4_regrade.pdf}
+\caption{\CapRegrade}
+\label{fig:regrade}
+\end{figure}
+
+\subsection{Naming the answers rather than counting them}
+
+Where a conclusion's distance is one, the candidates can be enumerated in full,
+and Table~\ref{tab:candidates} does that for both such conclusions in this
+study. This is the form in which the paper's argument is checkable by someone
+who does not accept any of its arithmetic. A reader can take any single question
+listed, look at the answer and the gold string, decide the grading for
+themselves, and the conclusion named in the first column stops holding.
+
+The proportions are worth reading directly. The reported finding that the
+multimodal condition trails the text-only one on the image-dependent questions
+of the widely-documented set rests on \HarmGradings{} individual gradings, of
+which \HarmCandidates{} would each erase it alone. Slightly more than half of
+the judgements that subset consists of are each independently sufficient to
+remove its headline. The verdict on the opposing contrast has
+\HelpVerdictCandidates{} such answers. Neither list is short, and that is the
+uncomfortable part: a conclusion with many single-grading candidates is not more
+robust than one with few, it is a conclusion that many different individual
+adjudications could each have written differently.
+
+\begin{table}[tbp]
+\centering
+\caption{\CapGradersTable}
+\label{tab:graders}
+\small
+\input{generated_table_graders}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{\CapCandidatesTable}
+\label{tab:candidates}
+\small
+\input{generated_table_candidates}
+\end{table}
+
+\section{What the tests could have returned}
+
+Fig.~\ref{fig:floor} reports a quantity that is available before any answer is
+graded. An exact paired test is a binomial test on the discordant pairs
+alone~\cite{mcnemar1947note}, so the smallest p-value it can produce is fixed by
+how many questions the two conditions disagreed on. With three discordant pairs
+the most extreme result attainable is a two-sided p-value of one quarter, and no
+grading of those three answers can do better.
+
+Table~\ref{tab:design} makes that arithmetic a lookup. Its first three columns
+depend on nothing about this evaluation: they say what any paired comparison at
+this threshold can return given how many items the two systems disagreed on, and
+they are the content of Corollary~\ref{cor:floor}. Below
+\SignificanceNeedsM{} discordant pairs the column reads unreachable, because no
+assignment of that many disagreements reaches \AlphaLevel{}. The last column is
+this study's contribution to the table and is the uncomfortable one:
+\Incapable{} of its \Contrasts{} contrasts sit in those rows.
+
+Those \Incapable{} contrasts were reported as non-significant, and they could
+not have been reported as anything else. For them the phrase carries no
+information about the conditions being compared: it is a restatement of how
+rarely the two conditions disagreed, which is a property of the question set.
+
+A second reading of the same figure is the \AtFloor{} contrasts sitting on the
+diagonal, where every discordant pair fell the same way and the test returned
+the most extreme value available to it. Of those, \AtFloorNS{} are
+non-significant regardless. A contrast in which one condition won every single
+question the two conditions disagreed about, and which is nonetheless reported
+as no evidence of a difference, is the clearest available demonstration that a
+threshold verdict at this scale is a statement about $n$ before it is a
+statement about the conditions.
+
+Of the \Contrasts{} contrasts, \SignificantRaw{} reach the threshold unadjusted
+and \SurvivesHolm{} survive correction across the family~\cite{holm1979simple}.
+The records state that their p-values are unadjusted and that a correction would
+raise the bar; this applies it. The survivors are all differences against no
+retrieval at all, and none of them is a comparison between the two retrieval
+conditions, which is the comparison the evaluation was built to make.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.62\linewidth]{fig5_floor.pdf}
+\caption{\CapFloor}
+\label{fig:floor}
+\end{figure}
+
+\begin{table}[tbp]
+\centering
+\caption{\CapDesignTable}
+\label{tab:design}
+\small
+\input{generated_table_design}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{\CapContrastsTable}
+\label{tab:contrasts}
+\scriptsize
+\setlength{\tabcolsep}{4.5pt}
+\input{generated_table_contrasts}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{\CapCellsTable}
+\label{tab:cells}
+\small
+\input{generated_table_cells}
+\end{table}
+
+\subsection{The same family read against a different threshold}
+
+Everything above is read against \AlphaLevel{}, which is the level the records
+used, and a reader is entitled to ask how much of it is a fact about the
+evaluation and how much a fact about that number. Fig.~\ref{fig:alpha}
+recomputes the whole family at \SweepLevels{} thresholds between \SweepLow{} and
+\SweepHigh{}.
+
+The counts move as they must: a looser threshold admits more contrasts and
+leaves fewer incapable of reaching it. What does not move is the shape. Across
+that whole range the number of contrasts that could not have reached the
+threshold whatever the answers were never falls below \IncapableSweepMin{},
+because that number is fixed by how rarely the two conditions disagreed rather
+than by where the line is drawn, and the median number of gradings that would
+move a verdict stays between \MedianKSweepMin{} and \MedianKSweepMax{}.
+Choosing a different conventional threshold would change which contrasts are
+called significant. It would not change the observation that the call is being
+made on a handful of individual adjudications.
+
+The sweep is also the first thing in this paper the exhaustive search could not
+have produced cheaply. Recomputing every distance at \SweepLevels{} thresholds
+is \SweepLevels{} families of searches; with Proposition~\ref{prop:verdict} it
+is one pass per contrast per level. The search remains what produces the
+reported numbers at the recorded threshold, where the build checks the two
+against each other.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.64\linewidth]{fig6_alpha.pdf}
+\caption{\CapAlpha}
+\label{fig:alpha}
+\end{figure}
+
+\section{Deleting a question is not re-grading an answer}
+
+Fig.~\ref{fig:loo} reports the leave-one-out count beside the flip distance,
+and the two disagree in an instructive way. Most contrasts survive every single
+deletion: the direction and the verdict are unchanged in all $n$ recomputations.
+Deletion is a blunt instrument here, because removing a concordant question
+changes neither the discordant split nor the sign, and most questions are
+concordant.
+
+The exceptions are the contrasts already identified. The direction of the first
+conclusion survives \HarmLooSign{} of \SubsetN{} deletions, so \HarmLooBreaks{}
+individual questions each carry it by their presence as well as by their
+grading. The verdict on the second survives \HelpLooVerdict{} of \SubsetN{}.
+
+The two measurements answer different counterfactuals and should be read as
+such. A flip asks what a different adjudication of the same evaluation would
+have concluded, which is a question about grading policy and about annotator
+disagreement~\cite{northcutt2021pervasive}. A deletion asks what a slightly
+different question set would have concluded, which is a question about sampling.
+An evaluation can be exposed on one and not the other, and reporting only the
+one that happens to look better is a degree of freedom worth closing in
+advance~\cite{simmons2011false}.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig7_loo.pdf}
+\caption{\CapLeaveOneOut}
+\label{fig:loo}
+\end{figure}
+
+\section{Discussion}
+
+\paragraph{The count is old; the target is not.} Counting how many outcomes
+would have to change to overturn a result is the fragility
+index~\cite{feinstein1990unit,walsh2014statistical}, introduced for randomised
+trials, where it revealed that a large share of results in the clinical
+literature turn on a handful of events --- one mechanism behind the more general
+observation that small studies produce unreliable
+findings~\cite{ioannidis2005why}. The construction transfers to machine
+learning evaluation almost unchanged, and the reasons to want it are stronger
+here: an evaluation item is graded by a rule that someone wrote, benchmark labels
+are known to carry errors at rates that change published
+rankings~\cite{northcutt2021pervasive}, and the evaluation sets that appear in
+practice are frequently small enough that the count is in single
+digits~\cite{card2020little}. The main criticism of the index in its original
+setting is that it is a monotone function of the p-value and so adds
+nothing~\cite{carter2017fragility}. That criticism has less force here, for a
+reason this study demonstrates rather than argues: the count is being applied to
+the direction of a difference as well as to the verdict on it, the two are not
+monotone in each other, and \DecoupledCount{} of the \Directional{} contrasts
+that have a direction to reverse separate them by \DecoupledGap{} gradings or
+more.
+
+\paragraph{Two conclusions per contrast, and only one of them gets audited.}
+Significance is routinely questioned and directions are routinely believed. This
+study found the opposite pattern at least as often. The clearest case is the
+contrast whose direction \HelpK{} gradings could not reverse and whose verdict
+\HelpVerdictK{} grading would flip, but the general point is that these are separate claims with
+separate supports, and a results table reports them in a single row as though
+they stood or fell together. The recommendation implied is small: print the two
+counts. They cost nothing to compute, they are exact, and they say what a
+confidence interval says while remaining in the units the reader can inspect ---
+answers.
+
+\paragraph{Non-significance is not a finding when significance was
+unreachable.} Of the \Contrasts{} contrasts here, \Incapable{} could not have
+been significant at any grading of their answers. Reporting them as null results
+is not conservative; it attributes to the conditions a property of the question
+set. The floor is one line of arithmetic from the discordant count and belongs
+beside any negative result from a paired design, in the same way that a power
+calculation belongs beside a negative result from an unpaired
+one~\cite{card2020little,amrhein2019scientists}. The stronger version of the
+point is the contrast in which every disagreement fell one way and the verdict
+was still negative: unanimity among the informative questions was not enough,
+because there were \AtFloorNSDiscordant{} of them.
+
+\paragraph{A grading convention is a researcher degree of freedom.} String
+matching against gold answers looks like a mechanical step and is not one.
+Strict matching, substring matching and numeric tolerance are three defensible
+rules, they disagree about one answer here, and that one answer decides a
+reported direction. The literature on undisclosed analytic
+flexibility~\cite{simmons2011false,gelman2014statistical} is usually read as
+being about model selection and outlier handling; grading rules belong on the
+same list, and in small evaluations they may dominate it. The regrade in this
+study is the practice that made the point visible, and it cost one pass over the
+stored answers with no model in the loop.
+
+\paragraph{Report the count with the claim.} The concrete proposal is one column.
+Beside each reported contrast, print the smallest number of gradings that would
+overturn its direction and the smallest that would move its verdict. Both are
+exhaustively computable at these sizes. A reader seeing \HarmK{} in that column
+knows immediately what kind of object they are being shown, without needing to
+reconstruct the discordant table from an accuracy and a sample size --- which is
+what it currently takes, and which is why the question is rarely asked. This is
+the same instinct behind reporting effect sizes and intervals rather than
+verdicts~\cite{wasserstein2016asa,amrhein2019scientists}, expressed in the unit
+that a small evaluation is actually made of.
+
+\paragraph{What this does not fix.} Counting gradings makes fragility visible
+and does nothing about its cause. An evaluation whose conclusions rest on single
+answers needs more questions, not better reporting of how few it
+had~\cite{card2020little,bowman2021will}. The count also says nothing about
+whether the question set measures what it claims to measure, which at these
+sizes is the larger risk~\cite{raji2021everything}. Its value is narrower: it is
+cheap, it is exact, it applies to records that already exist, and it prevents
+one specific error, which is publishing an arithmetic accident in the register
+of a finding.
+
+\section{What this study does not claim}
+
+No claim is made that adding image-derived attributes to retrieval helps or
+harms. The \HelpDiff{}-point contrast has an exact p-value of \HelpP{} and is
+not treated here as an established effect; the \HarmDiff{}-point contrast is
+\HarmK{} grading from disappearing. Both are objects whose fragility is being
+measured, not evidence about the conditions compared.
+
+No claim is made about performance on any reference benchmark. The benchmark
+this line of work would be measured against was never obtained, the tier that
+would hold that comparison is recorded as \PrimaryTier{} and the tier above it
+as \SotaTier{}, and no value is imputed for either. The \BlockedComponent{}
+component is recorded as blocked with its scores \ForgedState{} invented, the
+\RetrievalCorrect{} of \RetrievalN{} retrieval figure is a footnote on a lookup
+over an index of \IndexFiles{} files rather than an accuracy, and the value the
+records mark as not to be used appears nowhere above. Each of these is a check
+the build enforces rather than an assurance offered here.
+
+No claim is made that a minimum flip set of one means a conclusion is false. It
+means the conclusion is supported by one grading. A true effect measured on
+\SubsetNWord{} questions can rest on one grading too; the count does not
+separate those cases, and what it establishes is what separating them would
+take, which is more questions.
+
+\section{Conclusion}
+
+One completed evaluation of \Questions{} questions under \ConditionsWord{} retrieval
+conditions was re-read by counting rather than by re-running. For each of its
+\Contrasts{} paired contrasts, the smallest number of individual gradings that
+would overturn the direction, and separately the verdict, was found by
+exhaustive search over the reachable tables.
+
+The three conclusions named in advance came out at \HarmK{}, \HelpK{} and
+\SigK{} gradings, so the prespecified kill \KillState{}. The smallest,
+\SmallestK{}, belongs to the reported finding that the multimodal condition
+trails the text-only one: \HarmCandidates{} of the \HarmGradings{} gradings on
+that subset would each erase it alone, and an independent regrade of the same
+answers disagrees about exactly one of them, which moves the difference from
+\HarmDiff{} to \RegradedDiff{} percentage points. The direction of the opposing
+\HelpDiff{}-point difference needs \HelpK{} gradings while the verdict attached
+to it needs \HelpVerdictK{}, and across the study those two distances differ by
+\DecoupledGap{} or more in \DecoupledCount{} of the \Directional{} contrasts
+that have a direction at all. No grading of the answers could have made
+\Incapable{} of the contrasts significant.
+
+The recommendation is one column in a results table: beside each contrast, the
+number of gradings that would overturn its direction and the number that would
+move its verdict. It is exactly computable, it costs nothing at these sizes, and
+it converts a question a reader cannot currently ask into a number they can
+read. When the count is large, nothing has been lost by printing it. When it is
+\HarmK{}, what has been learned is that the row is reporting an adjudication of
+one answer, and that is worth knowing before the table is published rather than
+after.
+
+\section*{Data and code availability}
+
+The per-answer records for both question sets, the summaries each run wrote for
+itself, the recorded paired contrasts with their exact tests and intervals, the
+independent regrade under three graders, the fixed measurement table, the
+recorded state of each comparison tier including those that are absent or
+blocked, and the analysis code that produces every number in this manuscript
+accompany the manuscript source. Each artifact is recorded with its SHA-256
+digest in a manifest, and the analysis code verifies those digests against the
+bytes on disk before reading them, so the build fails rather than silently
+reporting stale numbers. The knowledge graph and question sets are small
+local artifacts distributed with the records; no third-party benchmark is
+redistributed, and the model used to produce the answers is a third-party
+release identified by name rather than copied.
+\input{generated_availability}
+
+\section*{Ethics statement}
+
+This study is a secondary analysis of numeric records produced by earlier
+computational runs. No human subjects are involved, no personal data are
+processed, and no new model output was generated. The questions concern publicly
+documented landmarks and comparable entities. One consideration bears directly
+on the subject matter: the paper's central observation is that a reported
+difference between two systems can be decided by a single grading decision, and
+the same is true of evaluations used to support claims about deployed systems,
+where a fragile result may be read as a safety or capability assurance.
+Reporting the count is offered partly for that reason.
+
+\section*{Competing interests}
+
+Not yet declared. This is a working draft and the declaration is outstanding.
+
+\section*{Funding and author contributions}
+
+Not yet declared. This is a working draft; the author list is not fixed and
+contributions are therefore not yet attributable.
+
+\section*{Declaration of generative AI use}
+
+The analysis code, the figure code and the drafting of this manuscript were
+produced with substantial assistance from large language model agents working
+under human direction. Two safeguards bear directly on what is reported. Every
+number printed above is emitted programmatically from artifacts bound by
+cryptographic digest rather than transcribed by a model into prose. And several
+of the paper's structural claims --- that every recorded difference, discordant
+split and exact p-value reproduces from the per-answer rows, that each run's
+summary still restates the rows in its own directory, that the regrade record
+contains exactly one contested grading and that it is the one named here, and
+that the tiers reported as absent or blocked are still in that state with no
+score substituted --- are enforced as build-time checks that stop the build
+rather than as sentences. The answers being analysed were themselves produced by
+a language model in the earlier runs this study re-reads; none was regenerated
+here. Responsibility for the content rests with the authors.

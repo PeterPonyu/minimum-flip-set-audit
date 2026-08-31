@@ -47,4 +47,4 @@ p <- ggplot() +
         legend.position = "bottom", legend.text = element_text(size = 7),
         legend.key.size = unit(9, "pt"), legend.margin = margin(t = -4))
 
-save_fig(p, "fig1_flips", width = 6.2, height = 4.1)
+save_fig(p, "fig2_flips", width = FIGURE_TEXT_WIDTH_IN, height = 4.1)

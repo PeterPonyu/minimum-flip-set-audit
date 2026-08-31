@@ -30,16 +30,103 @@ conditions disagree on. Everything in this paper follows from that.
 
 \subsection{The four counts a contrast reduces to}
 
-For two conditions over a set of questions, each question falls into exactly one
-of four cells: both conditions right, the first right alone, the second right
-alone, or neither right. The difference in accuracy, the exact test and its
-interval are all functions of those four counts and of nothing else.
+Fix two conditions, an arm and a reference, evaluated on the same $n$ questions.
+Each question falls into exactly one of four cells, and we write
+\begin{equation}
+  (a, b, c, d), \qquad a + b + c + d = n,
+\end{equation}
+for the number of questions both conditions answered correctly, the arm alone,
+the reference alone, and neither. Write $m = b + c$ for the discordant count.
+The paired difference in accuracy is $\delta = (b - c)/n$, reported below in
+percentage points, and the exact two-sided test is a binomial test at one half
+on the discordant pairs, with $b$ successes out of $m$~\cite{mcnemar1947note}.
+Write $p(b, c)$ for its p-value, with $p(0,0) = 1$.
 
-Changing one grading --- deciding that one answer under one condition should
-have been marked the other way --- moves one question from one cell to an
-adjacent one. So the set of tables reachable from the observed one by $k$
-grading changes is exactly the set reachable in $k$ steps of that move, and the
-question this paper asks has an exact answer rather than an estimate.
+Both quantities a contrast can report are therefore functions of the discordant
+pair $(b, c)$ alone: $\delta$ is, by inspection, and so is $p$. The concordant
+cells $a$ and $d$ enter only through $n$. This is the structural fact the rest
+of the method rests on.
+
+\begin{definition}[Grading change]\label{def:flip}
+A \emph{grading change}, or flip, is the decision that one answer, under one
+condition, on one question, should have been marked the other way. It moves that
+question from one cell to an adjacent one and leaves every other question where
+it was.
+\end{definition}
+
+There are eight such moves, since either condition's grading may change on a
+question in any of the four cells, and all eight are available whenever their
+source cell is occupied.
+
+\begin{lemma}\label{lem:projection}
+Every flip changes exactly one of $b$ and $c$ by exactly one, and leaves the
+other unchanged.
+\end{lemma}
+
+\begin{proof}
+The eight moves fall into four pairs. Changing the arm's grading on a question
+in $a$, or on a question in $d$, sends it to $c$ or to $b$ respectively;
+changing the arm's grading on a question already in $b$ removes it from $b$,
+whether it lands in $a$ or in $d$. The reference's four moves are the mirror
+image. In every case the discordant pair moves by one unit in one coordinate.
+\end{proof}
+
+Lemma~\ref{lem:projection} is what makes the question exact rather than
+approximate. The observed table is a point in the plane of discordant counts, a
+flip is a unit step in that plane, and asking how far a conclusion is from being
+overturned is asking for a distance.
+
+\subsection{The discordant plane, and the distance on it}
+
+Write $T_n = \{(b, c) \in \mathbb{Z}^2 : b \geq 0,\ c \geq 0,\ b + c \leq n\}$
+for the triangle of discordant pairs a table of $n$ questions can present, and
+$\|\cdot\|_1$ for the $\ell_1$ norm on it. Lemma~\ref{lem:projection} says that
+flips project onto unit steps in $T_n$; the next lemma says nothing else is
+lost in the projection, so a distance in the plane is a count of gradings.
+
+\begin{lemma}\label{lem:metric}
+From a table with discordant pair $(b, c)$, a pair $(b', c')$ is reachable in
+$k$ flips if and only if $(b', c') \in T_n$ and
+$k \geq \|(b, c) - (b', c')\|_1$, with $k$ of the same parity as that norm.
+\end{lemma}
+
+\begin{proof}
+For necessity, Lemma~\ref{lem:projection} makes each flip a unit step, so $k$
+steps move the pair by at most $k$ in $\ell_1$ and by exactly that parity, and
+$b' + c' \leq n$ because the discordant count never exceeds the number of
+questions.
+
+For sufficiency, note first which steps are available. Decreasing $b$ requires
+$b \geq 1$ and is achieved by regrading a question in the $b$ cell, either way;
+increasing $b$ requires a question in $a$ or in $d$, that is $a + d \geq 1$,
+which is $b + c \leq n - 1$; and the two statements for $c$ are the mirror
+image. So the available steps at a point of $T_n$ are exactly the unit steps
+that stay inside $T_n$, and the choice between the two moves realising a given
+step is free.
+
+Now take the decreases first and the increases afterwards. The decreasing phase
+lowers $b + c$, so it stays in $T_n$; the increasing phase raises $b + c$
+monotonically to $b' + c' \leq n$, so it does too. The path has length
+$\|(b, c) - (b', c')\|_1$, and any two further flips can be spent moving one
+coordinate out and back, which supplies every larger $k$ of the same parity.
+\end{proof}
+
+\begin{definition}[Minimum flip set]\label{def:mfs}
+Let $\mathcal{C}$ be a claim that is either true or false of a table, and let
+$F(\mathcal{C}) \subseteq T_n$ be the set of discordant pairs at which it fails.
+The \emph{minimum flip set} of $\mathcal{C}$ is
+\begin{equation}\label{eq:mfs}
+  \kappa(\mathcal{C}) \;=\; \min_{(b', c') \in F(\mathcal{C})}
+    \bigl\| (b, c) - (b', c') \bigr\|_1,
+\end{equation}
+the fewest grading changes after which $\mathcal{C}$ no longer holds, and
+$\infty$ where $F(\mathcal{C})$ is empty.
+\end{definition}
+
+Equation~\eqref{eq:mfs} is a minimisation over a set rather than a walk, which
+is what Lemma~\ref{lem:metric} buys: it replaces reachability by geometry. Both
+claims this paper audits are half-planes or unions of half-planes in $T_n$, so
+both minima have closed forms.
 
 \subsection{Two conclusions per contrast, and two distances}
 
@@ -58,14 +145,112 @@ half of that is not symmetry for its own sake. A verdict of ``no effect'' is
 reported and acted on exactly as a verdict of ``effect'' is, so it is entitled
 to the same audit.
 
-\subsection{Finding the minimum, rather than bounding it}
+\begin{proposition}[The direction]\label{prop:direction}
+The minimum flip set of the claim that the arm leads is
+\begin{equation}
+  \kappa_{\mathrm{dir}} \;=\; |b - c| \;=\; n\,|\delta|,
+\end{equation}
+attained by regrading $|b - c|$ questions in the leading discordant cell.
+\end{proposition}
 
-The search is exhaustive over reachable states rather than greedy over answers.
-Because a contrast is fully described by four non-negative counts summing to
-$n$, the reachable tables form a small graph, and a breadth-first walk outward
-from the observed table returns the first state satisfying the stopping
-condition. That state is at the true minimum distance, so the numbers reported
-here are minima and not upper bounds on minima.
+\begin{proof}
+Suppose $b > c$; the other case is symmetric and $b = c$ leaves nothing to
+unseat. The claim fails at any $(b', c') \in T_n$ with $b' \leq c'$. For such a
+pair,
+\begin{equation}
+  |b - b'| + |c - c'| \;\geq\; (b - b') + (c' - c) \;=\; (b - c) + (c' - b')
+  \;\geq\; b - c ,
+\end{equation}
+so no target is closer than $b - c$. The pair $(c, c)$ attains it: it lies in
+$T_n$ because $2c \leq b + c \leq n$, and its distance is exactly $b - c$. The
+second equality is the definition of $\delta$.
+\end{proof}
+
+Proposition~\ref{prop:direction} is worth stating plainly. The distance from a
+reported direction to its own reversal is not a new measurement of the
+evaluation; it is the numerator of the difference the evaluation already
+reported, which no results table currently prints because it prints the ratio
+instead. A reader who is shown a difference of \HarmDiff{} percentage points on
+\SubsetN{} questions is being shown a lead of one graded answer, and the
+conversion is division.
+
+\subsection{The verdict, and what the search costs}
+
+The verdict has no comparably short expression, because the significant region
+of $T_n$ is not a half-plane, and that asymmetry is the reason the two distances
+come apart. It is still available without any walk over tables. Write
+\begin{equation}
+  w_\alpha(m) \;=\; \min\bigl\{ w \in \{\lceil m/2 \rceil, \dots, m\} :
+    p(w, m - w) \leq \alpha \bigr\}
+\end{equation}
+for the smallest majority among $m$ discordant pairs that the test calls
+significant, undefined where no split of $m$ pairs reaches $\alpha$.
+
+\begin{proposition}[The verdict]\label{prop:verdict}
+For each target discordant count $m'$, the pairs of $T_n$ with $b' + c' = m'$
+that the test calls significant are those with $b' \geq w_\alpha(m')$ or
+$b' \leq m' - w_\alpha(m')$, and the remainder are those it does not. The
+distance from $(b, c)$ to any such set is
+\begin{equation}\label{eq:verdict-scan}
+  \kappa_{\mathrm{ver}} \;=\; \min_{0 \leq m' \leq n}\ \min_{b' \in A(m')}
+    \bigl( |b - b'| + |c - m' + b'| \bigr),
+\end{equation}
+where $A(m')$ is the admissible interval or pair of rays just described. The
+inner minimum is attained at whichever endpoint of $[\min(b, m'-c),
+\max(b, m'-c)]$ survives clamping to $A(m')$, so it costs a constant number of
+operations once $w_\alpha(m')$ is known.
+\end{proposition}
+
+\begin{proof}
+The first sentence is the monotonicity of the binomial tail: at fixed $m'$ the
+p-value is decreasing in the majority $\max(b', m' - b')$, so the significant
+splits are exactly those whose majority reaches $w_\alpha(m')$, on either side.
+Equation~\eqref{eq:verdict-scan} is then Definition~\ref{def:mfs} with the
+target set decomposed by $m'$. For the inner minimum, write $u = b'$ and observe
+that $|b - u| + |u - (m' - c)|$ is convex and piecewise linear in $u$, equal to
+$|m - m'|$ on the interval between $b$ and $m' - c$ and rising by one per unit
+outside it. A convex piecewise linear function restricted to an interval or to a
+ray is minimised at the projection of its own minimiser onto that set.
+\end{proof}
+
+Three costs are worth separating, because the gap between them is what the two
+lemmas are for. A breadth-first walk over four-cell tables, which is the direct
+reading of Definition~\ref{def:flip}, visits $\Theta(n^3)$ states, since a state
+is four non-negative counts summing to $n$. Lemma~\ref{lem:projection} collapses
+$a$ and $d$ and leaves $\Theta(n^2)$ lattice points.
+Proposition~\ref{prop:verdict} reduces it further to one pass over $m'$, and
+because $w_\alpha$ is non-decreasing in $m$ and rises by at most one at a time,
+a single scan tabulates every value of it: the whole computation is $\Theta(n)$
+evaluations of the test. Proposition~\ref{prop:direction} needs none at all.
+Both monotonicity properties are asserted as checks in the analysis code rather
+than assumed, so a threshold for which they failed would stop the build.
+
+\begin{corollary}[When no answer could have helped]\label{cor:floor}
+A paired comparison on $n$ questions can return a significant result at level
+$\alpha$ only if $n \geq \lceil \log_2 (2/\alpha) \rceil$, which is
+\SignificanceNeedsM{} at $\alpha = \AlphaLevel{}$, and only if its discordant
+count reaches the same bound.
+\end{corollary}
+
+\begin{proof}
+The smallest p-value available on $m$ discordant pairs is $\min(1, 2^{1-m})$,
+returned when every pair falls the same way, and $m \leq n$.
+\end{proof}
+
+\subsection{How the reported numbers were produced}
+
+The values in this paper come from the breadth-first search, not from the
+closed forms. The search is exhaustive over reachable states rather than greedy
+over answers: it walks outward from the observed table and returns the first
+state satisfying the stopping condition, so what it returns is a minimum and not
+an upper bound on one.
+
+The closed forms are then run against it. Both distances are recomputed from
+Propositions~\ref{prop:direction} and~\ref{prop:verdict} for every one of the
+\Contrasts{} contrasts, and the build stops if either disagrees with the search
+by a single grading. The two procedures share no code and reach the answer by
+different routes --- one enumerates tables, the other measures a distance --- so
+the derivation above is checked on every build rather than asserted here.
 
 Where the minimum is one, the paper enumerates every individual grading that
 would suffice on its own, so a reader can see which answers carry a conclusion

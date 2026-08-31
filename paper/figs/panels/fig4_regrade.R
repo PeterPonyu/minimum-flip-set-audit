@@ -57,4 +57,4 @@ difference <- ggplot(contrast, aes(x = diff, y = grader)) +
 
 p <- patchwork::wrap_plots(counts, difference, widths = c(1, 1.05))
 
-save_fig(p, "fig2_regrade", width = 6.0, height = 2.7)
+save_fig(p, "fig4_regrade", width = FIGURE_TEXT_WIDTH_IN, height = 2.7)
