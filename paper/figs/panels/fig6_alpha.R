@@ -44,5 +44,6 @@ distances <- ggplot(ALPHA_SWEEP, aes(x = alpha, y = median_k)) +
        y = "Median gradings to\nmove the verdict") +
   rtx_theme()
 
-p <- patchwork::wrap_plots(counts, distances, ncol = 1, heights = c(1.55, 1))
+p <- patchwork::wrap_plots(panel_label(counts, "A"), panel_label(distances, "B"),
+                           ncol = 1, heights = c(1.55, 1))
 save_fig(p, "fig6_alpha", width = 0.64 * FIGURE_TEXT_WIDTH_IN, height = 4.4)

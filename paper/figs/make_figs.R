@@ -528,7 +528,9 @@ write_generated(c(
   macro("RetrievalCorrect", retrieval$rows$n_correct[[1]]),
   macro("IndexFiles", retrieval$import_pin$index_file_count),
   macro("BlockedComponent", gsub("_", " ", blocker$component)),
-  macro("ForgedState", if (isTRUE(blocker$forged_scores)) "were" else "were not")
+  macro("ForgedState", if (isTRUE(blocker$forged_scores)) "were" else "were not"),
+  macro("NEvidence", nrow(manifest$entries)),
+  macro("EvidenceBytes", format(sum(manifest$entries$bytes), big.mark = ","))
 ), "generated_numbers.tex")
 
 ## The full inventory, one row per contrast.
@@ -695,6 +697,10 @@ write_generated(c(
   "\\bottomrule",
   "\\end{tabular}"
 ), "generated_table_candidates.tex")
+
+## The manifest itself, so the evidence discipline can be checked rather than believed.
+
+write_generated(evidence_table(manifest), "generated_table_evidence.tex")
 
 message(sprintf("wrote %d figures to figs/out and 7 generated tex files to tex/ (smallest flip set: %d)",
                 length(FIGURES), SMALLEST_K))

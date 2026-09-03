@@ -74,7 +74,8 @@ plane_panel <- function(cells, n, kind, alpha, subject) {
        observed = data.frame(b = b0, c = c0, panel = panel))
 }
 
-# The middle and right panels are the same contrast, the same four counts and
+# The less-documented direction panel and the verdict panel that reads the same
+# table are the same contrast, the same four counts and
 # the same point, read as two different claims. That is the paper's central
 # observation and it is a fact about the shape of two regions, so it is drawn
 # rather than argued.

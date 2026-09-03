@@ -645,6 +645,47 @@ read. When the count is large, nothing has been lost by printing it. When it is
 one answer, and that is worth knowing before the table is published rather than
 after.
 
+\appendix
+
+\section{The bound evidence}
+\label{app:evidence}
+
+Table~\ref{tab:evidence} lists all \NEvidence{} artifacts behind this
+manuscript, totalling \EvidenceBytes{} bytes, in the order the analysis consumes
+them. Every number the text prints is computed from these bytes, and the code
+recomputes each digest before reading, so a stale artifact stops the build
+rather than reaching the page.
+
+One row deserves attention because it documents a decision rather than a
+measurement. The panel built from the fixed measurement table is bound and
+re-hashed on every build, yet no figure reads it and it is withheld from the
+public tree, because it is annotated with an internal label and carries a value
+its own record marks as not to be used. Binding an artifact the analysis
+deliberately declines to read may look redundant. It is the opposite: it is the
+only way the decision to decline leaves a trace. An artifact that is simply
+never mentioned is indistinguishable from one nobody noticed, whereas this row
+records that the value existed, was seen, and was refused.
+
+Two limits keep the table honest. A digest fixes bytes to a claim; it does not
+make the bytes true, and nothing here certifies an artifact was correct when it
+was written. And each entry's internal identifier and path are omitted
+deliberately --- they describe a private tree, they would tell a reader nothing,
+and keeping them out of the PDF is a property the build verifies rather than a
+courtesy.
+
+\begin{table}[htbp]
+\centering
+\caption{Every artifact this manuscript rests on, with its size and the first 16
+hexadecimal characters of its SHA-256 digest. Full digests, and the paths they
+apply to, are in the manifest accompanying the manuscript source; the prefix is
+shown here only because a 64-character digest does not set in a table column.
+The figure and table code recomputes each digest from the bytes on disk before
+reading them and stops the build on any mismatch.}
+\label{tab:evidence}
+\footnotesize
+\input{generated_table_evidence}
+\end{table}
+
 \section*{Data and code availability}
 
 The per-answer records for both question sets, the summaries each run wrote for

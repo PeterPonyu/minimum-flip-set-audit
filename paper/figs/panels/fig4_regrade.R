@@ -1,8 +1,8 @@
 # Figure 2. The one grading three graders disagree about, and what the contrast
-# does when it moves. The left panel is the accuracy of each condition on the
+# does when it moves. Panel A is the accuracy of each condition on the
 # image-load-bearing questions of the famous set under the stored grader and
 # under the numeric-tolerant one; only the multimodal condition moves, and it
-# moves because of a single answer. The right panel is the contrast those
+# moves because of a single answer. Panel B is the contrast those
 # accuracies produce, before and after.
 
 conditions <- c("no_kg", "text_kg", "multimodal_kg")
@@ -55,6 +55,7 @@ difference <- ggplot(contrast, aes(x = diff, y = grader)) +
         axis.text.y = element_text(size = 7.5),
         panel.grid.major.y = element_blank())
 
-p <- patchwork::wrap_plots(counts, difference, widths = c(1, 1.05))
+p <- patchwork::wrap_plots(panel_label(counts, "A"), panel_label(difference, "B"),
+                           widths = c(1, 1.05))
 
 save_fig(p, "fig4_regrade", width = FIGURE_TEXT_WIDTH_IN, height = 2.7)
