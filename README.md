@@ -4,6 +4,8 @@ Per-answer question-answering records under three retrieval conditions, the reco
 
 This repository has not been deposited in a public archive, so it has no persistent identifier yet. One will be recorded here when an archive exists.
 
+Repository: https://github.com/PeterPonyu/minimum-flip-set-audit
+
 ## What is here
 
 - `paper/tex/` — manuscript source. The abstract, the methods and the figure
