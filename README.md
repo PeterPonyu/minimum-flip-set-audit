@@ -2,7 +2,7 @@
 
 Per-answer question-answering records under three retrieval conditions, the recorded paired contrasts, an independent three-grader regrade, figure code and manuscript source for a study that computes, by exhaustive search, the smallest number of individual gradings that would overturn the direction and separately the verdict of every contrast the evaluation reported.
 
-This repository has not been deposited in a public archive, so it has no persistent identifier yet. One will be recorded here when an archive exists.
+Archived at [10.5281/zenodo.22647028](https://doi.org/10.5281/zenodo.22647028).
 
 Repository: https://github.com/PeterPonyu/minimum-flip-set-audit
 
