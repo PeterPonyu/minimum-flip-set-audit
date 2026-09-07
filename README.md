@@ -8,20 +8,17 @@ Repository: https://github.com/PeterPonyu/minimum-flip-set-audit
 
 ## What is here
 
-- `paper/tex/` — manuscript source. The abstract, the methods and the figure
-  captions are separate files and each is self-contained.
-- `paper/figs/` — the R code that draws every figure and emits every number the
-  manuscript prints.
-- `paper/evidence/` — the manifest binding each artifact to its SHA-256 digest.
-- `data/` — the 15 artifacts the manifest names, at the bytes that
-  were hashed.
+- `paper/tex/` — manuscript source
+- `paper/figs/` — the R code that draws the figures and writes the printed numbers
+- `paper/evidence/` — a file list with SHA-256 hashes
+- `data/` — the 15 data files named in that list
 
-## Not redistributed
+## Not included
 
-The manuscript's evidence manifest binds 2 further artifacts that this archive does not carry. No number in the manuscript is derived from that material; they are bound because the manuscript refers to the content, and held back for the reason below.
+This archive leaves out 2 extra files named in the paper's evidence list. The paper does not take any number from them.
 
-- The project's own working record of this direction. It is an internal narrative that names other directions, planning decisions and process labels, and no number in the manuscript comes from it. Everything it contributes to the manuscript is stated in the methods section and is separately bound in the recorded-state artifacts that are redistributed.
-- A display panel built from the measurement table, annotated with the workspace's internal disposition label for this direction. The two things the manuscript reads from it, that the difference is recorded as not established and that the higher hand-authored figure is recorded as declined, are each also carried by artifacts that are redistributed: the measurement table states the first and the execution record states the second.
+- A private working note. The paper does not use any number from it. Those facts are already in the methods and in the result files included here.
+- A figure made from the measurement table. The two facts the paper uses from it are also in the measurement table and the execution record, both included here.
 
 ## Rebuild
 
@@ -29,9 +26,9 @@ The manuscript's evidence manifest binds 2 further artifacts that this archive d
 bash build.sh
 ```
 
-The build re-hashes every artifact before reading it and stops if any byte has
-moved. Figures and printed numbers are regenerated from those bytes rather than
-transcribed, so the manuscript cannot quietly disagree with its own data.
+The build checks every data file against its hash and stops if a file has
+changed. Figures and printed numbers are generated from those files, not typed
+in by hand.
 
 Requires `python3`, `Rscript` with `digest`, `ggplot2`, `jsonlite`,
 `patchwork`, `scales` and `systemfonts`, and a TeX distribution with `latexmk`.

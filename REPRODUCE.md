@@ -27,12 +27,12 @@ the build instead of producing a stale number.
 
 Some of these files recorded the paths of the machine that produced them. Those path strings and source links were refreshed before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
 
-## Not redistributed
+## Not included
 
-The manuscript's evidence manifest binds 2 further artifacts that this archive does not carry. No number in the manuscript is derived from that material; they are bound because the manuscript refers to the content, and held back for the reason below.
+This archive leaves out 2 extra files named in the paper's evidence list. The paper does not take any number from them.
 
-- The project's own working record of this direction. It is an internal narrative that names other directions, planning decisions and process labels, and no number in the manuscript comes from it. Everything it contributes to the manuscript is stated in the methods section and is separately bound in the recorded-state artifacts that are redistributed.
-- A display panel built from the measurement table, annotated with the workspace's internal disposition label for this direction. The two things the manuscript reads from it, that the difference is recorded as not established and that the higher hand-authored figure is recorded as declined, are each also carried by artifacts that are redistributed: the measurement table states the first and the execution record states the second.
+- A private working note. The paper does not use any number from it. Those facts are already in the methods and in the result files included here.
+- A figure made from the measurement table. The two facts the paper uses from it are also in the measurement table and the execution record, both included here.
 
 ## Checking the archive without building it
 
@@ -49,5 +49,5 @@ and reports the first artifact that has drifted.
 bash build.sh
 ```
 
-Stage order is verify, regenerate, typeset. Each stage is a hard gate on the
-next.
+The steps are check the files, redraw the figures, then typeset. Each step
+must finish before the next one starts.
