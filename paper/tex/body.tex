@@ -164,6 +164,33 @@ unit; it is not a new statistical family. The count
 is complementary rather than competing: it is read beside the
 interval and the corrected p-value, not instead of them.
 
+\subsection{Retrieval, question answering, and the evaluation those systems inherit}
+
+The evaluation being re-read sits in the open-domain question-answering line
+that treats a corpus as something a system retrieves from before it
+answers~\cite{chen2017reading,rajpurkar2016squad,kwiatkowski2019nq,
+joshi2017triviaqa,yang2018hotpotqa}. Sparse lexical matching remains the
+baseline retriever~\cite{robertson2009bm25}; dense and late-interaction
+retrievers, then retrieval-augmented generators, are the systems that replaced
+it on those
+benchmarks~\cite{lee2019latent,karpukhin2020dpr,khattab2020colbert,
+guu2020realm,izacard2021fid,lewis2020retrieval,izacard2022atlas,
+thakur2021beir}. Graph-structured retrieval is one more way of packaging the
+same evidence~\cite{edge2024local}. What those papers report is almost always an
+accuracy, or a ranking metric, on a question set whose items were graded once.
+Assessor disagreement is an old fact of that
+literature~\cite{voorhees2000variations,bailey2008relevance,artstein2008inter};
+it is rarely converted into a count of how many of those grades a published
+contrast actually depends on. The present paper does not introduce a new
+retriever. It asks that prior question of one already-recorded comparison.
+
+The same literature that diagnoses under-powered benchmark comparisons also
+says how a small evaluation should be
+read~\cite{cohen1992power,button2013power,card2020little,munafo2017manifesto,
+head2015phacking,openscience2015repro,goodman2016mean,pineau2021improving,
+wilkinson2016fair}. A paired grading count is one way of making that reading
+concrete.
+
 \subsection{Graded answers as the unit of evidence}
 
 Treating an individual grading as the unit that can move also connects to work
