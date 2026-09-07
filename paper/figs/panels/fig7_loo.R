@@ -4,12 +4,20 @@
 # other, so both are reported for every contrast.
 
 loo <- inventory
-loo$row_label <- paste0(loo$label, ": ", CONDITION_NAMES[loo$arm],
-                        " vs ", CONDITION_NAMES[loo$reference])
+loo$dataset_code <- c(famous = "W", longtail = "L")[loo$dataset]
+loo$subset_code <- c(image_load_bearing = "I", text_only = "T", overall = "A")[loo$subset]
 loo$sign_share <- loo$loo_sign / loo$n
 loo$verdict_share <- loo$loo_verdict / loo$n
-loo <- loo[order(loo$sign_share, loo$verdict_share, loo$row_label), ]
+loo <- loo[order(loo$sign_share, loo$verdict_share, loo$dataset_code,
+                 loo$subset_code, loo$arm, loo$reference), ]
 loo$pos <- seq_len(nrow(loo))
+
+# Use the same compact row key as the flip ladder. W/L are the widely and less
+# documented datasets, I/T/A are image/text/all questions, and M/T/N are the
+# multimodal/text/none retrieval conditions.
+condition_code <- c(no_kg = "N", text_kg = "T", multimodal_kg = "M")
+loo$row_label <- sprintf("%s/%s %s-%s", loo$dataset_code, loo$subset_code,
+                         condition_code[loo$arm], condition_code[loo$reference])
 
 long <- rbind(
   data.frame(pos = loo$pos, share = loo$sign_share, kept = loo$loo_sign, n = loo$n,
@@ -29,7 +37,7 @@ p <- ggplot(long, aes(x = share, y = pos, shape = which)) +
   scale_x_continuous(limits = c(0.68, 1.02), expand = c(0, 0),
                      labels = function(x) formatC(x, format = "f", digits = 2)) +
   labs(x = "Share of single-question deletions leaving the conclusion in place", y = NULL,
-       subtitle = "unlabelled points are unanimous") +
+       subtitle = "1.00 means all deletions agree; rows use W/L, I/T/A and M/T/N codes") +
   rtx_theme() +
   theme(plot.subtitle = element_text(size = 6.6, colour = "grey25"),
         axis.text.y = element_text(size = 6.4),

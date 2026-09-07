@@ -26,9 +26,12 @@ attainable_floor <- function(disc) if (disc == 0L) 1 else min(1, 2 * 0.5^disc)
 # records themselves used; it is not chosen here.
 holm_adjusted <- function(p) stats::p.adjust(p, method = "holm")
 
-# Clopper-Pearson on the discordant split, mapped onto the paired difference in
-# accuracy. This is the interval the records carry, recomputed so the manuscript
-# can print one whose construction it can state.
+# Clopper--Pearson on the discordant split, mapped onto the paired difference in
+# accuracy. This is a conditional interval given the observed discordant count;
+# it is recomputed so the manuscript can print the construction it can state.
+# When the observed discordant count is zero, the conditional split is empty and
+# the returned [0, 0] is a bookkeeping marker rather than an unconditional
+# interval for a population paired difference.
 exact_paired_interval <- function(cells) {
   disc <- discordant(cells)
   n <- sum(cells)

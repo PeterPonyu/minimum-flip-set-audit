@@ -1,31 +1,26 @@
-Small paired evaluations report conclusions, and a conclusion is a statement
-about how a handful of answers happened to be graded. This paper takes one
-completed question-answering evaluation --- \Questions{} questions answered
-under \ConditionsWord{} retrieval conditions, \Answers{} graded answers in total --- and
-asks of each of its \Contrasts{} recorded contrasts the same arithmetic
-question: what is the fewest individual gradings that would have to have come
-out the other way for the reported conclusion to stop holding? Because a paired
-contrast reduces to four counts and one grading moves a question between two of
-them, the answer is found by exhaustive search and is a minimum rather than a
-bound. Three conclusions were named in advance. The finding that the multimodal
-condition trails the text-only one on image-dependent questions rests on
-\HarmK{} grading: \HarmCandidates{} of the \HarmGradings{} individual gradings
-on that subset would each on their own erase it. That flip is not hypothetical.
-An independent regrade of the same answers by \Graders{} graders finds exactly
-\RegradeContested{} grading they disagree about, and applying it as the record
-states moves the difference from \HarmDiff{} to \RegradedDiff{} percentage
-points. The second conclusion, a \HelpDiff{}-point difference in the other
-direction, needs \HelpK{} gradings to reverse --- but its non-significant
-verdict needs \HelpVerdictK{}, so the direction of that result is \HelpRatio{}
-times better supported than the verdict attached to it. The third, the only
-contrast to survive correction for the \Contrasts{} comparisons, needs \SigK{}.
-Two further facts about the same rows sharpen the point: \Incapable{} of the
-\Contrasts{} contrasts had a smallest attainable p-value above the threshold and
-so could not have been called significant however the answers came out, and
-\AtFloor{} returned exactly the most extreme value available to them. None of this
-adjudicates whether the retrieval conditions differ, and no claim that they do
-or do not is made here. What it establishes is narrower and checkable: at this
-scale a conclusion is a property of individual gradings, the direction of a
-result and the verdict on it are separately fragile and can differ by a factor
-of \HelpRatio{}, and reporting either without the count of gradings it rests on
-presents an arithmetic accident as a finding.
+Small paired evaluations turn a handful of graded answers into a conclusion.
+We analyze one completed question-answering evaluation of \Questions{} questions
+under \ConditionsWord{} retrieval conditions, with \Answers{} graded answers
+and \Contrasts{} recorded contrasts, and ask for each contrast how few
+individual gradings would have to change for its conclusion to stop holding.
+Exhaustive search gives an exact minimum because one grading moves a question
+between the four paired counts.
+
+For the image-dependent harm contrast, \HarmK{} grading is sufficient:
+\HarmCandidates{} of its \HarmGradings{} individual gradings would each erase
+the observed difference. An independent regrade of the same answers finds
+\RegradeContested{} disagreement; applying it changes the difference from
+\HarmDiff{} to \RegradedDiff{} percentage points. The help contrast is
+\HelpDiff{} percentage points in the other direction and needs \HelpK{} gradings
+to reverse, but its non-significant verdict needs only \HelpVerdictK{}; the
+direction and verdict therefore differ by a factor of \HelpRatio{} (the
+observed verdict has \(p=\HelpP{}\)). The only contrast surviving correction
+for all \Contrasts{} comparisons needs \SigK{} gradings. For
+\Incapable{} contrasts the smallest attainable \(p\)-value already exceeds
+\AlphaLevel{}, and \AtFloor{} return the most extreme attainable value.
+
+We do not adjudicate whether retrieval conditions differ. The contribution is
+an application of a minimum-change perturbation count to annotation-limited
+evaluation, read alongside established fragility and resampling measures; it
+is not a new statistical family or a mechanism claim. The results are one
+evaluation and require validation on a broader set of paired comparisons.

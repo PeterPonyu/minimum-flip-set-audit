@@ -16,7 +16,7 @@ the build instead of producing a stale number.
 | `data/e-stats/inferential_stats.json` | derived_table | 26309 | `2aedebd44d74f4c5…` |
 | `data/e-regrade/regrade_independent.json` | derived_table | 5390 | `093946749aae8e5c…` |
 | `data/e-measure/paper_measurement_caption_condition.json` | recorded_state | 1005 | `3451160deab5dc31…` |
-| `data/e-executed/executed.json` | recorded_state | 3892 | `03f8556cf5627f6b…` |
+| `data/e-executed/executed.json` | recorded_state | 3914 | `3ef5e9fb574a9e62…` |
 | `data/e-retrieval/p006b_retrieval_38_38.json` | derived_table | 1283 | `1039ef73cb149c32…` |
 | `data/e-static/static.json` | recorded_state | 269 | `91227418f9eb99fa…` |
 | `data/e-naive/naive.json` | recorded_state | 355 | `283ce11222a77f46…` |

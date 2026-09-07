@@ -62,7 +62,12 @@ min_flips <- function(cells, holds) {
     }
     frontier <- nxt
   }
-  stop("no sequence of grading changes reaches the stated condition")
+  # The failure set can be empty in a finite design.  In that case the
+  # definition in the Methods section assigns the distance infinity; returning
+  # it explicitly keeps the search total instead of turning a valid
+  # no-counterexample result into a build error (for example, a non-significant
+  # McNemar verdict with fewer than six discordant opportunities at alpha=.05).
+  list(k = Inf, moves = character(0))
 }
 
 # The two conclusions a contrast can carry, and what it takes to unseat each.
@@ -136,7 +141,7 @@ critical_majority <- function(n, alpha) {
 # tables. For a target discordant count the cost is convex and piecewise linear
 # in how the pairs split, and it is flat at |m - m'| between the two split
 # points that preserve one coordinate, so the cheapest admissible split is
-# whichever endpoint of that flat stretch survives clamping. NA where no
+# whichever endpoint of that flat stretch survives clamping. Inf where no
 # reachable table carries the other verdict.
 verdict_distance <- function(cells, alpha) {
   b <- cells[["arm_only"]]
@@ -155,7 +160,11 @@ verdict_distance <- function(cells, alpha) {
                    cost(m2, min(max(flat[[2]], lo), hi))))
   }
 
-  best <- NA_integer_
+  # An empty target set is a legitimate result under the definition of the
+  # minimum flip set, so use infinity as the identity for the minimum rather
+  # than NA (which would conflate "no reachable counterexample" with missing
+  # arithmetic).
+  best <- Inf
   for (m2 in 0:n) {
     w <- majority[[m2 + 1L]]
     here <- if (significant) {
@@ -170,7 +179,7 @@ verdict_distance <- function(cells, alpha) {
       candidates <- candidates[!is.na(candidates)]
       if (length(candidates)) min(candidates) else NA_integer_
     }
-    if (!is.na(here) && (is.na(best) || here < best)) best <- as.integer(here)
+    if (!is.na(here) && here < best) best <- as.integer(here)
   }
   best
 }
@@ -205,10 +214,16 @@ assert_tail_monotone <- function(n) {
 # Run both routes against each other. Called once per contrast, so a derivation
 # that stops matching the search stops the build instead of reaching the page.
 assert_closed_form <- function(cells, alpha, searched_sign, searched_verdict, label) {
-  if (!identical(as.integer(searched_sign), as.integer(sign_distance(cells)))) {
+  same_distance <- function(observed, derived) {
+    if (is.infinite(observed) || is.infinite(derived)) {
+      return(isTRUE(is.infinite(observed)) && isTRUE(is.infinite(derived)))
+    }
+    identical(as.integer(observed), as.integer(derived))
+  }
+  if (!same_distance(searched_sign, sign_distance(cells))) {
     stop(label, ": the search and the closed form disagree about the direction")
   }
-  if (!identical(as.integer(searched_verdict), as.integer(verdict_distance(cells, alpha)))) {
+  if (!same_distance(searched_verdict, verdict_distance(cells, alpha))) {
     stop(label, ": the search and the closed form disagree about the verdict")
   }
   invisible(TRUE)

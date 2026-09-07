@@ -233,9 +233,10 @@ for (side in c("famous_lb", "longtail_lb")) {
   }
 }
 
-# Three graders scored the same answers. The manuscript's central example is the
-# one answer they disagree on, so the build checks that there is exactly one and
-# that it is the one the record names.
+# Three graders scored the same answers. The manuscript reports the disagreement
+# only in aggregate, so the build checks that there is exactly one contested
+# grading in the declared subset and condition without emitting its identifier or
+# answer strings into reader-facing TeX.
 GRADERS <- sort(unique(regrade$three_grader_table$grader))
 if (!identical(GRADERS, c("numeric", "strict", "substr"))) {
   stop("the regrade was not run under the three graders the manuscript names")
@@ -431,7 +432,7 @@ ALPHA_SWEEP <- do.call(rbind, lapply(
 # Numbered in the order a reader meets them, so a panel file and the figure it
 # becomes carry the same number.
 FIGURES <- c("fig1_plane.R", "fig2_flips.R", "fig3_decouple.R", "fig4_regrade.R",
-             "fig5_floor.R", "fig6_alpha.R", "fig7_loo.R")
+             "fig5_floor.R", "fig6_alpha.R", "fig7_loo.R", "fig8_effect_forest.R")
 for (unit in FIGURES) {
   source(file.path("figs", "panels", unit))
 }
@@ -515,9 +516,6 @@ write_generated(c(
   macro("RegradeAnswers", regrade$grader_agreement$famous$n +
           regrade$grader_agreement$longtail$n),
   macro("RegradeContested", count_word(length(flip_ids))),
-  macro("RegradeQuestion", regrade$i17_flip$question_id),
-  macro("RegradeResponse", regrade$i17_flip$response),
-  macro("RegradeGold", regrade$i17_flip$gold[[1]]),
   macro("RegradedMM", fmt(REGRADED_MM, 3)),
   macro("RegradedDiff", signed(REGRADED_DIFF)),
 
@@ -656,44 +654,24 @@ write_generated(c(
   "\\end{tabular}"
 ), "generated_table_graders.tex")
 
-## Which answers a one-grading conclusion is resting on, named rather than
-## counted. This is the table the paper's argument reduces to: a reader can take
-## any single question listed here, decide the grading for themselves, and watch
-## the conclusion in the first column stop holding.
-
-# Question identifiers are a letter prefix and a number, so sorting them as
-# strings would print I11 before I2 and invite a reader checking one of them to
-# look in the wrong place.
-by_number <- function(ids) ids[order(as.integer(gsub("[^0-9]", "", ids)))]
-
-# The conclusion is a heading spanning the row rather than a column of its own.
-# Written as a column it is the widest thing in the table and pushes the list of
-# questions -- which is the part worth reading -- into a strip too narrow to
-# read.
-candidate_block <- function(conclusion, label) {
-  found <- conclusion$candidates
-  if (!nrow(found)) return(character(0))
-  parts <- sprintf("\\multicolumn{3}{l}{\\emph{%s}} \\\\", label)
-  for (condition in CONDITIONS) {
-    ids <- by_number(found$question_id[found$condition == condition])
-    if (!length(ids)) next
-    parts <- c(parts, paste0(
-      "\\quad ", CONDITION_NAMES[[condition]], " & ", length(ids), " & ",
-      paste(ids, collapse = ", "), " \\\\"))
-  }
-  parts
+## Which conclusions have single-grading candidates. The count remains useful
+## for the argument, but row identifiers and answer strings belong to the private
+## evidence and are deliberately withheld from the publication surface.
+candidate_row <- function(conclusion, label) {
+  paste0(label, " & ", nrow(conclusion$candidates),
+         " & keys/strings withheld \\\\")
 }
 
 write_generated(c(
-  "\\begin{tabular}{lrp{0.52\\linewidth}}",
+  "\\raggedright",
+  "\\begin{tabular}{p{0.48\\linewidth}rp{0.25\\linewidth}}",
   "\\toprule",
-  "Condition regraded & Count & Questions whose single regrading suffices \\\\",
+  "Conclusion & Candidate count & Public detail \\\\",
   "\\midrule",
-  candidate_block(harm,
-                  "Multimodal is behind text, widely-documented set: the direction"),
-  "\\midrule",
-  candidate_block(help_verdict,
-                  "Less-documented image-dependent difference: the verdict"),
+  candidate_row(harm,
+                "Multimodal is behind text, widely-documented set: direction"),
+  candidate_row(help_verdict,
+                "Less-documented image-dependent difference: verdict"),
   "\\bottomrule",
   "\\end{tabular}"
 ), "generated_table_candidates.tex")

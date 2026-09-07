@@ -29,7 +29,8 @@ counts <- ggplot(alpha_counts, aes(x = alpha, y = count, linetype = series)) +
   scale_x_log10(breaks = c(0.001, 0.01, 0.05, 0.2),
                 labels = c("0.001", "0.01", "0.05", "0.2")) +
   scale_y_continuous(limits = c(0, nrow(inventory)), breaks = seq(0, 18, 6)) +
-  labs(x = NULL, y = sprintf("Contrasts, of %d", nrow(inventory))) +
+  labs(x = NULL, y = sprintf("Contrasts, of %d", nrow(inventory)),
+       subtitle = sprintf("vertical rule: registered alpha = %.2f", ALPHA)) +
   rtx_theme() +
   theme(legend.position = "bottom", legend.text = element_text(size = 7),
         legend.key.size = unit(11, "pt"), legend.margin = margin(t = -4),
@@ -41,9 +42,12 @@ distances <- ggplot(ALPHA_SWEEP, aes(x = alpha, y = median_k)) +
   scale_x_log10(breaks = c(0.001, 0.01, 0.05, 0.2),
                 labels = c("0.001", "0.01", "0.05", "0.2")) +
   labs(x = "Threshold the verdict is read against",
-       y = "Median gradings to\nmove the verdict") +
+       y = "Median gradings to\nmove the verdict",
+       subtitle = sprintf("vertical rule: registered alpha = %.2f", ALPHA)) +
   rtx_theme()
 
-p <- patchwork::wrap_plots(panel_label(counts, "A"), panel_label(distances, "B"),
+p <- patchwork::wrap_plots(
+  panel_label(counts, "A", subtitle = sprintf("vertical rule: registered alpha = %.2f", ALPHA)),
+  panel_label(distances, "B", subtitle = sprintf("vertical rule: registered alpha = %.2f", ALPHA)),
                            ncol = 1, heights = c(1.55, 1))
 save_fig(p, "fig6_alpha", width = 0.64 * FIGURE_TEXT_WIDTH_IN, height = 4.4)

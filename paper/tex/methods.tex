@@ -85,7 +85,7 @@ flips project onto unit steps in $T_n$; the next lemma says nothing else is
 lost in the projection, so a distance in the plane is a count of gradings.
 
 \begin{lemma}\label{lem:metric}
-From a table with discordant pair $(b, c)$, a pair $(b', c')$ is reachable in
+For $n\geq 1$, from a table with discordant pair $(b, c)$, a pair $(b', c')$ is reachable in
 $k$ flips if and only if $(b', c') \in T_n$ and
 $k \geq \|(b, c) - (b', c')\|_1$, with $k$ of the same parity as that norm.
 \end{lemma}
@@ -106,7 +106,8 @@ step is free.
 
 Now take the decreases first and the increases afterwards. The decreasing phase
 lowers $b + c$, so it stays in $T_n$; the increasing phase raises $b + c$
-monotonically to $b' + c' \leq n$, so it does too. The path has length
+monotonically to $b' + c' \leq n$, so it does too. Because $n\geq1$, every
+state in $T_n$ has an adjacent state. The path has length
 $\|(b, c) - (b', c')\|_1$, and any two further flips can be spent moving one
 coordinate out and back, which supplies every larger $k$ of the same parity.
 \end{proof}
@@ -127,6 +128,17 @@ Equation~\eqref{eq:mfs} is a minimisation over a set rather than a walk, which
 is what Lemma~\ref{lem:metric} buys: it replaces reachability by geometry. Both
 claims this paper audits are half-planes or unions of half-planes in $T_n$, so
 both minima have closed forms.
+When the failure set is empty under the fixed design, the value is reported as
+$\infty$ rather than as missing; for example, a design with too few discordant
+opportunities cannot reach a significant verdict at the registered threshold.
+
+\paragraph{Finite-state scope.}
+Every minimum below is conditional on the fixed question rows, their binary
+gradings, the paired sample size $n$, and the recorded test rule. It counts how
+many of those grading decisions would have to change; it is not a sampling
+distribution, a confidence bound, or an estimate for unobserved questions.
+When the text asks what the test ``could have returned'', it varies the binary
+table within $T_n$ while holding the design and the decision rule fixed.
 
 \subsection{Two conclusions per contrast, and two distances}
 
@@ -269,10 +281,19 @@ threshold could not have been called significant however the answers came out,
 and its non-significance is therefore a fact about the question set rather than
 about the conditions being compared.
 
-Intervals are Clopper--Pearson on the discordant split mapped onto the paired
+Intervals are exact 95\% intervals conditional on the observed discordant count:
+they use Clopper--Pearson on the discordant split and map it onto the paired
 difference~\cite{clopper1934use}, matching the construction the records already
 carry. Where a contrast has no discordant pairs the test is undefined and its
-p-value is reported as one rather than as an error.
+p-value is reported as one rather than as an error. In that $m=0$ case the
+discordant-split sample is empty: the generated zero-width marker $[0,0]$ is a
+conditional bookkeeping statement about the observed table, not an
+unconditional 95\% interval for a population paired difference.
+
+The effect forest is only a second encoding of these same quantities. It uses
+the recorded percentage-point difference as the point, the mapped interval as
+the horizontal bar, and the discordant count as $m$; it introduces no pooled
+model, rank ordering, or additional endpoint.
 
 \subsection{Deletion, as a separate question}
 
@@ -315,12 +336,14 @@ Each run's own summary is checked to still restate the rows in its own
 directory, and the fixed measurement table the project recorded as its result is
 checked to still come from those rows.
 
-The regrade record is checked to contain exactly one contested grading, and to
-be the one the manuscript names. The value the project recorded as not to be
-used is checked to still be recorded that way. The tiers reported here as absent
-or incomplete are checked to still be in that state, the blocked component is
-checked to still be blocked with no score substituted for it, and the retrieval
-result is checked to still carry the index state that keeps it a footnote.
+The regrade record is checked to contain exactly one contested grading in the
+declared subset and condition. The publication reports its aggregate count and
+effect; question keys, answer strings, and gold values remain in the private
+evidence. The value the project recorded as not to be used is checked to still
+be recorded that way. The tiers reported here as absent or incomplete are
+checked to still be in that state, the blocked component is checked to still be
+blocked with no score substituted for it, and the retrieval result is checked to
+still carry the index state that keeps it a footnote.
 
 \subsection{What is deliberately not computed}
 

@@ -5,10 +5,18 @@
 # contrasts where one is sturdy and the other is not.
 
 flips <- inventory
-flips$row_label <- paste0(flips$label, ": ", CONDITION_NAMES[flips$arm],
-                          " vs ", CONDITION_NAMES[flips$reference])
-flips <- flips[order(flips$k_sign, flips$k_verdict, flips$row_label), ]
+flips$dataset_code <- c(famous = "W", longtail = "L")[flips$dataset]
+flips$subset_code <- c(image_load_bearing = "I", text_only = "T", overall = "A")[flips$subset]
+flips <- flips[order(flips$k_sign, flips$k_verdict, flips$dataset_code,
+                    flips$subset_code, flips$arm, flips$reference), ]
 flips$pos <- seq_len(nrow(flips))
+
+# Keep the ladder legible at the printed width. The key is stated in the
+# caption: W/L are the two recorded datasets, I/T/A are the image, text and
+# all-question splits, and M/T/N are multimodal, text and no retrieval.
+condition_code <- c(no_kg = "N", text_kg = "T", multimodal_kg = "M")
+flips$row_label <- sprintf("%s/%s %s-%s", flips$dataset_code, flips$subset_code,
+                           condition_code[flips$arm], condition_code[flips$reference])
 
 # A difference of exactly zero has no direction to reverse, so its distance is
 # zero by definition rather than by fragility. Marking them keeps a reader from
@@ -38,7 +46,7 @@ p <- ggplot() +
   scale_x_continuous(breaks = seq(0, max(long$k), by = 2),
                      limits = c(-0.4, max(long$k) + 0.4), expand = c(0, 0)) +
   labs(x = "Gradings that would have to have come out otherwise", y = NULL,
-       subtitle = sprintf("shaded: fewer than %d, the prespecified threshold. Cross: no direction to reverse.",
+       subtitle = sprintf("W/L = dataset; I/T/A = image/text/all; M/T/N = multimodal/text/none. Shaded: fewer than %d; cross: no direction.",
                           KILL_THRESHOLD)) +
   rtx_theme() +
   theme(plot.subtitle = element_text(size = 6.6, colour = "grey25"),

@@ -23,7 +23,7 @@
     "did not mix RAG-Anything 63.4 with MMGraphRAG 76.8",
     "did not treat retrieval 1.0 or the 41-byte mini-doc as DocBench Acc",
     "did not use the hand-authored-caption 0.944 / 94.4% run as the real-caption result (real-caption is 0.389 vs text 0.444)",
-    "did not reopen S8",
+    "did not reopen the recorded disposition",
     "did not SSH or put 006 on the 4090",
     "did not mint an official DocBench row"
   ],

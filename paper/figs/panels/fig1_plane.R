@@ -62,6 +62,23 @@ plane_panel <- function(cells, n, kind, alpha, subject) {
 
   panel <- sprintf("%s\n%d grading%s away", subject, k, if (k == 1L) "" else "s")
 
+  # Keep the observed table legible without asking a reader to infer its
+  # coordinates from the open circle or its status from the colour legend.
+  # These are labels for quantities already carried by the four-cell table:
+  # (b, c), whether the named conclusion holds there, and the existing minimum
+  # grading distance k. No new state or statistic is introduced.
+  observed_fails <- grid$fails[grid$b == b0 & grid$c == c0]
+  if (length(observed_fails) != 1L) {
+    stop("the observed table is not represented exactly once on the plane")
+  }
+  observed_state <- if (observed_fails) "fails" else "holds"
+  observed <- data.frame(
+    b = b0, c = c0, panel = panel,
+    label = sprintf("observed (b,c) = (%d,%d)\n%s; distance = %d",
+                    b0, c0, observed_state, k),
+    stringsAsFactors = FALSE
+  )
+
   # The ball of radius k in the only metric a grading change can move in. Its
   # boundary touches the failure region without entering it, which is what
   # "minimum" means here, drawn rather than asserted.
@@ -71,7 +88,7 @@ plane_panel <- function(cells, n, kind, alpha, subject) {
 
   list(grid = transform(grid, panel = panel),
        ball = transform(ball, panel = panel),
-       observed = data.frame(b = b0, c = c0, panel = panel))
+       observed = observed)
 }
 
 # The less-documented direction panel and the verdict panel that reads the same
@@ -102,6 +119,12 @@ p <- ggplot(plane_part("grid"), aes(x = b, y = c)) +
                linewidth = 0.45, linetype = "22") +
   geom_point(data = plane_part("observed"), size = 2.2, shape = 21,
              fill = "white", colour = "black", stroke = 0.7) +
+  geom_label(data = plane_part("observed"),
+             aes(x = b, y = c, label = label),
+             inherit.aes = FALSE, nudge_x = 0.75, nudge_y = 0.75,
+             hjust = 0, vjust = 0, size = 2.05, lineheight = 0.92,
+             colour = "grey20", fill = "white", alpha = 0.92,
+             linewidth = 0.15, label.padding = unit(0.11, "lines")) +
   facet_wrap(~ panel, nrow = 1) +
   scale_colour_manual(values = c("conclusion still holds" = "grey74",
                                  "conclusion fails here" = "grey20"), name = NULL) +

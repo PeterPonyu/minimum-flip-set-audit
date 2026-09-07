@@ -69,8 +69,8 @@
       "path": "data/e-executed/executed.json",
       "role": "recorded_state",
       "note": "the record of which caption source was used and which was declined, with the accuracy the declined one gave",
-      "bytes": 3892,
-      "sha256": "03f8556cf5627f6b2ae281c234f2919252398d50704af5c5800733d721c49bf7"
+      "bytes": 3914,
+      "sha256": "3ef5e9fb574a9e624522b10b84122c8ee24aa78e6292c54ad362fcb8c8992961"
     },
     {
       "id": "E-RETRIEVAL",

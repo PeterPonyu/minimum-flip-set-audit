@@ -16,17 +16,17 @@ exactly zero and which therefore has no direction to reverse. The shaded region
 is fewer than \KillThreshold{} gradings, the threshold fixed in advance as the
 point below which a conclusion counts as resting on individual records. Rows
 where the two markers are far apart are contrasts whose direction and whose
-verdict are nothing like equally secure.%
+verdict are nothing like equally secure. The compact row key is W/L for the
+widely/less-documented datasets, I/T/A for image/text/all questions, and M/T/N
+for multimodal/text/none retrieval.%
 }
 
 \newcommand{\CapRegrade}{%
 One answer, and the conclusion it carries. The same \RegradeAnswers{} answers of
 a question-answering evaluation were scored by \Graders{} graders, which agree
-on all but \RegradeContested{} of them. The contested answer is question
-\RegradeQuestion{} under the condition that adds image-derived attributes to
-retrieval, where the model replied \RegradeResponse{} against a gold value of
-\RegradeGold{}: the stored grader marks it wrong on a strict string match and a
-numeric-tolerant grader marks it right. Panel A gives the number of
+on all but \RegradeContested{} of them. The single disagreement is reported only
+in aggregate; its question key, answer string, and gold value remain in the
+private evidence. Panel A gives the number of
 answers graded correct under each retrieval condition on the \SubsetN{}
 image-dependent questions of the widely-documented-entity set, under both
 graders; only the multimodal condition moves, and it moves by one answer. Panel
@@ -66,7 +66,28 @@ exact paired test still falls on the same side of the conventional threshold of
 \AlphaLevel{}. Most contrasts survive every deletion, which is what makes the
 few that do not worth naming: deletion is a blunter instrument than re-grading,
 and a conclusion that a single deletion can move was already resting on very
-little.%
+little. Rows use the same W/L, I/T/A and M/T/N key as the flip ladder; a printed
+count gives the numerator and denominator whenever the share is not unanimous.%
+}
+
+\newcommand{\CapEffectForest}{%
+The recorded effect and its exact paired interval, shown for every one of the
+\Contrasts{} contrasts. The point is the first-named condition's accuracy minus
+the second's in percentage points; the horizontal segment is the exact 95\%
+interval conditional on the observed discordant count, obtained by treating the
+discordant questions as a binomial split and mapping that split back to the
+paired accuracy difference.
+The dashed vertical rule is no difference. Each annotation is printed as
+``$m/n$'': (m) is the number of discordant questions and (n) is that
+contrast's recorded question count. Filled points have a non-zero accuracy
+difference; open points are exact zero differences. A zero difference can
+still have discordant questions ($m>0$), which is why $m/n$ is printed. W/L identify the widely and
+less-documented datasets, I/T/A the image/text/all splits, and M/T/N the
+multimodal/text/none retrieval conditions. This is a descriptive re-expression
+of the bound four-cell tables. When $m=0$, no binomial split exists and the
+zero-width segment is a conditional marker for the observed zero difference,
+not an unconditional 95\% interval. Interval overlap is not used as a
+significance rule and no question text or identifier is displayed.%
 }
 
 \newcommand{\CapPlane}{%
@@ -80,7 +101,10 @@ at which the conclusion named above the panel no longer holds. The open circle
 is the table the evaluation actually produced, and the dashed outline is the set
 of tables exactly as many gradings away as the nearest dark dot, cut back to the
 tables that exist, so it touches the failure region without entering it. All
-three panels are the same lattice over \SubsetN{} questions. The panel for the
+three panels are the same lattice over \SubsetN{} questions. The white annotation
+next to each open circle prints the observed discordant counts (b,c), whether
+the named conclusion holds at that table, and its existing minimum distance; it
+is a label for the observed record, not an additional state. The panel for the
 less-documented direction and the verdict panel that reads the same table are
 the same contrast, the same four counts and the same observed point, read as
 two different claims: the direction survives \HelpK{} gradings and the
@@ -167,14 +191,11 @@ here as the only place any number moves.%
 }
 
 \newcommand{\CapCandidatesTable}{%
-The answers each one-grading conclusion is resting on, named. Where the smallest
-number of gradings that would overturn a conclusion is one, every individual
-grading that would suffice on its own can be enumerated, and this is that
-enumeration for the two such conclusions in this study. Each block is one
-conclusion, and its rows give the condition under which a grading would change,
-how many questions qualify, and which. A reader can take any single question
-listed, decide its grading for themselves, and the conclusion heading that block
-stops holding.
+Aggregate counts of single-grading candidates. Where the smallest number of
+gradings that would overturn a conclusion is one, the private evidence can
+enumerate every qualifying row, but this publication table reports only how many
+there are. Question keys, answer strings, and gold values are withheld; an
+approved, separately redacted evidence release is required for row-level audit.
 Several candidates do not make a conclusion sturdier: they mean several answers
 each carry it alone.%
 }
