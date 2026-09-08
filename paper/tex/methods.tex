@@ -7,7 +7,7 @@
 Nothing in this study was generated for it. No model was run, no answer was
 produced, and no question was written. Every quantity below comes from records
 written by runs that finished before this analysis began, and each record is
-bound to the manuscript by its SHA-256 digest; the analysis code re-hashes each
+tied to the manuscript by its SHA-256 checksum; the analysis code re-hashes each
 file before reading it and stops the build on any mismatch.
 
 The evaluation being re-read is small and simple. A question set of
@@ -341,7 +341,7 @@ The regrade record is checked to contain exactly one contested grading in the
 declared subset and condition. The publication reports its aggregate count and
 effect; question keys, answer strings, and gold values remain in the private
 evidence. The value the project recorded as not to be used is checked to still
-be recorded that way. The tiers reported here as absent or incomplete are
+be recorded that way. The comparisons reported here as absent or incomplete are
 checked to still be in that state, the blocked component is checked to still be
 blocked with no score substituted for it, and the retrieval result is checked to
 still carry the index state that keeps it a footnote.
@@ -351,9 +351,9 @@ still carry the index state that keeps it a footnote.
 No answer is regenerated and no grading is decided here; the contested grading
 discussed below is one the records already contain, applied as the record states
 it, not a judgement made by this paper. The reference benchmark this line of
-work would eventually be measured against was never downloaded, the tier that
-would hold that comparison is recorded as \PrimaryTier{} and the tier above it
-as \SotaTier{}, and no value is imputed for either. The \BlockedComponent{}
+work would eventually be measured against was never downloaded; that comparison
+is recorded as \PrimaryTier{}, the comparison against the strongest published
+method that would follow it as \SotaTier{}, and no value is imputed for either. The \BlockedComponent{}
 component is recorded as blocked on a service that was unreachable, and its
 scores \ForgedState{} invented in its place. Nothing in this paper substitutes
 for any of them.

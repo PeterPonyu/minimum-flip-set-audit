@@ -70,9 +70,10 @@ were at the limit of what the design could say.
 
 None of this adjudicates the underlying comparison, and this paper makes no
 claim about whether the retrieval conditions differ. The reference benchmark
-this line of work would be measured against was never obtained, the tier that
-would hold that comparison is recorded as \PrimaryTier{} and the tier above it
-as \SotaTier{}, and the counting below does not stand in for either. The
+this line of work would be measured against was never obtained; that comparison
+is recorded as \PrimaryTier{}, the comparison against the strongest published
+method that would follow it as \SotaTier{}, and the counting below does not stand
+in for either. The
 contribution is an application of an established fragility construction to a
 paired grading unit. At this scale a conclusion is a property of individual
 gradings, and a results table that prints a difference and a p-value while
@@ -238,6 +239,23 @@ follows is therefore a re-reading of the project's own numbers rather than a
 second measurement of them. Both distances were additionally recomputed from
 Propositions~\ref{prop:direction} and~\ref{prop:verdict} and agreed with the
 search on every contrast.
+
+\begin{table}[tbp]
+\centering
+\caption{\CapContrastsTable}
+\label{tab:contrasts}
+\scriptsize
+\setlength{\tabcolsep}{4.5pt}
+\input{generated_table_contrasts}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{\CapCellsTable}
+\label{tab:cells}
+\small
+\input{generated_table_cells}
+\end{table}
 
 The three prespecified conclusions are in Table~\ref{tab:prereg}. Taking them in
 turn.
@@ -481,23 +499,6 @@ conditions, which is the comparison the evaluation was built to make.
 \input{generated_table_design}
 \end{table}
 
-\begin{table}[tbp]
-\centering
-\caption{\CapContrastsTable}
-\label{tab:contrasts}
-\scriptsize
-\setlength{\tabcolsep}{4.5pt}
-\input{generated_table_contrasts}
-\end{table}
-
-\begin{table}[tbp]
-\centering
-\caption{\CapCellsTable}
-\label{tab:cells}
-\small
-\input{generated_table_cells}
-\end{table}
-
 \subsection{The same family read against a different threshold}
 
 Everything above is read against \AlphaLevel{}, which is the level the records
@@ -649,9 +650,9 @@ not treated here as an established effect; the \HarmDiff{}-point contrast is
 measured, not evidence about the conditions compared.
 
 No claim is made about performance on any reference benchmark. The benchmark
-this line of work would be measured against was never obtained, the tier that
-would hold that comparison is recorded as \PrimaryTier{} and the tier above it
-as \SotaTier{}, and no value is imputed for either. The \BlockedComponent{}
+this line of work would be measured against was never obtained; that comparison
+is recorded as \PrimaryTier{}, the comparison against the strongest published
+method that would follow it as \SotaTier{}, and no value is imputed for either. The \BlockedComponent{}
 component is recorded as blocked with its scores \ForgedState{} invented, the
 \RetrievalCorrect{} of \RetrievalN{} retrieval figure is a footnote on a lookup
 over an index of \IndexFiles{} files rather than an accuracy, and the value the
@@ -697,25 +698,25 @@ after.
 
 \appendix
 
-\section{The bound evidence}
+\section{Source artifacts and their checksums}
 \label{app:evidence}
 
 Table~\ref{tab:evidence} lists all \NEvidence{} artifacts behind this
 manuscript, totalling \EvidenceBytes{} bytes, in the order the analysis consumes
 them. Every number the text prints is computed from these bytes, and the code
-recomputes each digest before reading, so a stale artifact stops the build
+recomputes each checksum before reading, so a stale artifact stops the build
 rather than reaching the page.
 
 One row deserves attention because it documents a decision rather than a
-measurement. The panel built from the fixed measurement table is bound and
+measurement. The panel built from the fixed measurement table is recorded and
 re-hashed on every build, yet no figure reads it because its status places it
-outside the registered analysis. Binding an artifact the analysis deliberately
+outside the registered analysis. Recording an artifact the analysis deliberately
 declines to read may look redundant. It is the opposite: it is the only way the
 decision to decline leaves a trace. An artifact that is simply never mentioned
 is indistinguishable from one nobody noticed, whereas this row records that the
 value existed, was seen, and was refused before it could enter an estimate.
 
-Two limits keep the table honest. A digest fixes bytes to a claim; it does not
+Two limits keep the table honest. A checksum fixes bytes to a claim; it does not
 make the bytes true, and nothing here certifies an artifact was correct when it
 was written. And each entry's internal identifier and path are omitted
 deliberately --- they describe a private tree, they would tell a reader nothing,
@@ -725,10 +726,10 @@ courtesy.
 \begin{table}[htbp]
 \centering
 \caption{Every artifact this manuscript rests on, with its size and the first 16
-hexadecimal characters of its SHA-256 digest. Full digests, and the paths they
+hexadecimal characters of its SHA-256 checksum. Full checksums, and the paths they
 apply to, are in the manifest accompanying the manuscript source; the prefix is
-shown here only because a 64-character digest does not set in a table column.
-The figure and table code recomputes each digest from the bytes on disk before
+shown here only because a 64-character checksum does not set in a table column.
+The figure and table code recomputes each checksum from the bytes on disk before
 reading them and stops the build on any mismatch.}
 \label{tab:evidence}
 \footnotesize
@@ -740,10 +741,10 @@ reading them and stops the build on any mismatch.}
 The per-answer records for both question sets, the summaries each run wrote for
 itself, the recorded paired contrasts with their exact tests and intervals, the
 independent regrade under three graders, the fixed measurement table, the
-recorded state of each comparison tier including those that are absent or
+recorded status of each planned comparison, including those that are absent or
 blocked, and the analysis code that produces every number in this manuscript
 accompany the manuscript source. Each artifact is recorded with its SHA-256
-digest in a manifest, and the analysis code verifies those digests against the
+checksum in a manifest, and the analysis code verifies those checksums against the
 bytes on disk before reading them, so the build fails rather than silently
 reporting stale numbers. The knowledge graph and question sets are small
 local artifacts distributed with the records; no third-party benchmark is
@@ -786,10 +787,10 @@ and editing.
 \section*{Declaration of generative AI use}
 
 Generative AI tools assisted with code preparation and language editing. Every
-number printed above is emitted programmatically from artifacts bound by
-cryptographic digest rather than transcribed into prose. Structural claims ---
+number printed above is emitted programmatically from artifacts tied to the manuscript by cryptographic
+checksum rather than transcribed into prose. Structural claims ---
 including the paired differences, discordant splits, exact tests, regrade
-record, and blocked-tier handling --- are enforced by build-time checks that
+record, and the handling of blocked comparisons --- are enforced by build-time checks that
 stop the build. The evaluated responses were pre-existing records and were not
 regenerated for this analysis. Responsibility for the content rests with the
 authors.
