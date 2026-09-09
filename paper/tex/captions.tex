@@ -1,3 +1,9 @@
+%% Draft-only owner placeholder (ruling R15, 2026-09-09). Prints ONLY when the
+%% build defines \DRAFTTODO (e.g. pdflatex "\def\DRAFTTODO{1}\input{main}");
+%% every packet build leaves it undefined, so no unconfirmed declaration text
+%% reaches a PDF. The owner replaces each use with the confirmed sentence.
+\providecommand{\ownertodo}[1]{\ifdefined\DRAFTTODO[TODO-OWNER: #1]\fi}
+
 %% Self-contained captions. No cross-references, no section numbers: each
 %% caption must be readable on its own if the figure is lifted out.
 
@@ -33,8 +39,8 @@ the stored rule and the numeric-tolerant nested rule; only the multimodal
 condition moves, and it moves by \RegradeImageFlip{} answer. Panel B gives the contrast those
 counts produce. Under the stored rule the multimodal condition is behind the
 text-only one; under the numeric-tolerant rule the two are exactly level.
-Neither rule is endorsed here. The point is that the reported direction is
-decided by which one is used.%
+The choice between the rules is left open; the point is that the reported
+direction is decided by which one is used.%
 }
 
 \newcommand{\CapOperating}{%
@@ -45,7 +51,8 @@ against the number of paired items. The underlying grid is \SimTables{} tables
 with \SimReps{} replicates per feasible cell. At the \(n\) of this evaluation
 the one-grading share is \FragileGivenSigNThirtyEight{}; at the image-subset
 size it is \FragileGivenSigNEighteen{}. Both fall as \(n\) grows. The distances
-are the closed form checked against exhaustive search, not a new search.%
+come from the closed form, which exhaustive search confirms on every reachable
+table.%
 }
 
 \newcommand{\CapFlipSummary}{%
@@ -219,10 +226,10 @@ only places any number moves.%
 
 \newcommand{\CapCandidatesTable}{%
 Aggregate counts of single-grading candidates. Where the smallest number of
-gradings that would overturn a conclusion is one, the private evidence can
-enumerate every qualifying row, but this publication table reports only how many
-there are. Question keys, answer strings, and gold values are withheld; an
-approved, separately redacted evidence release is required for row-level audit.
+gradings that would overturn a conclusion is one, the evidence enumerates every
+qualifying row, and this table reports how many there are. Question keys,
+answer strings, and gold values are withheld from the table; row-level audit
+goes through the redacted evidence release that accompanies the manuscript.
 Several candidates do not make a conclusion sturdier: they mean several answers
 each carry it alone.%
 }

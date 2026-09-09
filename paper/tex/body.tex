@@ -14,14 +14,13 @@ conditions and graded against gold strings, twice over --- once on widely
 documented entities and once on less documented ones --- for \Answers{} graded
 answers. The project that produced those runs computed \Contrasts{} paired
 contrasts from them and recorded which it considered to have found something.
-Nothing here regenerates those answers. The rows are on disk, the recorded
-contrasts are on disk, and the objects added here are counts, identities, and a
-simulation: for each conclusion, the smallest number of individual gradings that
-would have to have come out the other way for it to stop holding; a closed form
-that matches the search on every four-cell state of the three designs; the same
-three nested string rules counted on all \Answers{} answers rather than on the
-image subset; and the operating characteristic of that count under a paired
-Bernoulli model.
+The answers are used exactly as recorded. What this paper adds to them is a set
+of counts, identities, and a simulation: for each conclusion, the smallest
+number of individual gradings that would have to have come out the other way
+for it to stop holding; a closed form that matches the search on every
+four-cell state of the three designs; the same three nested string rules
+counted on all \Answers{} answers rather than on the image subset; and the
+operating characteristic of that count under a paired Bernoulli model.
 
 The count is exact rather than estimated. A paired contrast between two
 conditions reduces to four numbers --- how many questions both got right, how
@@ -43,56 +42,69 @@ the other direction has exact \(p=\HelpP{}\) and is reported as not significant;
 it needs \HelpK{} gradings to reverse. Under the stored grader,
 \SurvivesHolm{} of \Contrasts{} contrasts survive Holm correction, two of them
 identical question by question; the long-tail text pair that does so needs
-\SigK{}. The prespecified kill for
-this study was that all three come out at \KillThreshold{} or more, in which
-case the claim that these conclusions turn on individual records would have
-failed; it \KillState{}, and the smallest is \SmallestK{}.
+\SigK{}. The prespecified kill for this study was that all three come out at
+\KillThreshold{} or more, which would have refuted the premise that these
+conclusions turn on individual records; it \KillState{}, and the smallest is
+\SmallestK{}.
 
 Two things make this more than an arithmetic exercise. The first is that the
-single grading is not hypothetical. An independent regrade of the same answers
-by three nested string rules finds \RegradeContested{} answers they disagree
-about. One of those \RegradeContested{} is among the \HarmCandidates{} that
-carry the harm contrast: applied as the record states it, the reported
-difference moves from \HarmDiff{} to \RegradedDiff{} percentage points.
-The conclusion and its negation are separated by one adjudication of one string.
-The other three sit on year-valued long-tail answers and, under the
-numeric-tolerant rule, are enough to drop the Holm-surviving long-tail text pair
-out of the family of \Contrasts{}.
+single grading is a disagreement already present in the record rather than a
+hypothetical one. An independent regrade of the same answers by three nested
+string rules finds \RegradeContested{} answers they disagree about. One of
+those \RegradeContested{} is among the \HarmCandidates{} that carry the harm
+contrast: applied as the record states it, the reported difference moves from
+\HarmDiff{} to \RegradedDiff{} percentage points. The conclusion and its
+negation are separated by one adjudication of one string. The other three sit
+on year-valued long-tail answers and, under the numeric-tolerant rule, are
+enough to drop the Holm-surviving long-tail text pair out of the family of
+\Contrasts{}.
 
 The second is that a contrast carries two conclusions, not one, and they are not
 equally secure. The \HelpDiff{}-point difference (exact \(p=\HelpP{}\), reported
 as not significant) needs \HelpK{} gradings to change direction, which is
 comparatively sturdy at this scale. Its verdict --- that an exact test does
-not call it significant --- needs \HelpVerdictK{}. On
-the same four counts, from the same \SubsetN{} questions, the direction is
-\HelpRatio{} times further from being overturned than the significance statement
-attached to it. Among the \Directional{} contrasts that have a direction to
-reverse at all, the two distances differ by \DecoupledGap{} gradings or more in
-\DecoupledCount{} of them. Reporting a contrast as ``not significant''
-and reporting it as ``smaller'' are not the same claim and are not equally
-supported, and nothing in a conventional results table distinguishes them.
+not call it significant --- needs \HelpVerdictK{}. On the same four counts,
+from the same \SubsetN{} questions, the direction is \HelpRatio{} times further
+from being overturned than the significance statement attached to it. Among the
+\Directional{} contrasts that have a direction to reverse at all, the two
+distances differ by \DecoupledGap{} gradings or more in \DecoupledCount{} of
+them. Reporting a contrast as ``not significant'' and reporting it as
+``smaller'' are two different claims with two different supports, and nothing
+in a conventional results table distinguishes them.
 
-A third observation falls out of the same rows and is arguably the most
-uncomfortable. Of the \Contrasts{} contrasts, \Incapable{} have a smallest
-attainable p-value above the threshold: the two conditions disagreed on so few
-questions that no assignment of those disagreements could have produced a
-significant result. Their non-significance is a fact about the question set and
-carries no information about the conditions being compared. A further
-\AtFloor{} returned exactly the most extreme value available to them, so they
-were at the limit of what the design could say.
+A third observation falls out of the same rows. Of the \Contrasts{} contrasts,
+\Incapable{} have a smallest attainable p-value above the threshold: the two
+conditions disagreed on so few questions that no assignment of those
+disagreements could have produced a significant result. Their non-significance
+is a fact about the question set and carries no information about the
+conditions being compared. A further \AtFloor{} returned exactly the most
+extreme value available to them, so they were at the limit of what the design
+could say.
 
-None of this adjudicates the underlying comparison, and this paper makes no
-claim about whether the retrieval conditions differ. The reference benchmark
-this line of work would be measured against was never obtained; that comparison
-is recorded as \PrimaryTier{}, the comparison against the strongest published
-method that would follow it as \SotaTier{}, and the counting below does not stand
-in for either. The
-contribution is an application of an established fragility construction to a
-paired grading unit. At this scale a conclusion is a property of individual
-gradings, and a results table that prints a difference and a p-value while
-omitting how many gradings each rests on has withheld the part a reader would
-need in order to know what they are looking at. This is not a new statistical
-family.
+The object throughout is the reporting of the evaluation, and the comparison
+the evaluation was built to make is left where its records leave it. The
+reference benchmark this line of work would be measured against was never
+obtained; that comparison is recorded as \PrimaryTier{}, the comparison against
+the strongest published method that would follow it as \SotaTier{}, and the
+counts below are read beside those states rather than in place of them. Whether
+the retrieval conditions differ is a question these records do not settle, and
+the two contrasts examined most closely enter as objects whose fragility is
+measured.
+
+The contribution has three parts. The first is a statistic: the fragility index
+of the clinical-trial literature, carried to a paired grading unit and measured
+against both claims a contrast carries, its direction and its verdict, with a
+two-index closed form that exhaustive search confirms on every reachable table.
+The second is that statistic's operating characteristic at small \(n\),
+tabulated under a paired Bernoulli model. The third is an audit of one completed
+evaluation with it, in which the survival of a Holm-corrected result is read
+conditional on the grading rule and on the family it was corrected in. The
+construction itself is Feinstein's; what is added is the unit it is counted in,
+the second claim it is measured against, the closed form, and the operating
+characteristic. At this scale a conclusion is a property of individual
+gradings, and a results table that prints a difference and a p-value without
+the number of gradings each rests on has left out the part a reader needs in
+order to know what they are looking at.
 
 \section{Related work}
 
@@ -116,8 +128,9 @@ restatement of the same evidence on a scale a reader can hold in mind.
 Machine learning has since reused the same name for a different object. Yang,
 Zhang, Cao and colleagues define a Fragility Index that penalises large-error
 binary predictions rather than counting how many dichotomous outcomes would
-have to change~\cite{yang2023fragility}. That construction is a risk metric,
-not a perturbation count, and it is not the statistic applied here.
+have to change~\cite{yang2023fragility}. That construction is a risk metric
+rather than a perturbation count; the two share a name and nothing else, and
+the statistic applied here is Feinstein's.
 
 The meta-analytic ancestor is older still. Rosenthal asked how many unpublished
 null studies would have to be sitting in file drawers before a significant
@@ -175,13 +188,12 @@ established~\cite{ioannidis2005why,simmons2011false,button2013power,wasserstein2
 
 What this literature supplies is diagnosis and remedy at the level of the test:
 choose a better test, correct for multiplicity, report an interval, collect more
-topics. What it does not supply is a statement, in the units the evaluation was
-actually recorded in, of how many individual gradings a particular reported
-conclusion depends on. That is the reporting gap this application addresses.
-It transfers an established fragility-index construction to a paired grading
-unit; it is not a new statistical family. The count
-is complementary rather than competing: it is read beside the
-interval and the corrected p-value, not instead of them.
+topics. What remains to be supplied is a statement, in the units the evaluation
+was actually recorded in, of how many individual gradings a particular reported
+conclusion depends on. That is the reporting gap this paper addresses, by an
+application of an established fragility construction to a paired grading unit.
+The count is complementary to the interval and the corrected p-value, and it is
+read beside them.
 
 \subsection{Retrieval, question answering, and the evaluation those systems inherit}
 
@@ -200,8 +212,8 @@ accuracy, or a ranking metric, on a question set whose items were graded once.
 Assessor disagreement is an old fact of that
 literature~\cite{voorhees2000variations,bailey2008relevance,artstein2008inter};
 it is rarely converted into a count of how many of those grades a published
-contrast actually depends on. The present paper does not introduce a new
-retriever. It asks that prior question of one already-recorded comparison.
+contrast actually depends on. The present paper asks that prior question of one
+already-recorded comparison, and takes the retrievers as the records left them.
 
 The same literature that diagnoses under-powered benchmark comparisons also
 says how a small evaluation should be
@@ -238,25 +250,24 @@ size, and the comparison between them is arithmetic rather than rhetorical.
 \label{fig:plane}
 \end{figure}
 
-\section{How far each conclusion is from being overturned}
+\section{Results}
 
 Fig.~\ref{fig:plane} draws the headline conclusions in the plane the method
 lives in, and it is worth reading before any number is quoted. The two right
 panels are the same contrast, the same four counts and the same observed point,
 read as two different claims; the outline around that point reaches \HelpK{}
-gradings in one and \HelpVerdictK{} in the other. That is not a property of the
-data so much as of the two regions being measured to, and it is the whole reason
-this paper reports two distances per contrast instead of one.
+gradings in one and \HelpVerdictK{} in the other. That difference belongs to
+the two regions being measured to rather than to the data, and it is the whole
+reason this paper reports two distances per contrast instead of one.
 
 Table~\ref{tab:contrasts} gives all \Contrasts{} contrasts,
 Table~\ref{tab:cells} gives the four counts each of them reduces to, and
 Fig.~\ref{fig:flips} plots the two distances for each. Every recorded
 difference and every recorded p-value reproduced from the per-answer rows, and
-so did every discordant split; the build would have stopped otherwise, and what
-follows is therefore a re-reading of the project's own numbers rather than a
-second measurement of them. Both distances were additionally recomputed from
-Propositions~\ref{prop:direction} and~\ref{prop:verdict} and agreed with the
-search on every contrast.
+so did every discordant split; the build would have stopped otherwise, so what
+follows is a re-reading of the project's own numbers. Both distances were
+additionally recomputed from Propositions~\ref{prop:direction}
+and~\ref{prop:verdict} and agreed with the search on every contrast.
 
 \begin{table}[tbp]
 \centering
@@ -275,8 +286,10 @@ search on every contrast.
 \input{generated_table_cells}
 \end{table}
 
-The three prespecified conclusions are in Table~\ref{tab:prereg}. Taking them in
-turn.
+\subsection{The three prespecified conclusions}
+
+The three prespecified conclusions are in Table~\ref{tab:prereg}, and they are
+taken in turn.
 
 The first is that on the image-dependent questions of the widely-documented set,
 the multimodal condition is behind the text-only one: \HarmMM{} against
@@ -291,10 +304,10 @@ sufficient to erase its reported direction.
 The second is that on the image-dependent questions of the less-documented set,
 the multimodal condition is ahead: \HelpMM{} against \HelpText{}, a difference
 of \HelpDiff{} percentage points, exact p-value \HelpP{}, which the records
-report as not significant and which this paper does not treat as an established
-effect. Its direction needs \HelpK{} gradings to reverse. That is the sturdiest
-direction among the three at this subset size, and it is still \HelpK{} answers
-out of \SubsetNWord{}.
+report as not significant and which is read here as a recorded difference
+rather than as an established effect. Its direction needs \HelpK{} gradings to
+reverse. That is the sturdiest direction among the three at this subset size,
+and it is still \HelpK{} answers out of \SubsetNWord{}.
 
 The third survives Holm correction across the family of \Contrasts{} under the
 stored grading rule: on the text-answerable questions of the less-documented
@@ -304,8 +317,15 @@ the numeric-tolerant nested rule its adjusted p-value is \NumericHolmLT{} and
 it does not survive; survival is a property of the grader and the family, not
 of the contrast alone. Its verdict needs \SigK{} gradings and its direction
 needs \SigSignK{}. This is what a comparatively secure result looks like at
-this scale, and it is also the least interesting one available: it says that
-supplying a fact makes a model more likely to state that fact.
+this scale, and its content is modest: it says that supplying a fact makes a
+model more likely to state that fact.
+
+The first conclusion is also the cleanest illustration of
+Proposition~\ref{prop:direction}. Its \HarmDiff{}-point difference on \SubsetN{}
+questions is a lead of one question in the discordant cells, and the proposition
+says the distance to its reversal is that lead. A reader shown the percentage
+and the sample size has been shown the count already, in a form that requires
+division to recover; a reader shown the count needs nothing.
 
 \begin{table}[tbp]
 \centering
@@ -322,14 +342,16 @@ supplying a fact makes a model more likely to state that fact.
 \label{fig:flips}
 \end{figure}
 
-The flip ladder counts how many individual gradings could alter a conclusion;
-the same contrasts can also be read on their accuracy scale. Fig.~\ref{fig:effect-forest}
+The flip ladder of Fig.~\ref{fig:flips} counts how many individual gradings
+could alter a conclusion; the same contrasts can also be read on their accuracy
+scale. Fig.~\ref{fig:effect-forest}
 puts the recorded difference and its exact paired interval beside one another
 for all \Contrasts{} rows. It is a descriptive re-encoding of the four-cell
-tables, not a second test: the compact key suppresses item text, and $m$ makes
-the number of informative questions visible next to the percentage-point
+tables rather than a second test: the compact key suppresses item text, and $m$
+makes the number of informative questions visible next to the percentage-point
 difference. The spread of intervals is therefore read together with the flip
-counts below, rather than as evidence for a new retrieval effect.
+counts, as a description of the recorded tables rather than as evidence for a
+retrieval effect.
 
 \begin{figure}[tbp]
 \centering
@@ -337,13 +359,6 @@ counts below, rather than as evidence for a new retrieval effect.
 \caption{\CapEffectForest}
 \label{fig:effect-forest}
 \end{figure}
-
-The first of these is also the cleanest illustration of
-Proposition~\ref{prop:direction}. Its \HarmDiff{}-point difference on \SubsetN{}
-questions is a lead of one question in the discordant cells, and the proposition
-says the distance to its reversal is that lead. A reader shown the percentage
-and the sample size has been shown the count already, in a form that requires
-division to recover; a reader shown the count needs nothing.
 
 \subsection{The direction and the verdict are not equally secure}
 
@@ -390,7 +405,7 @@ not.
 \label{fig:decouple}
 \end{figure}
 
-\subsection{The nested rules disagree on \RegradeContested{} answers, not \RegradeImageFlip{}}
+\subsection{The \RegradeContested{} answers on which the nested rules disagree}
 
 Fig.~\ref{fig:regrade} makes the first conclusion concrete. The same
 \RegradeAnswers{} answers were scored by \Graders{} nested string rules, which
@@ -400,36 +415,36 @@ identical across the three rules, and \RegradeMovingRows{} move. One of those
 moving rows is the multimodal condition on the image-dependent split of the
 widely-documented set, and it is the row Fig.~\ref{fig:regrade} isolates. The
 other is the no-retrieval condition on the less-documented text split. Question
-keys, answer strings, and gold values remain in the private evidence rather
-than the publication source. The image-subset disagreement is one of the
-\HarmCandidates{} gradings the search identified.
+keys, answer strings, and gold values remain in the evidence rather than in the
+manuscript. The image-subset disagreement is one of the \HarmCandidates{}
+gradings the search identified.
 
 Applying it as the record states moves the multimodal condition from
 \HarmMM{} to \RegradedMM{} on those \SubsetN{} questions and the contrast from
 \HarmDiff{} to \RegradedDiff{} percentage points. The reported direction does
 not weaken; it disappears. Under one rule the multimodal condition is behind,
 under the other the two are exactly level, and the two rules differ on how to
-read one numeric string. Neither rule is endorsed here.
+read one numeric string. The choice between them is left open here.
 
-The same three rules are not independent graders. They are nested string
-matches: exact token, substring, then a numeric window that also fires on year
-answers. Two local instruction-model judges, scoring the stored strings and
-nothing else, agree with the stored rule at Cohen's \(\kappa=\LLMKappaQwen{}\)
-and \(\kappa=\LLMKappaLlama{}\), and with each other at
-\(\kappa=\LLMKappaBoth{}\). That agreement is a consistency check on the stored
-strings, not an independent rating of the answers: the judges read the same
-strings the rules read, and what they confirm is that the stored rule's verdicts
-are the ones a reader of those strings would also reach, not that it is the
-right rule.
+The three rules are nested string matches rather than independent graders:
+exact token, substring, then a numeric window that also fires on year answers.
+Two local instruction-model judges, scoring the stored strings and nothing
+else, agree with the stored rule at Cohen's \(\kappa=\LLMKappaQwen{}\) and
+\(\kappa=\LLMKappaLlama{}\), and with each other at \(\kappa=\LLMKappaBoth{}\).
+That agreement is a consistency check on the stored strings rather than an
+independent rating of the answers: the judges read the same strings the rules
+read, and what they confirm is that the stored rule's verdicts are the ones a
+reader of those strings would also reach, which is a different thing from its
+being the right rule.
 
-This paper does not endorse either grader, and the choice between them is a real
-methodological question rather than a formality --- whether a tolerance is
+The choice between the two graders is left open because it is a real
+methodological question rather than a formality: whether a tolerance is
 appropriate depends on what the question was asking, and that is a judgement
-about the item. The point is upstream of the choice. A reported direction that
-is decided by an unstated grading convention was never a property of the
-conditions being compared, and the way to notice that before publishing is to
-count, because the count is what makes a grading convention visible as a
-load-bearing part of the result.
+about the item. The point of this paper is upstream of the choice. A reported
+direction that is decided by an unstated grading convention was never a
+property of the conditions being compared, and the way to notice that before
+publishing is to count, because the count is what makes a grading convention
+visible as a load-bearing part of the result.
 
 That the flip turned up in an independent regrade rather than in the search is
 also the reason to trust the search. The two procedures had nothing to do with
@@ -444,24 +459,42 @@ same answer.
 \label{fig:regrade}
 \end{figure}
 
+Fig.~\ref{fig:flip-summary} collects the three pre-registered claims under
+both graders. The stored strict grader gives direction distances
+\SummaryHarmStrict{} and \SummaryHelpStrict{} for the harm and help contrasts
+and a verdict distance of \SummarySigStrict{} for the long-tail text contrast.
+Repeating the same per-contrast calculation under the numeric-tolerant grader
+gives \SummaryHarmNumeric{}, \SummaryHelpNumeric{} and \SummarySigNumeric{},
+respectively. These are raw per-contrast distances conditioned on the grader.
+Holm survival is a separate family-level condition and is reported for each
+grader on its own, so the panel conditions distances on the grader without
+treating them as family-adjusted quantities.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig10_flip_regrade_summary.pdf}
+\caption{\CapFlipSummary}
+\label{fig:flip-summary}
+\end{figure}
+
 \subsection{Counting candidate gradings without publishing row identities}
 
-Where a conclusion's distance is one, the private evidence can enumerate every
-candidate grading, but the publication surface reports only the count.
-Table~\ref{tab:candidates} gives that aggregate count for both such conclusions
-and explicitly marks the row identities as withheld. This preserves the
-fragility result without publishing question keys, answer strings, or gold
-values. A reader can still audit the count from an approved, separately
-redacted evidence release; no row-level material is required to interpret the
-figure or the conclusion.
+Where a conclusion's distance is one, the evidence enumerates every candidate
+grading, and the manuscript reports the count. Table~\ref{tab:candidates} gives
+that aggregate count for both such conclusions and marks the row identities as
+withheld. This preserves the fragility result while keeping question keys,
+answer strings, and gold values out of the manuscript. A reader can audit the
+count from the redacted evidence release that accompanies it, and no row-level
+material is required to interpret the figure or the conclusion.
 
 The proportions are worth reading directly. The reported finding that the
 multimodal condition trails the text-only one on the image-dependent questions
 of the widely-documented set rests on \HarmGradings{} individual gradings, of
 which \HarmCandidates{} would each erase it alone. The verdict on the opposing
-contrast has \HelpVerdictCandidates{} such answers. Neither count is a
-confidence guarantee: it says how many distinct adjudications could carry the
-conclusion, not which private row produced each one.
+contrast has \HelpVerdictCandidates{} such answers. Each count is a count of
+adjudications rather than a confidence statement: it says how many distinct
+gradings could carry the conclusion, and the identity of each stays in the
+evidence.
 
 \begin{table}[tbp]
 \centering
@@ -479,7 +512,7 @@ conclusion, not which private row produced each one.
 \input{generated_table_candidates}
 \end{table}
 
-\section{What the tests could have returned}
+\subsection{What each test could have returned, and what survives correction}
 
 Fig.~\ref{fig:floor} reports a quantity that is available before any answer is
 graded. An exact paired test is a binomial test on the discordant pairs
@@ -494,8 +527,8 @@ this threshold can return given how many items the two systems disagreed on, and
 they are the content of Corollary~\ref{cor:floor}. Below
 \SignificanceNeedsM{} discordant pairs the column reads unreachable, because no
 assignment of that many disagreements reaches \AlphaLevel{}. The last column is
-this study's contribution to the table and is the uncomfortable one:
-\Incapable{} of its \Contrasts{} contrasts sit in those rows.
+this evaluation's entry in the table: \Incapable{} of its \Contrasts{}
+contrasts sit in those rows.
 
 Those \Incapable{} contrasts were reported as non-significant, and they could
 not have been reported as anything else. For them the phrase carries no
@@ -514,41 +547,16 @@ statement about the conditions.
 Of the \Contrasts{} contrasts, \SignificantRaw{} reach the threshold unadjusted
 and \SurvivesHolm{} survive correction across the family~\cite{holm1979simple}
 under the stored rule. The records state that their p-values are unadjusted and
-that a correction would raise the bar; this applies it. The survivors are all
-differences against no retrieval at all, and none of them is a comparison
-between the two retrieval conditions, which is the comparison the evaluation
-was built to make. Two of those \SurvivesHolm{} rows are the
-same long-tail text table counted twice. Under the paper's own numeric-tolerant
-nested rule that table moves from Holm-adjusted \(p=\SigHolm{}\) to
+that a correction would raise the bar; this paper applies that correction. The
+survivors are all differences against no retrieval at all, and none of them is
+a comparison between the two retrieval conditions, which is the comparison the
+evaluation was built to make. Two of those \SurvivesHolm{} rows are the same
+long-tail text table counted twice. Under the numeric-tolerant nested rule of
+the same regrade record that table moves from Holm-adjusted \(p=\SigHolm{}\) to
 \(p=\NumericHolmLT{}\) and does not survive; \NumericHolmSurvivors{} contrast in
 the family of \Contrasts{} then remains. Survival is therefore a joint fact
-about the grading rule and the family definition, not a property of the
+about the grading rule and the family definition rather than a property of the
 evaluation alone.
-
-\subsection{How often a significant verdict rests on one grading}
-
-The closed form makes a sampling experiment cheap. Fig.~\ref{fig:operating}
-reports \SimTables{} paired Bernoulli tables at the \(n\) of this evaluation and
-at smaller and larger designs, \SimReps{} replicates per cell. Conditional on
-\(p\le\AlphaLevel{}\), the share of tables whose verdict distance is one is
-\FragileGivenSigNEighteen{} at \(n=\SubsetN{}\) and
-\FragileGivenSigNThirtyEight{} at \(n=\Questions{}\); both fall toward zero as
-\(n\) grows. Among significant tables at \(n=\Questions{}\), Spearman correlation
-of the verdict distance with exact \(p\) is \SpearmanSigNThirtyEight{}, so the
-count tracks \(p\) closely on that side of the threshold and still inverts
-adjacent tables: \KappaVerInversionsLow{}--\KappaVerInversionsHigh{} inversions
-among \KappaVerSigTables{} significant states. Under this model a significant
-verdict at these sizes is typically a one-grading result unless the effect is
-large. That is an operating characteristic of the statistic, a description of
-how the verdict distance behaves at small \(n\), not a finding about the
-evaluation.
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=0.72\linewidth]{fig9_operating.pdf}
-\caption{\CapOperating}
-\label{fig:operating}
-\end{figure}
 
 \begin{figure}[tbp]
 \centering
@@ -565,7 +573,32 @@ evaluation.
 \input{generated_table_design}
 \end{table}
 
-\subsection{The same family read against a different threshold}
+\subsection{How often a significant verdict rests on one grading}
+
+The closed form makes a sampling experiment cheap. Fig.~\ref{fig:operating}
+reports \SimTables{} paired Bernoulli tables at the \(n\) of this evaluation and
+at smaller and larger designs, \SimReps{} replicates per cell. Conditional on
+\(p\le\AlphaLevel{}\), the share of tables whose verdict distance is one is
+\FragileGivenSigNEighteen{} at \(n=\SubsetN{}\) and
+\FragileGivenSigNThirtyEight{} at \(n=\Questions{}\); both fall toward zero as
+\(n\) grows. Among significant tables at \(n=\Questions{}\), Spearman correlation
+of the verdict distance with exact \(p\) is \SpearmanSigNThirtyEight{}, so the
+count tracks \(p\) closely on that side of the threshold and still inverts
+adjacent tables: \KappaVerInversionsLow{}--\KappaVerInversionsHigh{} inversions
+among \KappaVerSigTables{} significant states. Under this model a significant
+verdict at these sizes is typically a one-grading result unless the effect is
+large. That is an operating characteristic of the statistic --- a description
+of how the verdict distance behaves at small \(n\) --- and it is read as such,
+separately from the findings about the evaluation.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.72\linewidth]{fig9_operating.pdf}
+\caption{\CapOperating}
+\label{fig:operating}
+\end{figure}
+
+\subsection{The same family read against every threshold}
 
 Everything above is read against \AlphaLevel{}, which is the level the records
 used, and a reader is entitled to ask how much of it is a fact about the
@@ -596,7 +629,7 @@ against the closed form on every contrast.
 \label{fig:alpha}
 \end{figure}
 
-\section{Deleting a question is not re-grading an answer}
+\subsection{Deletion asks a different question from re-grading}
 
 Fig.~\ref{fig:loo} reports the leave-one-out count beside the flip distance,
 and the two disagree in an instructive way. Most contrasts survive every single
@@ -628,8 +661,8 @@ advance~\cite{simmons2011false}.
 
 \section{Discussion}
 
-\paragraph{The count is old; the target is not.} Counting how many outcomes
-would have to change to overturn a result is the fragility
+The count is old and the target is new. Counting how many outcomes would have
+to change to overturn a result is the fragility
 index~\cite{feinstein1990unit,walsh2014statistical}, introduced for randomised
 trials, where it revealed that a large share of results in the clinical
 literature turn on a handful of events --- one mechanism behind the more general
@@ -650,24 +683,25 @@ verdict distance, depending on how ties in \(p\) are broken. The count is being
 applied to the direction of a difference as well as to the verdict on it, the
 two are not monotone in each other, and \DecoupledCount{} of the \Directional{}
 contrasts that have a direction to reverse separate them by \DecoupledGap{}
-gradings or more. This is a transfer of an established construction to a paired
-grading unit, not a claim to have invented a new statistical family.
+gradings or more. The construction itself is Feinstein's; what this paper adds
+is the paired grading unit it is counted in and the second claim, the
+direction, that it is measured against.
 
-\paragraph{Two conclusions per contrast, and only one of them gets audited.}
+A contrast carries two conclusions, and only one of them is usually audited.
 Significance is routinely questioned and directions are routinely believed. This
 study found the opposite pattern at least as often. The clearest case is the
 contrast whose direction \HelpK{} gradings could not reverse and whose verdict
-\HelpVerdictK{} grading would flip, but the general point is that these are separate claims with
-separate supports, and a results table reports them in a single row as though
-they stood or fell together. The recommendation implied is small: print the two
-counts. They cost nothing to compute, they are exact, and they say what a
-conditional interval says while remaining in the units the reader can inspect
---- answers.
+\HelpVerdictK{} grading would flip, but the general point is that these are
+separate claims with separate supports, and a results table reports them in a
+single row as though they stood or fell together. The recommendation implied is
+small: print the two counts. They cost nothing to compute, they are exact, and
+they say what a conditional interval says while remaining in the units the
+reader can inspect --- answers.
 
-\paragraph{Non-significance is not a finding when significance was
-unreachable.} Of the \Contrasts{} contrasts here, \Incapable{} could not have
-been significant at any grading of their answers. Reporting them as null results
-is not conservative; it attributes to the conditions a property of the question
+Non-significance is a finding only where significance was reachable. Of the
+\Contrasts{} contrasts here, \Incapable{} could not have been significant at
+any grading of their answers. Reporting them as null results looks conservative
+and is the opposite: it attributes to the conditions a property of the question
 set. The floor is one line of arithmetic from the discordant count and belongs
 beside any negative result from a paired design, in the same way that a power
 calculation belongs beside a negative result from an unpaired
@@ -676,10 +710,10 @@ point is the contrast in which every disagreement fell one way and the verdict
 was still negative: unanimity among the informative questions was not enough,
 because there were \AtFloorNSDiscordant{} of them.
 
-\paragraph{A grading convention is a researcher degree of freedom.} String
-matching against gold answers looks like a mechanical step and is not one.
-Strict matching, substring matching and numeric tolerance are \Graders{}
-defensible rules; they disagree about \RegradeContested{} answers here,
+A grading convention is a researcher degree of freedom. String matching against
+gold answers looks like a mechanical step and is a choice among rules. Strict
+matching, substring matching and numeric tolerance are \Graders{} defensible
+rules; they disagree about \RegradeContested{} answers here,
 \RegradeImageFlip{} of which sits on the image-subset contrast and decides its
 reported direction, while the rest decide whether the long-tail text pair
 survives correction across the family. The literature on undisclosed analytic
@@ -689,9 +723,9 @@ same list, and in small evaluations they may dominate it. The regrade in this
 study is the practice that made the point visible, and it cost one pass over the
 stored answers with no model in the loop.
 
-\paragraph{Report the count with the claim.} The concrete proposal is one column.
-Beside each reported contrast, print the smallest number of gradings that would
-overturn its direction and the smallest that would move its verdict. Both are
+The concrete proposal is one column, reported with the claim. Beside each
+reported contrast, print the smallest number of gradings that would overturn
+its direction and the smallest that would move its verdict. Both are
 exhaustively computable at these sizes. A reader seeing \HarmK{} in that column
 knows immediately what kind of object they are being shown, without needing to
 reconstruct the discordant table from an accuracy and a sample size --- which is
@@ -700,40 +734,45 @@ the same instinct behind reporting effect sizes and intervals rather than
 verdicts~\cite{wasserstein2016asa,amrhein2019scientists}, expressed in the unit
 that a small evaluation is actually made of.
 
-\paragraph{What this does not fix.} Counting gradings makes fragility visible
-and does nothing about its cause. An evaluation whose conclusions rest on single
-answers needs more questions, not better reporting of how few it
-had~\cite{card2020little,bowman2021will}. The count also says nothing about
-whether the question set measures what it claims to measure, which at these
-sizes is the larger risk~\cite{raji2021everything}. Its value is narrower: it is
-cheap, it is exact, it applies to records that already exist, and it prevents
-one specific error, which is publishing an arithmetic accident in the register
-of a finding.
+Counting gradings makes fragility visible; removing it is a separate task. An
+evaluation whose conclusions rest on single answers needs more questions, not
+better reporting of how few it had~\cite{card2020little,bowman2021will}. The
+count is also silent on whether the question set measures what it claims to
+measure, which at these sizes is the larger risk~\cite{raji2021everything}. Its
+value is specific: it is cheap, it is exact, it applies to records that already
+exist, and it prevents one particular error, publishing an arithmetic accident
+in the register of a finding.
 
-\section{What this study does not claim}
+\section{Scope of the conclusions}
 
-No claim is made that adding image-derived attributes to retrieval helps or
-harms. The \HelpDiff{}-point contrast has an exact p-value of \HelpP{} and is
-not treated here as an established effect; the \HarmDiff{}-point contrast is
-\HarmK{} grading from disappearing. Both are objects whose fragility is being
-measured, not evidence about the conditions compared.
+The conclusions of this paper are about how an evaluation is reported, and
+three boundaries fix their scope.
 
-No claim is made about performance on any reference benchmark. The benchmark
-this line of work would be measured against was never obtained; that comparison
-is recorded as \PrimaryTier{}, the comparison against the strongest published
-method that would follow it as \SotaTier{}, and no value is imputed for either. The \BlockedComponent{}
-component is recorded as blocked on a service that was unreachable, and its
-scores \ForgedState{} invented in its place; the
-\RetrievalCorrect{} of \RetrievalN{} retrieval figure is a footnote on a lookup
-over an index of \IndexFiles{} files rather than an accuracy, and the value the
-records mark as not to be used appears nowhere above. Each of these is a check
-the build enforces rather than an assurance offered here.
+The first concerns the retrieval conditions. Whether adding image-derived
+attributes to retrieval helps or harms is a question these records do not
+settle, and this paper leaves it open. The \HelpDiff{}-point contrast has an
+exact p-value of \HelpP{} and is read here as a recorded difference rather than
+as an established effect; the \HarmDiff{}-point contrast is \HarmK{} grading
+from disappearing. Both enter as objects whose fragility is measured, and
+neither is offered as evidence about the conditions compared.
 
-No claim is made that a minimum flip set of one means a conclusion is false. It
-means the conclusion is supported by one grading. A true effect measured on
-\SubsetNWord{} questions can rest on one grading too; the count does not
-separate those cases, and what it establishes is what separating them would
-take, which is more questions.
+The second concerns reference benchmarks, on which this paper reports no
+performance. The benchmark this line of work would be measured against was
+never obtained; that comparison is recorded as \PrimaryTier{}, the comparison
+against the strongest published method that would follow it as \SotaTier{}, and
+no value is imputed for either. The \BlockedComponent{} component is recorded
+as blocked on a service that was unreachable, and its scores \ForgedState{}
+invented in its place; the \RetrievalCorrect{} of \RetrievalN{} retrieval figure
+is a footnote on a lookup over an index of \IndexFiles{} files rather than an
+accuracy, and the value the records mark as not to be used appears nowhere
+above. Each of these is a state the build checks on every run rather than an
+assurance offered in prose.
+
+The third concerns what a minimum flip set of one means. It means the
+conclusion is supported by one grading, and it does not mean the conclusion is
+false. A true effect measured on \SubsetNWord{} questions can rest on one
+grading too; the count does not separate those cases, and what it establishes
+is what separating them would take, which is more questions.
 
 \section{Conclusion}
 
@@ -741,7 +780,7 @@ One completed evaluation of \Questions{} questions under \ConditionsWord{} retri
 conditions was re-read by counting rather than by re-running. For each of its
 \Contrasts{} paired contrasts, the smallest number of individual gradings that
 would overturn the direction, and separately the verdict, was found by
-exhaustive search over the reachable tables.
+exhaustive search over the reachable tables and confirmed by a closed form.
 
 The three conclusions named in advance came out at \HarmK{}, \HelpK{} and
 \SigK{} gradings, so the prespecified kill \KillState{}. The smallest,
@@ -756,7 +795,10 @@ needs \HelpK{} gradings while the verdict attached to it needs \HelpVerdictK{},
 and across the study those two distances differ by
 \DecoupledGap{} or more in \DecoupledCount{} of the \Directional{} contrasts
 that have a direction at all. No grading of the answers could have made
-\Incapable{} of the contrasts significant.
+\Incapable{} of the contrasts significant, and survival of Holm correction is a
+joint fact about the grading rule and the family: \SurvivesHolm{} contrasts
+survive under the stored rule and \NumericHolmSurvivors{} under the
+numeric-tolerant one.
 
 The recommendation is one column in a results table: beside each contrast, the
 number of gradings that would overturn its direction and the number that would
@@ -767,60 +809,71 @@ read. When the count is large, nothing has been lost by printing it. When it is
 one answer, and that is worth knowing before the table is published rather than
 after.
 
-Fig.~\ref{fig:flip-summary} collects the three pre-registered claims in one
-view. The stored strict grader gives direction distances \SummaryHarmStrict{} and
-\SummaryHelpStrict{} for the harm and help contrasts, while the verdict distance
-for the long-tail text contrast is \SummarySigStrict{} as a raw per-contrast
-distance. Repeating the same per-contrast calculation under the numeric-tolerant
-grader changes these values to \SummaryHarmNumeric{}, \SummaryHelpNumeric{} and
-\SummarySigNumeric{}, respectively. Holm survival remains a separate family-level
-condition reported for the stored grader, with the numeric-tolerant family treated
-separately in the regrade audit. The panel therefore conditions distances on the
-grader without treating them as family-adjusted quantities.
+\section*{Funding}
 
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\linewidth]{fig10_flip_regrade_summary.pdf}
-\caption{\CapFlipSummary}
-\label{fig:flip-summary}
-\end{figure}
-
-\section*{Data and code availability}
-
-The per-answer records for both question sets, the summaries each run wrote for
-itself, the recorded paired contrasts with their exact tests and intervals, the
-independent regrade under three graders, the fixed measurement table, the
-recorded status of each planned comparison, including those that are absent or
-blocked, and the analysis code that produces every number in this manuscript
-accompany the manuscript source. Each artifact is recorded under an evidence ID
-in a manifest, and the analysis code verifies the bound bytes before reading
-them, so the build fails rather than silently reporting stale numbers. The knowledge graph and question sets are small
-local artifacts distributed with the records; no third-party benchmark is
-redistributed, and the model used to produce the answers is a third-party
-release identified by name rather than copied.
-\input{generated_availability}
-
-\section*{Ethics statement}
-
-This study is a secondary analysis of numeric records produced by earlier
-computational runs. No human subjects are involved, no personal data are
-processed, and no new evaluation answers were generated; two local
-instruction-model judges later scored the stored strings as a consistency
-check. The questions concern publicly
-documented landmarks and comparable entities. One consideration bears directly
-on the subject matter: the paper's central observation is that a reported
-difference between two systems can be decided by a single grading decision, and
-the same is true of evaluations used to support claims about deployed systems,
-where a fragile result may be read as a safety or capability assurance.
-Reporting the count is offered partly for that reason.
+%% Funding and competing-interest wording adopted from the owner's packaging
+%% script (scripts/build_springer_submission_package.py), shipped in every
+%% packet since 2026-08-28 (ruling R16, 2026-09-09). FUNDING_AND_CONFLICTS
+%% stays OPEN for the owner's final read. The comment sits after the first
+%% \section* so the Discussion slice used by the checks is unchanged.
+No external funding was received for this study.
 
 \section*{Competing interests}
 
-The authors declare no competing interests.
+The author declares that they have no competing financial or non-financial
+interests that are directly or indirectly related to the work submitted for
+publication.
 
-\section*{Funding}
+%% Draft-only (ruling R15, 2026-09-09): prints only when \DRAFTTODO is
+%% defined; the owner supplies the sentence or deletes the heading. Kept below
+%% the first \section* so the Discussion slice used by the checks is unchanged.
+\ifdefined\DRAFTTODO
+\section*{Acknowledgements}
 
-No external funding was received for this study.
+\ownertodo{acknowledgements of people, institutions and computing resources
+are to be supplied by the author; no acknowledgement is recorded in the
+project ledger.}
+\fi
+
+\section*{Ethics approval and consent}
+
+This study is a secondary analysis of numeric records produced by earlier
+computational runs. It involved no human participants and no animals and
+processed no personal data, so ethics approval, consent to participate and
+consent for publication do not apply. No new evaluation answers were generated;
+two local instruction-model judges scored the stored answer strings as a
+consistency check and wrote no new answers. The questions concern publicly
+documented landmarks and comparable entities. Grading disagreements are
+reported in aggregate, and the manuscript prints no question keys, answer
+strings or gold values. One consideration bears directly on the subject matter:
+the paper's central observation is that a reported difference between two
+systems can be decided by a single grading decision, and the same is true of
+evaluations used to support claims about deployed systems, where a fragile
+result may be read as a safety or capability assurance. Reporting the count is
+offered partly for that reason.
+
+\section*{Data availability}
+
+The per-answer records for both question sets, the summaries each run wrote for
+itself, the recorded paired contrasts with their exact tests and intervals, the
+independent regrade under three graders, the fixed measurement table, and the
+recorded status of each planned comparison, including those that are absent or
+blocked, accompany the manuscript source. Each artifact is recorded under an
+evidence ID in a manifest, and the analysis code verifies the bound bytes
+before reading them, so the build stops rather than silently reporting stale
+numbers. The knowledge graph and question sets are small local artifacts
+distributed with the records; no third-party benchmark is redistributed, and
+the model used to produce the answers is a third-party release identified by
+name rather than copied.
+\input{generated_availability}
+
+\section*{Code availability}
+
+The analysis code that produces every number, table and figure in this
+manuscript accompanies the manuscript source in the same deposit and the same
+repository as the records, together with the exhaustive-search unit test that
+checks the closed form on every reachable table and the build script that
+verifies the bound evidence before reading it.
 
 \section*{Author contributions}
 
@@ -837,10 +890,10 @@ and editing.
 \section*{Declaration of generative AI use}
 
 Generative AI tools assisted with code preparation and language editing. Every
-number printed above is emitted programmatically from artifacts tied to the manuscript by cryptographic
-evidence binding rather than transcribed into prose. Structural claims ---
-including the paired differences, discordant splits, exact tests, regrade
-record, and the handling of blocked comparisons --- are enforced by build-time checks that
-stop the build. The evaluated responses were pre-existing records and were not
-regenerated for this analysis. Responsibility for the content rests with the
-authors.
+number printed above is emitted programmatically from artifacts tied to the
+manuscript by evidence binding rather than transcribed into prose. Structural
+claims --- including the paired differences, discordant splits, exact tests,
+regrade record, and the handling of blocked comparisons --- are enforced by
+build-time checks that stop the build. The evaluated responses were
+pre-existing records and were not regenerated for this analysis. Responsibility
+for the content rests with the author.

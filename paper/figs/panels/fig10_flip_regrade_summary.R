@@ -4,7 +4,7 @@ summary_specs <- data.frame(
   key = c("Harm", "Help", "Sig"),
   label = c("Harm direction\n(W/I M vs T)",
             "Help direction\n(L/I M vs T)",
-            "Help verdict\n(L/T T vs N)"),
+            "Long-tail text verdict\n(L/T T vs N)"),
   estimand = c("direction", "direction", "verdict"),
   stringsAsFactors = FALSE
 )
@@ -29,7 +29,7 @@ summary_rows <- do.call(rbind, lapply(seq_len(nrow(summary_specs)), function(i) 
              kappa = c(grader_values("strict", spec), grader_values("numeric", spec)),
              stringsAsFactors = FALSE)
 }))
-summary_rows$label <- factor(summary_rows$label, levels = rev(summary_specs$label))
+summary_rows$label <- factor(summary_rows$label, levels = summary_specs$label)
 summary_rows$grader <- factor(summary_rows$grader,
                               levels = c("Stored strict", "Numeric-tolerant"))
 
@@ -40,7 +40,7 @@ p <- ggplot(summary_rows, aes(x = label, y = kappa, fill = grader)) +
             vjust = -0.35, size = 2.8, colour = "grey20") +
   scale_fill_manual(values = c("Stored strict" = "#2166AC",
                                "Numeric-tolerant" = "#B2182B"), name = NULL) +
-  scale_y_continuous(breaks = 0:12, limits = c(0, 13),
+  scale_y_continuous(breaks = 0:8, limits = c(0, 8),
                      expand = expansion(mult = c(0, 0.02))) +
   labs(x = NULL, y = "Minimum gradings to overturn",
        subtitle = "Three pre-registered claims; raw per-contrast distances (Holm survival is a separate stored condition)") +

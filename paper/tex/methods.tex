@@ -4,14 +4,15 @@
 
 \subsection{What was already on disk}
 
-The evaluation answers were not generated for this study. No question was
-written, and no retrieval condition was re-run. Every quantity below comes from
-records written by runs that finished before this analysis began, or from later
-checks that read those same rows: a closed-form identity, a count of the three
-nested string rules on all \Answers{} answers, two local instruction-model
-judges scoring the stored strings, and a simulation of four-cell tables. Each
-record is tied to the manuscript by an evidence-manifest binding; the analysis
-code verifies each bound file before reading it and stops the build on any mismatch.
+The evaluation answers predate this study: the questions, the retrieval runs
+and the gradings are taken from records written by runs that finished before
+this analysis began. Every quantity below comes from those records or from
+later checks that read the same rows: a closed-form identity, a count of the
+three nested string rules on all \Answers{} answers, two local
+instruction-model judges scoring the stored strings, and a simulation of
+four-cell tables. Each record is tied to the manuscript by an
+evidence-manifest binding; the analysis code verifies each bound file before
+reading it and stops the build on any mismatch.
 
 The evaluation being re-read is small and simple. A question set of
 \Questions{} questions was answered by a \Model{} instruction model at
@@ -136,10 +137,10 @@ When the failure set is empty under the fixed design, the value is reported as
 $\infty$ rather than as missing; for example, a design with too few discordant
 opportunities cannot reach a significant verdict at the registered threshold.
 
-\paragraph{Finite-state scope.}
-Every minimum below is conditional on the fixed question rows, their binary
-gradings, the paired sample size $n$, and the recorded test rule. It counts how
-many of those grading decisions would have to change; it is not a sampling
+The scope of every minimum below is finite-state. Each is conditional on the
+fixed question rows, their binary gradings, the paired sample size $n$, and the
+recorded test rule, and it counts how many of those grading decisions would
+have to change. It is a count over a fixed table rather than a sampling
 distribution, a confidence bound, or an estimate for unobserved questions.
 When the text asks what the test ``could have returned'', it varies the binary
 table within $T_n$ while holding the design and the decision rule fixed.
@@ -183,10 +184,9 @@ second equality is the definition of $\delta$.
 \end{proof}
 
 Proposition~\ref{prop:direction} is worth stating plainly. The distance from a
-reported direction to its own reversal is not a new measurement of the
-evaluation; it is the numerator of the difference the evaluation already
-reported, which no results table currently prints because it prints the ratio
-instead. A reader who is shown a difference of \HarmDiff{} percentage points on
+reported direction to its own reversal is the numerator of the difference the
+evaluation already reported, which no results table currently prints because it
+prints the ratio instead. A reader who is shown a difference of \HarmDiff{} percentage points on
 \SubsetN{} questions is being shown a lead of one graded answer, and the
 conversion is division.
 
@@ -352,16 +352,17 @@ checked to still be in that state, the blocked component is checked to still be
 blocked with no score substituted for it, and the retrieval result is checked to
 still carry the index state that keeps it a footnote.
 
-\subsection{What is deliberately not computed}
+\subsection{Scope of the computation}
 
-No evaluation answer is regenerated and no grading of the original comparison
-is decided here; the contested nested-rule disagreements are ones the records
-already contain, applied as the records state them, not a judgement made by
-this paper. Two local instruction-model judges later scored those same stored
-strings; they did not write new answers. The reference benchmark this line of
-work would eventually be measured against was never downloaded; that comparison
-is recorded as \PrimaryTier{}, the comparison against the strongest published
-method that would follow it as \SotaTier{}, and no value is imputed for either. The \BlockedComponent{}
-component is recorded as blocked on a service that was unreachable, and its
-scores \ForgedState{} invented in its place. Nothing in this paper substitutes
-for any of them.
+The computation stops at the records. No evaluation answer is regenerated, and
+the grading of the original comparison is left as the records made it: the
+contested nested-rule disagreements are ones the records already contain,
+applied as the records state them rather than as a judgement made by this
+paper. Two local instruction-model judges later scored those same stored
+strings and wrote no new answers. The reference benchmark this line of work
+would eventually be measured against was never downloaded; that comparison is
+recorded as \PrimaryTier{}, the comparison against the strongest published
+method that would follow it as \SotaTier{}, and no value is imputed for either.
+The \BlockedComponent{} component is recorded as blocked on a service that was
+unreachable, and its scores \ForgedState{} invented in its place. Each of those
+states is carried into the manuscript as recorded.
