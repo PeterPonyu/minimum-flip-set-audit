@@ -24,6 +24,10 @@ the build instead of producing a stale number.
 | `data/e-primary/paper_primary.json` | recorded_state | 1025 | `d6f6053440c0ce6b…` |
 | `data/e-sota/sota_copy.json` | recorded_state | 315 | `f856273e0ef3202f…` |
 | `data/e-blocker/llm_qa_blocker.json` | recorded_state | 484 | `aa0d722720e9a9a4…` |
+| `data/e-audit-s1/closed_form_verification.json` | derived_table | 53152 | `c9054a7ae3bc11a7…` |
+| `data/e-audit-s2/regrade_consequences.json` | derived_table | 112036 | `48a1b060a5d2a3e1…` |
+| `data/e-audit-s3/judge_summary.json` | derived_table | 25331 | `2175c7b2d46594cc…` |
+| `data/e-audit-s4/simulation_summary.json` | derived_table | 125422 | `7d0ff852cf53b094…` |
 
 Some of these files recorded the paths of the machine that produced them. Those path strings and source links were refreshed before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
 

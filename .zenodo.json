@@ -1,6 +1,6 @@
 {
   "title": "Count the gradings, not the questions: how far each conclusion of a small paired evaluation is from being overturned",
-  "description": "Per-answer question-answering records under three retrieval conditions, the recorded paired contrasts, an independent three-grader regrade, figure code and manuscript source for a study that computes, by exhaustive search, the smallest number of individual gradings that would overturn the direction and separately the verdict of every contrast the evaluation reported. Code is MIT; manuscript text, figures and recorded result data are CC-BY-4.0. Third-party simulators and datasets are not redistributed.",
+  "description": "Per-answer question-answering records under three retrieval conditions, paired contrasts, an independent three-grader regrade, minimum-flip and leave-one-out summaries, figure code and manuscript source for a fragility audit that computes the smallest number of individual gradings that would overturn each reported direction or verdict. Local KG results are not DocBench accuracy. Code is MIT; manuscript text, figures and recorded result data are CC-BY-4.0. Third-party simulators and datasets are not redistributed.",
   "upload_type": "dataset",
   "access_right": "open",
   "license": "MIT",

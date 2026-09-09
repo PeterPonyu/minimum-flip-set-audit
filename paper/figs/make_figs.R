@@ -35,6 +35,10 @@ famous_summary <- read_bound$json("E-FAMOUS-SUMMARY")
 longtail_summary <- read_bound$json("E-LONGTAIL-SUMMARY")
 recorded <- read_bound$json("E-STATS")
 regrade <- read_bound$json("E-REGRADE")
+audit_s1 <- read_bound$json("E-AUDIT-S1")
+audit_s2 <- read_bound$json("E-AUDIT-S2")
+audit_s3 <- read_bound$json("E-AUDIT-S3")
+audit_s4 <- read_bound$json("E-AUDIT-S4")
 measure <- read_bound$json("E-MEASURE")
 executed <- read_bound$json("E-EXECUTED")
 retrieval <- read_bound$json("E-RETRIEVAL")
@@ -44,6 +48,26 @@ tier_simple <- read_bound$json("E-SIMPLE")
 tier_primary <- read_bound$json("E-PRIMARY")
 tier_sota <- read_bound$json("E-SOTA")
 blocker <- read_bound$json("E-BLOCKER")
+
+# The summary panel and its prose use the same grader-conditioned rows.  Keep
+# the selected claims explicit so a changed audit record fails the build rather
+# than silently changing the meaning of the 1/6/4 summary.
+summary_row <- function(grader, label) {
+  rows <- audit_s2$per_grader[[grader]]$contrasts
+  row <- rows[rows$label == label, ]
+  if (nrow(row) != 1L) stop("no unique summary row for ", grader, "/", label)
+  row
+}
+SUMMARY_HARM_STRICT <- summary_row("strict", "Famous, image | multimodal vs text")$kappa_dir[[1]]
+SUMMARY_HARM_NUMERIC <- summary_row("numeric", "Famous, image | multimodal vs text")$kappa_dir[[1]]
+SUMMARY_HELP_STRICT <- summary_row("strict", "Long-tail, image | multimodal vs text")$kappa_dir[[1]]
+SUMMARY_HELP_NUMERIC <- summary_row("numeric", "Long-tail, image | multimodal vs text")$kappa_dir[[1]]
+SUMMARY_SIG_STRICT <- summary_row("strict", "Long-tail, text | text vs none")$kappa_ver[[1]]
+SUMMARY_SIG_NUMERIC <- summary_row("numeric", "Long-tail, text | text vs none")$kappa_ver[[1]]
+if (!identical(as.integer(c(SUMMARY_HARM_STRICT, SUMMARY_HELP_STRICT, SUMMARY_SIG_STRICT)), c(1L, 6L, 4L)) ||
+    !identical(as.integer(c(SUMMARY_HARM_NUMERIC, SUMMARY_HELP_NUMERIC, SUMMARY_SIG_NUMERIC)), c(0L, 6L, 2L))) {
+  stop("the grader-conditioned minimum-flip summary no longer matches the registered 1/6/4 -> 0/6/2 record")
+}
 
 ## ---------------------------------------------------------------------------
 ## The rows, reshaped into the paired tables every contrast is computed on.
@@ -256,6 +280,65 @@ if (!identical(regrade$i17_flip$stored_correct, FALSE) ||
     !identical(regrade$i17_flip$numeric, TRUE)) {
   stop("the contested grading no longer disagrees between the stored and numeric graders")
 }
+
+# The stored regrade JSON enumerates image-subset flips only, which is why the
+# manuscript originally reported one disagreement. The later count over all 228
+# answers is the one the prose now prints.
+cf <- audit_s1$closed_form_verification
+if (!identical(as.integer(cf$total_mismatches), 0L)) {
+  stop("the closed form no longer agrees with the search on every four-cell state")
+}
+if (!isTRUE(audit_s1$stored_contrasts$all_18_reproduce)) {
+  stop("the stored 18 contrasts no longer reproduce from the rows")
+}
+nested_n <- as.integer(audit_s2$disagreements_among_three_original_rules$count)
+if (!identical(nested_n, 4L)) {
+  stop("the three nested rules no longer disagree on four of 228 answers")
+}
+numeric_lt <- audit_s2$contrast_rows_that_change_vs_strict
+numeric_lt <- numeric_lt[numeric_lt$grader == "numeric" &
+                           numeric_lt$label == "Long-tail, text | text vs none", ]
+if (nrow(numeric_lt) != 1L) {
+  stop("no unique numeric-grader row for the long-tail text pair")
+}
+if (!isTRUE(numeric_lt$strict$survives_holm_18[[1]])) {
+  stop("under the stored grader the long-tail text pair no longer survives Holm")
+}
+if (isTRUE(numeric_lt$under_grader$survives_holm_18[[1]])) {
+  stop("under the numeric grader the long-tail text pair still survives Holm-18")
+}
+if (as.integer(audit_s2$per_grader$numeric$summary$n_survive_holm_18) != 1L) {
+  stop("the numeric grader no longer leaves one Holm-18 survivor")
+}
+if (!identical(as.integer(audit_s3$judges$n_unparsed), c(0L, 0L))) {
+  stop("an LLM judge left unparsed verdicts")
+}
+if (!identical(as.integer(audit_s4$design$n_tables), 840000L)) {
+  stop("the simulation no longer contains 840000 tables")
+}
+inv38 <- cf$per_n[["38"]]$monotonicity$significant_tables$adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks
+if (length(inv38) != 2L || inv38[[1]] > inv38[[2]]) {
+  stop("n = 38 significant-table inversions of kappa_ver are missing")
+}
+grader_splits <- unique(regrade$three_grader_table[, c("dataset", "subset")])
+n_moving_rows <- 0L
+for (i in seq_len(nrow(grader_splits))) {
+  block <- regrade$three_grader_table[
+    regrade$three_grader_table$dataset == grader_splits$dataset[[i]] &
+      regrade$three_grader_table$subset == grader_splits$subset[[i]], ]
+  strict_row <- block[block$grader == "strict", ]
+  if (nrow(strict_row) != 1L) {
+    stop("no unique strict row in the three-grader table")
+  }
+  acc_strict <- as.numeric(strict_row[, c("no_kg", "text_kg", "multimodal_kg")])
+  acc <- as.matrix(block[, c("no_kg", "text_kg", "multimodal_kg")])
+  n_moving_rows <- n_moving_rows +
+    sum(rowSums(abs(acc - matrix(acc_strict, nrow(acc), 3, byrow = TRUE))) > 1e-12)
+}
+if (!identical(as.integer(n_moving_rows), 2L)) {
+  stop("the three-grader table no longer has exactly two rows that move")
+}
+
 for (dataset in names(WIDE)) {
   agreement <- regrade$grader_agreement[[dataset]]
   if (!identical(as.integer(agreement$agree), as.integer(agreement$n))) {
@@ -432,7 +515,8 @@ ALPHA_SWEEP <- do.call(rbind, lapply(
 # Numbered in the order a reader meets them, so a panel file and the figure it
 # becomes carry the same number.
 FIGURES <- c("fig1_plane.R", "fig2_flips.R", "fig3_decouple.R", "fig4_regrade.R",
-             "fig5_floor.R", "fig6_alpha.R", "fig7_loo.R", "fig8_effect_forest.R")
+             "fig5_floor.R", "fig6_alpha.R", "fig7_loo.R", "fig8_effect_forest.R",
+             "fig9_operating.R", "fig10_flip_regrade_summary.R")
 for (unit in FIGURES) {
   source(file.path("figs", "panels", unit))
 }
@@ -515,9 +599,43 @@ write_generated(c(
 
   macro("RegradeAnswers", regrade$grader_agreement$famous$n +
           regrade$grader_agreement$longtail$n),
-  macro("RegradeContested", count_word(length(flip_ids))),
+  macro("RegradeContested", count_word(nested_n)),
+  macro("RegradeImageFlip", count_word(length(flip_ids))),
+  macro("RegradeMovingRows", count_word(n_moving_rows)),
+  macro("RegradeIdenticalRows", count_word(nrow(regrade$three_grader_table) - n_moving_rows)),
+  macro("ClosedFormMismatches", cf$total_mismatches),
+  macro("ClosedFormStates", format(as.integer(cf$total_four_cell_states_checked),
+                                   big.mark = ",")),
+  macro("ClosedFormPairs", format(as.integer(cf$total_discordant_pairs_checked),
+                                  big.mark = ",")),
+  macro("KappaVerInversionsLow", inv38[[1]]),
+  macro("KappaVerInversionsHigh", inv38[[2]]),
+  macro("KappaVerSigTables",
+        cf$per_n[["38"]]$monotonicity$significant_tables$n_tables),
+  macro("SimTables", format(as.integer(audit_s4$design$n_tables), big.mark = ",")),
+  macro("SimReps", format(as.integer(audit_s4$design$reps_per_cell), big.mark = ",")),
+  macro("FragileGivenSigNEighteen",
+        fmt(unlist(audit_s4$headline$P_kappa_ver_eq_1_given_sig_by_n)[["18"]], 2)),
+  macro("FragileGivenSigNThirtyEight",
+        fmt(unlist(audit_s4$headline$P_kappa_ver_eq_1_given_sig_by_n)[["38"]], 2)),
+  macro("SpearmanSigNThirtyEight",
+        fmt(unlist(audit_s4$headline$spearman_pooled_significant_only_by_n)[["38"]], 2)),
+  macro("NumericHolmLT", pval(numeric_lt$under_grader$holm_18[[1]])),
+  macro("NumericHolmSurvivors",
+        count_word(as.integer(audit_s2$per_grader$numeric$summary$n_survive_holm_18))),
+  macro("LLMKappaQwen",
+        fmt(audit_s3$judges$cohen_kappa$judge_vs_strict[[1]], 2)),
+  macro("LLMKappaLlama",
+        fmt(audit_s3$judges$cohen_kappa$judge_vs_strict[[2]], 2)),
+  macro("LLMKappaBoth", fmt(audit_s3$judge_vs_judge$cohen_kappa$kappa, 2)),
   macro("RegradedMM", fmt(REGRADED_MM, 3)),
   macro("RegradedDiff", signed(REGRADED_DIFF)),
+  macro("SummaryHarmStrict", SUMMARY_HARM_STRICT),
+  macro("SummaryHarmNumeric", SUMMARY_HARM_NUMERIC),
+  macro("SummaryHelpStrict", SUMMARY_HELP_STRICT),
+  macro("SummaryHelpNumeric", SUMMARY_HELP_NUMERIC),
+  macro("SummarySigStrict", SUMMARY_SIG_STRICT),
+  macro("SummarySigNumeric", SUMMARY_SIG_NUMERIC),
 
   macro("StaticTier", tier_static$status),
   macro("PrimaryTier", tier_primary$status),
@@ -678,7 +796,6 @@ write_generated(c(
 
 ## The manifest itself, so the evidence discipline can be checked rather than believed.
 
-write_generated(evidence_table(manifest), "generated_table_evidence.tex")
-
-message(sprintf("wrote %d figures to figs/out and 7 generated tex files to tex/ (smallest flip set: %d)",
+message(sprintf("wrote %d figures to figs/out and 6 generated tex files to tex/ (smallest flip set: %d)",
                 length(FIGURES), SMALLEST_K))
+unlink(file.path("tex", "generated_table_evidence.tex"), force = TRUE)

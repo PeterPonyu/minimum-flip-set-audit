@@ -4,11 +4,14 @@
 
 \subsection{What was already on disk}
 
-Nothing in this study was generated for it. No model was run, no answer was
-produced, and no question was written. Every quantity below comes from records
-written by runs that finished before this analysis began, and each record is
-tied to the manuscript by its SHA-256 checksum; the analysis code re-hashes each
-file before reading it and stops the build on any mismatch.
+The evaluation answers were not generated for this study. No question was
+written, and no retrieval condition was re-run. Every quantity below comes from
+records written by runs that finished before this analysis began, or from later
+checks that read those same rows: a closed-form identity, a count of the three
+nested string rules on all \Answers{} answers, two local instruction-model
+judges scoring the stored strings, and a simulation of four-cell tables. Each
+record is tied to the manuscript by an evidence-manifest binding; the analysis
+code verifies each bound file before reading it and stops the build on any mismatch.
 
 The evaluation being re-read is small and simple. A question set of
 \Questions{} questions was answered by a \Model{} instruction model at
@@ -252,14 +255,14 @@ returned when every pair falls the same way, and $m \leq n$.
 
 \subsection{How the reported numbers were produced}
 
-The values in this paper come from the breadth-first search, not from the
-closed forms. The search is exhaustive over reachable states rather than greedy
-over answers: it walks outward from the observed table and returns the first
-state satisfying the stopping condition, so what it returns is a minimum and not
-an upper bound on one.
+The values in this paper come from the two-index closed form of
+Propositions~\ref{prop:direction} and~\ref{prop:verdict}. The form is exact on
+every four-cell table: a breadth-first walk over the eight adjacent moves agrees
+with it on all \ClosedFormStates{} states of the three designs
+(\ClosedFormMismatches{} mismatches). The search is retained as a unit test
+rather than as the definition.
 
-The closed forms are then run against it. Both distances are recomputed from
-Propositions~\ref{prop:direction} and~\ref{prop:verdict} for every one of the
+Both distances are recomputed from the propositions for every one of the
 \Contrasts{} contrasts, and the build stops if either disagrees with the search
 by a single grading. The two procedures share no code and reach the answer by
 different routes --- one enumerates tables, the other measures a distance --- so
@@ -338,9 +341,12 @@ directory, and the fixed measurement table the project recorded as its result is
 checked to still come from those rows.
 
 The regrade record is checked to contain exactly one contested grading in the
-declared subset and condition. The publication reports its aggregate count and
-effect; question keys, answer strings, and gold values remain in the private
-evidence. The value the project recorded as not to be used is checked to still
+declared image subset and condition. A later count of the same three nested
+rules over all \Answers{} answers is checked to contain \RegradeContested{}
+disagreements, and the numeric-tolerant rule is checked to move the long-tail
+text pair's Holm-adjusted p-value above \AlphaLevel{} in the family of
+\Contrasts{}. The publication reports those aggregate counts; question keys,
+answer strings, and gold values remain in the private evidence. The value the project recorded as not to be used is checked to still
 be recorded that way. The comparisons reported here as absent or incomplete are
 checked to still be in that state, the blocked component is checked to still be
 blocked with no score substituted for it, and the retrieval result is checked to
@@ -348,9 +354,11 @@ still carry the index state that keeps it a footnote.
 
 \subsection{What is deliberately not computed}
 
-No answer is regenerated and no grading is decided here; the contested grading
-discussed below is one the records already contain, applied as the record states
-it, not a judgement made by this paper. The reference benchmark this line of
+No evaluation answer is regenerated and no grading of the original comparison
+is decided here; the contested nested-rule disagreements are ones the records
+already contain, applied as the records state them, not a judgement made by
+this paper. Two local instruction-model judges later scored those same stored
+strings; they did not write new answers. The reference benchmark this line of
 work would eventually be measured against was never downloaded; that comparison
 is recorded as \PrimaryTier{}, the comparison against the strongest published
 method that would follow it as \SotaTier{}, and no value is imputed for either. The \BlockedComponent{}

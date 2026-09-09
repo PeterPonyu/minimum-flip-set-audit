@@ -1,0 +1,4189 @@
+{
+  "experiment": "S2 regrade consequences",
+  "written_utc": "2026-09-08T05:32:01Z",
+  "versions": {
+    "python": "3.13.5",
+    "python_full": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:09:02) [GCC 11.2.0]",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+    "numpy": "2.2.6",
+    "scipy": "1.16.3"
+  },
+  "alpha": 0.05,
+  "seeds": null,
+  "inputs": {
+    "famous_rows": {
+      "path": "data/e-famous/raw_responses.jsonl",
+      "sha256": "f83fef56548eb4ee6058c90d0d21d21b22fdc2c28db4c58b9f5d401c39ab2a77"
+    },
+    "longtail_rows": {
+      "path": "data/e-longtail/raw_responses.jsonl",
+      "sha256": "7bca93ed4e23e8a38d963dd84afc26bee7804be0b5c742fe69de72f0ecd27e8e"
+    },
+    "famous_questions": {
+      "path": "source-tree/006-kg-llm-reasoning/questions.json",
+      "sha256": "3f78c17289d8e952ef1658a41674029ea21c2a80371ac418a4cb45f6b8c9bec4"
+    },
+    "longtail_questions": {
+      "path": "source-tree/006-kg-llm-reasoning/questions_longtail.json",
+      "sha256": "d6f51bbc7fa0305f8e65a2a79a249d89b9583f2b71458bac394dfb9dfdca9fd5"
+    },
+    "regrade_independent_py": {
+      "path": "source-tree/006-kg-llm-reasoning/regrade_independent.py",
+      "sha256": "f4525c895ac16140f651f249b0e2f64660864f18a7fb7e8790ff18a5a66bd7c7"
+    },
+    "stored_regrade_json": {
+      "path": "data/e-regrade/regrade_independent.json",
+      "sha256": "093946749aae8e5cb127375de97280046d7d986239977f51545bbe868b74e7c7"
+    }
+  },
+  "graders": {
+    "strict": "normalised word-boundary match against any gold string (the stored grader; regrade_independent.grade_strict)",
+    "substr": "any normalised gold string appears anywhere in the normalised response (regrade_independent.grade_substr)",
+    "numeric": "substr, plus word<->digit normalisation and |gold - resp| <= max(0.1|gold|, 0.5) for any numeric pair (regrade_independent.grade_numeric; applies to years too)",
+    "yearsafe_f1": "substr OR SQuAD token-F1 >= 0.5 OR the same numeric window restricted to non-year questions (question text lacks the word 'year')"
+  },
+  "n_answers": 228,
+  "strict_reproduces_stored_correct": {
+    "agree": 228,
+    "n": 228
+  },
+  "stored_regrade_json_check": {
+    "stored_three_grader_table_rows": 12,
+    "rows_reproduced": 12,
+    "mismatches": [],
+    "stored_flips_strict_to_numeric_image": {
+      "famous": {
+        "no_kg": [],
+        "text_kg": [],
+        "multimodal_kg": [
+          "I17"
+        ]
+      },
+      "longtail": {
+        "no_kg": [],
+        "text_kg": [],
+        "multimodal_kg": []
+      }
+    },
+    "note": "the stored JSON enumerated strict->numeric flips on the IMAGE subset only (regrade_independent.py L122-135); the text-only flips below were never enumerated there"
+  },
+  "disagreements_among_three_original_rules": {
+    "count": 4,
+    "manuscript_claim": "one disagreement (abstract.tex L11-12; body.tex L43-44, L357-360; captions.tex L184-187)",
+    "answers": [
+      {
+        "dataset": "famous",
+        "question_id": "I17",
+        "condition": "multimodal_kg",
+        "image_load_bearing": true,
+        "question": "By approximately how many degrees does the Leaning Tower of Pisa tilt?",
+        "response": "3.9",
+        "gold": [
+          "4",
+          "four"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": true,
+          "yearsafe_f1": true
+        },
+        "token_f1_max": 0.0,
+        "is_year_question": false
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LT1",
+        "condition": "no_kg",
+        "image_load_bearing": false,
+        "question": "In what year was Fallingwater completed?",
+        "response": "1939",
+        "gold": [
+          "1937"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": true,
+          "yearsafe_f1": false
+        },
+        "token_f1_max": 0.0,
+        "is_year_question": true
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LT7",
+        "condition": "no_kg",
+        "image_load_bearing": false,
+        "question": "In what year was the Tempietto di San Pietro in Montorio completed?",
+        "response": "1580",
+        "gold": [
+          "1502"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": true,
+          "yearsafe_f1": false
+        },
+        "token_f1_max": 0.0,
+        "is_year_question": true
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LT11",
+        "condition": "no_kg",
+        "image_load_bearing": false,
+        "question": "In what year was the Palau de la Musica Catalana completed?",
+        "response": "1969",
+        "gold": [
+          "1908"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": true,
+          "yearsafe_f1": false
+        },
+        "token_f1_max": 0.0,
+        "is_year_question": true
+      }
+    ]
+  },
+  "disagreements_among_all_four_rules": {
+    "count": 6,
+    "answers": [
+      {
+        "dataset": "famous",
+        "question_id": "I17",
+        "condition": "multimodal_kg",
+        "image_load_bearing": true,
+        "question": "By approximately how many degrees does the Leaning Tower of Pisa tilt?",
+        "response": "3.9",
+        "gold": [
+          "4",
+          "four"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": true,
+          "yearsafe_f1": true
+        },
+        "token_f1_max": 0.0,
+        "is_year_question": false
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LT1",
+        "condition": "no_kg",
+        "image_load_bearing": false,
+        "question": "In what year was Fallingwater completed?",
+        "response": "1939",
+        "gold": [
+          "1937"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": true,
+          "yearsafe_f1": false
+        },
+        "token_f1_max": 0.0,
+        "is_year_question": true
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LT7",
+        "condition": "no_kg",
+        "image_load_bearing": false,
+        "question": "In what year was the Tempietto di San Pietro in Montorio completed?",
+        "response": "1580",
+        "gold": [
+          "1502"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": true,
+          "yearsafe_f1": false
+        },
+        "token_f1_max": 0.0,
+        "is_year_question": true
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LT11",
+        "condition": "no_kg",
+        "image_load_bearing": false,
+        "question": "In what year was the Palau de la Musica Catalana completed?",
+        "response": "1969",
+        "gold": [
+          "1908"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": true,
+          "yearsafe_f1": false
+        },
+        "token_f1_max": 0.0,
+        "is_year_question": true
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LT12",
+        "condition": "no_kg",
+        "image_load_bearing": false,
+        "question": "Who designed Casa Mila (La Pedrera)?",
+        "response": "Antoni Gaud\u00ed",
+        "gold": [
+          "antoni gaudi",
+          "gaudi"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": false,
+          "yearsafe_f1": true
+        },
+        "token_f1_max": 0.5,
+        "is_year_question": false
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LI2",
+        "condition": "multimodal_kg",
+        "image_load_bearing": true,
+        "question": "What color is the roof of Notre-Dame du Haut (Ronchamp Chapel)?",
+        "response": "Dark brown",
+        "gold": [
+          "dark grey",
+          "grey",
+          "gray",
+          "dark gray"
+        ],
+        "stored_correct": false,
+        "grades": {
+          "strict": false,
+          "substr": false,
+          "numeric": false,
+          "yearsafe_f1": true
+        },
+        "token_f1_max": 0.5,
+        "is_year_question": false
+      }
+    ]
+  },
+  "per_grader": {
+    "strict": {
+      "definition": "normalised word-boundary match against any gold string (the stored grader; regrade_independent.grade_strict)",
+      "accuracy_table": [
+        {
+          "dataset": "famous",
+          "subset": "image_load_bearing",
+          "grader": "strict",
+          "no_kg": 0.4444444444444444,
+          "n": 18,
+          "text_kg": 0.4444444444444444,
+          "multimodal_kg": 0.3888888888888889
+        },
+        {
+          "dataset": "famous",
+          "subset": "text_only",
+          "grader": "strict",
+          "no_kg": 0.8,
+          "n": 20,
+          "text_kg": 1.0,
+          "multimodal_kg": 1.0
+        },
+        {
+          "dataset": "longtail",
+          "subset": "image_load_bearing",
+          "grader": "strict",
+          "no_kg": 0.3333333333333333,
+          "n": 18,
+          "text_kg": 0.2222222222222222,
+          "multimodal_kg": 0.5555555555555556
+        },
+        {
+          "dataset": "longtail",
+          "subset": "text_only",
+          "grader": "strict",
+          "no_kg": 0.4,
+          "n": 20,
+          "text_kg": 1.0,
+          "multimodal_kg": 1.0
+        }
+      ],
+      "contrasts": [
+        {
+          "label": "Famous, image | multimodal vs text",
+          "n": 18,
+          "b": 3,
+          "c": 4,
+          "m": 7,
+          "diff_pt": -5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.015625,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 3,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.3888888888888889,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 1,
+          "m": 2,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.5,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 7,
+            "arm_only": 1,
+            "ref_only": 1,
+            "neither": 9
+          },
+          "capable": false,
+          "acc_arm": 0.4444444444444444,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, image | multimodal vs none",
+          "n": 18,
+          "b": 3,
+          "c": 4,
+          "m": 7,
+          "diff_pt": -5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.015625,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 3,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.3888888888888889,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 1.0
+        },
+        {
+          "label": "Famous, text | text vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 0.8
+        },
+        {
+          "label": "Famous, text | multimodal vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 0.8
+        },
+        {
+          "label": "Famous, all | multimodal vs text",
+          "n": 38,
+          "b": 3,
+          "c": 4,
+          "m": 7,
+          "diff_pt": -2.6315789473684212,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.015625,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 24,
+            "arm_only": 3,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.7105263157894737,
+          "acc_ref": 0.7368421052631579
+        },
+        {
+          "label": "Famous, all | text vs none",
+          "n": 38,
+          "b": 5,
+          "c": 1,
+          "m": 6,
+          "diff_pt": 10.526315789473685,
+          "p": 0.21875,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 5,
+            "ref_only": 1,
+            "neither": 9
+          },
+          "capable": true,
+          "acc_arm": 0.7368421052631579,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Famous, all | multimodal vs none",
+          "n": 38,
+          "b": 7,
+          "c": 4,
+          "m": 11,
+          "diff_pt": 7.894736842105263,
+          "p": 0.548828125,
+          "significant": false,
+          "floor": 0.0009765625,
+          "kappa_dir": 3,
+          "kappa_ver": 4,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 7,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.7105263157894737,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Long-tail, image | multimodal vs text",
+          "n": 18,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 33.333333333333336,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 0.984375,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.5555555555555556,
+          "acc_ref": 0.2222222222222222
+        },
+        {
+          "label": "Long-tail, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 3,
+          "m": 4,
+          "diff_pt": -11.11111111111111,
+          "p": 0.625,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 2,
+          "kappa_ver": 4,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 1,
+            "ref_only": 3,
+            "neither": 11
+          },
+          "capable": false,
+          "acc_arm": 0.2222222222222222,
+          "acc_ref": 0.3333333333333333
+        },
+        {
+          "label": "Long-tail, image | multimodal vs none",
+          "n": 18,
+          "b": 6,
+          "c": 2,
+          "m": 8,
+          "diff_pt": 22.22222222222222,
+          "p": 0.2890625,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 6,
+            "ref_only": 2,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.5555555555555556,
+          "acc_ref": 0.3333333333333333
+        },
+        {
+          "label": "Long-tail, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 1.0
+        },
+        {
+          "label": "Long-tail, text | text vs none",
+          "n": 20,
+          "b": 12,
+          "c": 0,
+          "m": 12,
+          "diff_pt": 60.0,
+          "p": 0.00048828125,
+          "significant": true,
+          "floor": 0.00048828125,
+          "kappa_dir": 12,
+          "kappa_ver": 4,
+          "holm_18": 0.00830078125,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 8,
+            "arm_only": 12,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true,
+          "acc_arm": 1.0,
+          "acc_ref": 0.4
+        },
+        {
+          "label": "Long-tail, text | multimodal vs none",
+          "n": 20,
+          "b": 12,
+          "c": 0,
+          "m": 12,
+          "diff_pt": 60.0,
+          "p": 0.00048828125,
+          "significant": true,
+          "floor": 0.00048828125,
+          "kappa_dir": 12,
+          "kappa_ver": 4,
+          "holm_18": 0.00830078125,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 8,
+            "arm_only": 12,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true,
+          "acc_arm": 1.0,
+          "acc_ref": 0.4
+        },
+        {
+          "label": "Long-tail, all | multimodal vs text",
+          "n": 38,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 15.789473684210526,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 0.984375,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.7894736842105263,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Long-tail, all | text vs none",
+          "n": 38,
+          "b": 13,
+          "c": 3,
+          "m": 16,
+          "diff_pt": 26.31578947368421,
+          "p": 0.021270751953125,
+          "significant": true,
+          "floor": 3.0517578125e-05,
+          "kappa_dir": 10,
+          "kappa_ver": 2,
+          "holm_18": 0.319061279296875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 11,
+            "arm_only": 13,
+            "ref_only": 3,
+            "neither": 11
+          },
+          "capable": true,
+          "acc_arm": 0.631578947368421,
+          "acc_ref": 0.3684210526315789
+        },
+        {
+          "label": "Long-tail, all | multimodal vs none",
+          "n": 38,
+          "b": 18,
+          "c": 2,
+          "m": 20,
+          "diff_pt": 42.10526315789474,
+          "p": 0.0004024505615234375,
+          "significant": true,
+          "floor": 1.9073486328125e-06,
+          "kappa_dir": 16,
+          "kappa_ver": 6,
+          "holm_18": 0.007244110107421875,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 12,
+            "arm_only": 18,
+            "ref_only": 2,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.7894736842105263,
+          "acc_ref": 0.3684210526315789
+        }
+      ],
+      "summary": {
+        "n_raw_significant": 4,
+        "raw_significant": [
+          "Long-tail, text | text vs none",
+          "Long-tail, text | multimodal vs none",
+          "Long-tail, all | text vs none",
+          "Long-tail, all | multimodal vs none"
+        ],
+        "n_survive_holm_18": 3,
+        "holm_18_survivors": [
+          {
+            "label": "Long-tail, text | text vs none",
+            "p": 0.00048828125,
+            "holm_18": 0.00830078125,
+            "kappa_dir": 12,
+            "kappa_ver": 4
+          },
+          {
+            "label": "Long-tail, text | multimodal vs none",
+            "p": 0.00048828125,
+            "holm_18": 0.00830078125,
+            "kappa_dir": 12,
+            "kappa_ver": 4
+          },
+          {
+            "label": "Long-tail, all | multimodal vs none",
+            "p": 0.0004024505615234375,
+            "holm_18": 0.007244110107421875,
+            "kappa_dir": 16,
+            "kappa_ver": 6
+          }
+        ],
+        "n_incapable": 6
+      },
+      "dedup_family": {
+        "n_non_overall": 12,
+        "n_distinct_tables": 9,
+        "n_informative_distinct": 7,
+        "distinct_tables": [
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 4,
+              "arm_only": 3,
+              "ref_only": 4,
+              "neither": 7
+            },
+            "m": 7,
+            "p": 1.0,
+            "members": [
+              "Famous, image | multimodal vs text",
+              "Famous, image | multimodal vs none"
+            ],
+            "identical_per_question": false,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 7,
+              "arm_only": 1,
+              "ref_only": 1,
+              "neither": 9
+            },
+            "m": 2,
+            "p": 1.0,
+            "members": [
+              "Famous, image | text vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 20,
+              "arm_only": 0,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 0,
+            "p": 1.0,
+            "members": [
+              "Famous, text | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": true
+          },
+          {
+            "dataset": "famous",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 16,
+              "arm_only": 4,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 4,
+            "p": 0.125,
+            "members": [
+              "Famous, text | text vs none",
+              "Famous, text | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 3,
+              "arm_only": 7,
+              "ref_only": 1,
+              "neither": 7
+            },
+            "m": 8,
+            "p": 0.0703125,
+            "members": [
+              "Long-tail, image | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 3,
+              "arm_only": 1,
+              "ref_only": 3,
+              "neither": 11
+            },
+            "m": 4,
+            "p": 0.625,
+            "members": [
+              "Long-tail, image | text vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 4,
+              "arm_only": 6,
+              "ref_only": 2,
+              "neither": 6
+            },
+            "m": 8,
+            "p": 0.2890625,
+            "members": [
+              "Long-tail, image | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 20,
+              "arm_only": 0,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 0,
+            "p": 1.0,
+            "members": [
+              "Long-tail, text | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": true
+          },
+          {
+            "dataset": "longtail",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 8,
+              "arm_only": 12,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 12,
+            "p": 0.00048828125,
+            "members": [
+              "Long-tail, text | text vs none",
+              "Long-tail, text | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          }
+        ],
+        "holm_over_12_non_overall": [
+          {
+            "label": "Famous, image | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0703125,
+            "holm": 0.703125,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.2890625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none",
+            "p": 0.00048828125,
+            "holm": 0.005859375,
+            "survives": true
+          },
+          {
+            "label": "Long-tail, text | multimodal vs none",
+            "p": 0.00048828125,
+            "holm": 0.005859375,
+            "survives": true
+          }
+        ],
+        "holm_over_distinct": [
+          {
+            "label": "Famous, image | multimodal vs text == Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none == Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 0.875,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0703125,
+            "holm": 0.5625,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.2890625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none == Long-tail, text | multimodal vs none",
+            "p": 0.00048828125,
+            "holm": 0.00439453125,
+            "survives": true
+          }
+        ],
+        "holm_over_informative_distinct": [
+          {
+            "label": "Famous, image | multimodal vs text == Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none == Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 0.625,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0703125,
+            "holm": 0.421875,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.2890625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none == Long-tail, text | multimodal vs none",
+            "p": 0.00048828125,
+            "holm": 0.00341796875,
+            "survives": true
+          }
+        ]
+      }
+    },
+    "substr": {
+      "definition": "any normalised gold string appears anywhere in the normalised response (regrade_independent.grade_substr)",
+      "accuracy_table": [
+        {
+          "dataset": "famous",
+          "subset": "image_load_bearing",
+          "grader": "substr",
+          "no_kg": 0.4444444444444444,
+          "n": 18,
+          "text_kg": 0.4444444444444444,
+          "multimodal_kg": 0.3888888888888889
+        },
+        {
+          "dataset": "famous",
+          "subset": "text_only",
+          "grader": "substr",
+          "no_kg": 0.8,
+          "n": 20,
+          "text_kg": 1.0,
+          "multimodal_kg": 1.0
+        },
+        {
+          "dataset": "longtail",
+          "subset": "image_load_bearing",
+          "grader": "substr",
+          "no_kg": 0.3333333333333333,
+          "n": 18,
+          "text_kg": 0.2222222222222222,
+          "multimodal_kg": 0.5555555555555556
+        },
+        {
+          "dataset": "longtail",
+          "subset": "text_only",
+          "grader": "substr",
+          "no_kg": 0.4,
+          "n": 20,
+          "text_kg": 1.0,
+          "multimodal_kg": 1.0
+        }
+      ],
+      "contrasts": [
+        {
+          "label": "Famous, image | multimodal vs text",
+          "n": 18,
+          "b": 3,
+          "c": 4,
+          "m": 7,
+          "diff_pt": -5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.015625,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 3,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.3888888888888889,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 1,
+          "m": 2,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.5,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 7,
+            "arm_only": 1,
+            "ref_only": 1,
+            "neither": 9
+          },
+          "capable": false,
+          "acc_arm": 0.4444444444444444,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, image | multimodal vs none",
+          "n": 18,
+          "b": 3,
+          "c": 4,
+          "m": 7,
+          "diff_pt": -5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.015625,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 3,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.3888888888888889,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 1.0
+        },
+        {
+          "label": "Famous, text | text vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 0.8
+        },
+        {
+          "label": "Famous, text | multimodal vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 0.8
+        },
+        {
+          "label": "Famous, all | multimodal vs text",
+          "n": 38,
+          "b": 3,
+          "c": 4,
+          "m": 7,
+          "diff_pt": -2.6315789473684212,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.015625,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 24,
+            "arm_only": 3,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.7105263157894737,
+          "acc_ref": 0.7368421052631579
+        },
+        {
+          "label": "Famous, all | text vs none",
+          "n": 38,
+          "b": 5,
+          "c": 1,
+          "m": 6,
+          "diff_pt": 10.526315789473685,
+          "p": 0.21875,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 5,
+            "ref_only": 1,
+            "neither": 9
+          },
+          "capable": true,
+          "acc_arm": 0.7368421052631579,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Famous, all | multimodal vs none",
+          "n": 38,
+          "b": 7,
+          "c": 4,
+          "m": 11,
+          "diff_pt": 7.894736842105263,
+          "p": 0.548828125,
+          "significant": false,
+          "floor": 0.0009765625,
+          "kappa_dir": 3,
+          "kappa_ver": 4,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 7,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.7105263157894737,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Long-tail, image | multimodal vs text",
+          "n": 18,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 33.333333333333336,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 0.984375,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.5555555555555556,
+          "acc_ref": 0.2222222222222222
+        },
+        {
+          "label": "Long-tail, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 3,
+          "m": 4,
+          "diff_pt": -11.11111111111111,
+          "p": 0.625,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 2,
+          "kappa_ver": 4,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 1,
+            "ref_only": 3,
+            "neither": 11
+          },
+          "capable": false,
+          "acc_arm": 0.2222222222222222,
+          "acc_ref": 0.3333333333333333
+        },
+        {
+          "label": "Long-tail, image | multimodal vs none",
+          "n": 18,
+          "b": 6,
+          "c": 2,
+          "m": 8,
+          "diff_pt": 22.22222222222222,
+          "p": 0.2890625,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 6,
+            "ref_only": 2,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.5555555555555556,
+          "acc_ref": 0.3333333333333333
+        },
+        {
+          "label": "Long-tail, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 1.0
+        },
+        {
+          "label": "Long-tail, text | text vs none",
+          "n": 20,
+          "b": 12,
+          "c": 0,
+          "m": 12,
+          "diff_pt": 60.0,
+          "p": 0.00048828125,
+          "significant": true,
+          "floor": 0.00048828125,
+          "kappa_dir": 12,
+          "kappa_ver": 4,
+          "holm_18": 0.00830078125,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 8,
+            "arm_only": 12,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true,
+          "acc_arm": 1.0,
+          "acc_ref": 0.4
+        },
+        {
+          "label": "Long-tail, text | multimodal vs none",
+          "n": 20,
+          "b": 12,
+          "c": 0,
+          "m": 12,
+          "diff_pt": 60.0,
+          "p": 0.00048828125,
+          "significant": true,
+          "floor": 0.00048828125,
+          "kappa_dir": 12,
+          "kappa_ver": 4,
+          "holm_18": 0.00830078125,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 8,
+            "arm_only": 12,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true,
+          "acc_arm": 1.0,
+          "acc_ref": 0.4
+        },
+        {
+          "label": "Long-tail, all | multimodal vs text",
+          "n": 38,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 15.789473684210526,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 0.984375,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.7894736842105263,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Long-tail, all | text vs none",
+          "n": 38,
+          "b": 13,
+          "c": 3,
+          "m": 16,
+          "diff_pt": 26.31578947368421,
+          "p": 0.021270751953125,
+          "significant": true,
+          "floor": 3.0517578125e-05,
+          "kappa_dir": 10,
+          "kappa_ver": 2,
+          "holm_18": 0.319061279296875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 11,
+            "arm_only": 13,
+            "ref_only": 3,
+            "neither": 11
+          },
+          "capable": true,
+          "acc_arm": 0.631578947368421,
+          "acc_ref": 0.3684210526315789
+        },
+        {
+          "label": "Long-tail, all | multimodal vs none",
+          "n": 38,
+          "b": 18,
+          "c": 2,
+          "m": 20,
+          "diff_pt": 42.10526315789474,
+          "p": 0.0004024505615234375,
+          "significant": true,
+          "floor": 1.9073486328125e-06,
+          "kappa_dir": 16,
+          "kappa_ver": 6,
+          "holm_18": 0.007244110107421875,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 12,
+            "arm_only": 18,
+            "ref_only": 2,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.7894736842105263,
+          "acc_ref": 0.3684210526315789
+        }
+      ],
+      "summary": {
+        "n_raw_significant": 4,
+        "raw_significant": [
+          "Long-tail, text | text vs none",
+          "Long-tail, text | multimodal vs none",
+          "Long-tail, all | text vs none",
+          "Long-tail, all | multimodal vs none"
+        ],
+        "n_survive_holm_18": 3,
+        "holm_18_survivors": [
+          {
+            "label": "Long-tail, text | text vs none",
+            "p": 0.00048828125,
+            "holm_18": 0.00830078125,
+            "kappa_dir": 12,
+            "kappa_ver": 4
+          },
+          {
+            "label": "Long-tail, text | multimodal vs none",
+            "p": 0.00048828125,
+            "holm_18": 0.00830078125,
+            "kappa_dir": 12,
+            "kappa_ver": 4
+          },
+          {
+            "label": "Long-tail, all | multimodal vs none",
+            "p": 0.0004024505615234375,
+            "holm_18": 0.007244110107421875,
+            "kappa_dir": 16,
+            "kappa_ver": 6
+          }
+        ],
+        "n_incapable": 6
+      },
+      "dedup_family": {
+        "n_non_overall": 12,
+        "n_distinct_tables": 9,
+        "n_informative_distinct": 7,
+        "distinct_tables": [
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 4,
+              "arm_only": 3,
+              "ref_only": 4,
+              "neither": 7
+            },
+            "m": 7,
+            "p": 1.0,
+            "members": [
+              "Famous, image | multimodal vs text",
+              "Famous, image | multimodal vs none"
+            ],
+            "identical_per_question": false,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 7,
+              "arm_only": 1,
+              "ref_only": 1,
+              "neither": 9
+            },
+            "m": 2,
+            "p": 1.0,
+            "members": [
+              "Famous, image | text vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 20,
+              "arm_only": 0,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 0,
+            "p": 1.0,
+            "members": [
+              "Famous, text | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": true
+          },
+          {
+            "dataset": "famous",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 16,
+              "arm_only": 4,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 4,
+            "p": 0.125,
+            "members": [
+              "Famous, text | text vs none",
+              "Famous, text | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 3,
+              "arm_only": 7,
+              "ref_only": 1,
+              "neither": 7
+            },
+            "m": 8,
+            "p": 0.0703125,
+            "members": [
+              "Long-tail, image | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 3,
+              "arm_only": 1,
+              "ref_only": 3,
+              "neither": 11
+            },
+            "m": 4,
+            "p": 0.625,
+            "members": [
+              "Long-tail, image | text vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 4,
+              "arm_only": 6,
+              "ref_only": 2,
+              "neither": 6
+            },
+            "m": 8,
+            "p": 0.2890625,
+            "members": [
+              "Long-tail, image | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 20,
+              "arm_only": 0,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 0,
+            "p": 1.0,
+            "members": [
+              "Long-tail, text | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": true
+          },
+          {
+            "dataset": "longtail",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 8,
+              "arm_only": 12,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 12,
+            "p": 0.00048828125,
+            "members": [
+              "Long-tail, text | text vs none",
+              "Long-tail, text | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          }
+        ],
+        "holm_over_12_non_overall": [
+          {
+            "label": "Famous, image | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0703125,
+            "holm": 0.703125,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.2890625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none",
+            "p": 0.00048828125,
+            "holm": 0.005859375,
+            "survives": true
+          },
+          {
+            "label": "Long-tail, text | multimodal vs none",
+            "p": 0.00048828125,
+            "holm": 0.005859375,
+            "survives": true
+          }
+        ],
+        "holm_over_distinct": [
+          {
+            "label": "Famous, image | multimodal vs text == Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none == Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 0.875,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0703125,
+            "holm": 0.5625,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.2890625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none == Long-tail, text | multimodal vs none",
+            "p": 0.00048828125,
+            "holm": 0.00439453125,
+            "survives": true
+          }
+        ],
+        "holm_over_informative_distinct": [
+          {
+            "label": "Famous, image | multimodal vs text == Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none == Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 0.625,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0703125,
+            "holm": 0.421875,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.2890625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none == Long-tail, text | multimodal vs none",
+            "p": 0.00048828125,
+            "holm": 0.00341796875,
+            "survives": true
+          }
+        ]
+      }
+    },
+    "numeric": {
+      "definition": "substr, plus word<->digit normalisation and |gold - resp| <= max(0.1|gold|, 0.5) for any numeric pair (regrade_independent.grade_numeric; applies to years too)",
+      "accuracy_table": [
+        {
+          "dataset": "famous",
+          "subset": "image_load_bearing",
+          "grader": "numeric",
+          "no_kg": 0.4444444444444444,
+          "n": 18,
+          "text_kg": 0.4444444444444444,
+          "multimodal_kg": 0.4444444444444444
+        },
+        {
+          "dataset": "famous",
+          "subset": "text_only",
+          "grader": "numeric",
+          "no_kg": 0.8,
+          "n": 20,
+          "text_kg": 1.0,
+          "multimodal_kg": 1.0
+        },
+        {
+          "dataset": "longtail",
+          "subset": "image_load_bearing",
+          "grader": "numeric",
+          "no_kg": 0.3333333333333333,
+          "n": 18,
+          "text_kg": 0.2222222222222222,
+          "multimodal_kg": 0.5555555555555556
+        },
+        {
+          "dataset": "longtail",
+          "subset": "text_only",
+          "grader": "numeric",
+          "no_kg": 0.55,
+          "n": 20,
+          "text_kg": 1.0,
+          "multimodal_kg": 1.0
+        }
+      ],
+      "contrasts": [
+        {
+          "label": "Famous, image | multimodal vs text",
+          "n": 18,
+          "b": 3,
+          "c": 3,
+          "m": 6,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 5,
+            "arm_only": 3,
+            "ref_only": 3,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.4444444444444444,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 1,
+          "m": 2,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.5,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 7,
+            "arm_only": 1,
+            "ref_only": 1,
+            "neither": 9
+          },
+          "capable": false,
+          "acc_arm": 0.4444444444444444,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, image | multimodal vs none",
+          "n": 18,
+          "b": 4,
+          "c": 4,
+          "m": 8,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 4,
+            "ref_only": 4,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.4444444444444444,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 1.0
+        },
+        {
+          "label": "Famous, text | text vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 0.8
+        },
+        {
+          "label": "Famous, text | multimodal vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 0.8
+        },
+        {
+          "label": "Famous, all | multimodal vs text",
+          "n": 38,
+          "b": 3,
+          "c": 3,
+          "m": 6,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 25,
+            "arm_only": 3,
+            "ref_only": 3,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.7368421052631579,
+          "acc_ref": 0.7368421052631579
+        },
+        {
+          "label": "Famous, all | text vs none",
+          "n": 38,
+          "b": 5,
+          "c": 1,
+          "m": 6,
+          "diff_pt": 10.526315789473685,
+          "p": 0.21875,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 5,
+            "ref_only": 1,
+            "neither": 9
+          },
+          "capable": true,
+          "acc_arm": 0.7368421052631579,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Famous, all | multimodal vs none",
+          "n": 38,
+          "b": 8,
+          "c": 4,
+          "m": 12,
+          "diff_pt": 10.526315789473685,
+          "p": 0.3876953125,
+          "significant": false,
+          "floor": 0.00048828125,
+          "kappa_dir": 4,
+          "kappa_ver": 3,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 8,
+            "ref_only": 4,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.7368421052631579,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Long-tail, image | multimodal vs text",
+          "n": 18,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 33.333333333333336,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.5555555555555556,
+          "acc_ref": 0.2222222222222222
+        },
+        {
+          "label": "Long-tail, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 3,
+          "m": 4,
+          "diff_pt": -11.11111111111111,
+          "p": 0.625,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 2,
+          "kappa_ver": 4,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 1,
+            "ref_only": 3,
+            "neither": 11
+          },
+          "capable": false,
+          "acc_arm": 0.2222222222222222,
+          "acc_ref": 0.3333333333333333
+        },
+        {
+          "label": "Long-tail, image | multimodal vs none",
+          "n": 18,
+          "b": 6,
+          "c": 2,
+          "m": 8,
+          "diff_pt": 22.22222222222222,
+          "p": 0.2890625,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 6,
+            "ref_only": 2,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.5555555555555556,
+          "acc_ref": 0.3333333333333333
+        },
+        {
+          "label": "Long-tail, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 1.0
+        },
+        {
+          "label": "Long-tail, text | text vs none",
+          "n": 20,
+          "b": 9,
+          "c": 0,
+          "m": 9,
+          "diff_pt": 45.0,
+          "p": 0.00390625,
+          "significant": true,
+          "floor": 0.00390625,
+          "kappa_dir": 9,
+          "kappa_ver": 2,
+          "holm_18": 0.06640625,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 11,
+            "arm_only": 9,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true,
+          "acc_arm": 1.0,
+          "acc_ref": 0.55
+        },
+        {
+          "label": "Long-tail, text | multimodal vs none",
+          "n": 20,
+          "b": 9,
+          "c": 0,
+          "m": 9,
+          "diff_pt": 45.0,
+          "p": 0.00390625,
+          "significant": true,
+          "floor": 0.00390625,
+          "kappa_dir": 9,
+          "kappa_ver": 2,
+          "holm_18": 0.06640625,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 11,
+            "arm_only": 9,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true,
+          "acc_arm": 1.0,
+          "acc_ref": 0.55
+        },
+        {
+          "label": "Long-tail, all | multimodal vs text",
+          "n": 38,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 15.789473684210526,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.7894736842105263,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Long-tail, all | text vs none",
+          "n": 38,
+          "b": 10,
+          "c": 3,
+          "m": 13,
+          "diff_pt": 18.42105263157895,
+          "p": 0.09228515625,
+          "significant": false,
+          "floor": 0.000244140625,
+          "kappa_dir": 7,
+          "kappa_ver": 1,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 14,
+            "arm_only": 10,
+            "ref_only": 3,
+            "neither": 11
+          },
+          "capable": true,
+          "acc_arm": 0.631578947368421,
+          "acc_ref": 0.4473684210526316
+        },
+        {
+          "label": "Long-tail, all | multimodal vs none",
+          "n": 38,
+          "b": 15,
+          "c": 2,
+          "m": 17,
+          "diff_pt": 34.21052631578947,
+          "p": 0.002349853515625,
+          "significant": true,
+          "floor": 1.52587890625e-05,
+          "kappa_dir": 13,
+          "kappa_ver": 4,
+          "holm_18": 0.04229736328125,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 15,
+            "arm_only": 15,
+            "ref_only": 2,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.7894736842105263,
+          "acc_ref": 0.4473684210526316
+        }
+      ],
+      "summary": {
+        "n_raw_significant": 3,
+        "raw_significant": [
+          "Long-tail, text | text vs none",
+          "Long-tail, text | multimodal vs none",
+          "Long-tail, all | multimodal vs none"
+        ],
+        "n_survive_holm_18": 1,
+        "holm_18_survivors": [
+          {
+            "label": "Long-tail, all | multimodal vs none",
+            "p": 0.002349853515625,
+            "holm_18": 0.04229736328125,
+            "kappa_dir": 13,
+            "kappa_ver": 4
+          }
+        ],
+        "n_incapable": 6
+      },
+      "dedup_family": {
+        "n_non_overall": 12,
+        "n_distinct_tables": 10,
+        "n_informative_distinct": 8,
+        "distinct_tables": [
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 5,
+              "arm_only": 3,
+              "ref_only": 3,
+              "neither": 7
+            },
+            "m": 6,
+            "p": 1.0,
+            "members": [
+              "Famous, image | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 7,
+              "arm_only": 1,
+              "ref_only": 1,
+              "neither": 9
+            },
+            "m": 2,
+            "p": 1.0,
+            "members": [
+              "Famous, image | text vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 4,
+              "arm_only": 4,
+              "ref_only": 4,
+              "neither": 6
+            },
+            "m": 8,
+            "p": 1.0,
+            "members": [
+              "Famous, image | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 20,
+              "arm_only": 0,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 0,
+            "p": 1.0,
+            "members": [
+              "Famous, text | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": true
+          },
+          {
+            "dataset": "famous",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 16,
+              "arm_only": 4,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 4,
+            "p": 0.125,
+            "members": [
+              "Famous, text | text vs none",
+              "Famous, text | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 3,
+              "arm_only": 7,
+              "ref_only": 1,
+              "neither": 7
+            },
+            "m": 8,
+            "p": 0.0703125,
+            "members": [
+              "Long-tail, image | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 3,
+              "arm_only": 1,
+              "ref_only": 3,
+              "neither": 11
+            },
+            "m": 4,
+            "p": 0.625,
+            "members": [
+              "Long-tail, image | text vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 4,
+              "arm_only": 6,
+              "ref_only": 2,
+              "neither": 6
+            },
+            "m": 8,
+            "p": 0.2890625,
+            "members": [
+              "Long-tail, image | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 20,
+              "arm_only": 0,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 0,
+            "p": 1.0,
+            "members": [
+              "Long-tail, text | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": true
+          },
+          {
+            "dataset": "longtail",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 11,
+              "arm_only": 9,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 9,
+            "p": 0.00390625,
+            "members": [
+              "Long-tail, text | text vs none",
+              "Long-tail, text | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          }
+        ],
+        "holm_over_12_non_overall": [
+          {
+            "label": "Famous, image | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0703125,
+            "holm": 0.703125,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.2890625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none",
+            "p": 0.00390625,
+            "holm": 0.046875,
+            "survives": true
+          },
+          {
+            "label": "Long-tail, text | multimodal vs none",
+            "p": 0.00390625,
+            "holm": 0.046875,
+            "survives": true
+          }
+        ],
+        "holm_over_distinct": [
+          {
+            "label": "Famous, image | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none == Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0703125,
+            "holm": 0.6328125,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.2890625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none == Long-tail, text | multimodal vs none",
+            "p": 0.00390625,
+            "holm": 0.0390625,
+            "survives": true
+          }
+        ],
+        "holm_over_informative_distinct": [
+          {
+            "label": "Famous, image | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none == Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 0.75,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0703125,
+            "holm": 0.4921875,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.2890625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none == Long-tail, text | multimodal vs none",
+            "p": 0.00390625,
+            "holm": 0.03125,
+            "survives": true
+          }
+        ]
+      }
+    },
+    "yearsafe_f1": {
+      "definition": "substr OR SQuAD token-F1 >= 0.5 OR the same numeric window restricted to non-year questions (question text lacks the word 'year')",
+      "accuracy_table": [
+        {
+          "dataset": "famous",
+          "subset": "image_load_bearing",
+          "grader": "yearsafe_f1",
+          "no_kg": 0.4444444444444444,
+          "n": 18,
+          "text_kg": 0.4444444444444444,
+          "multimodal_kg": 0.4444444444444444
+        },
+        {
+          "dataset": "famous",
+          "subset": "text_only",
+          "grader": "yearsafe_f1",
+          "no_kg": 0.8,
+          "n": 20,
+          "text_kg": 1.0,
+          "multimodal_kg": 1.0
+        },
+        {
+          "dataset": "longtail",
+          "subset": "image_load_bearing",
+          "grader": "yearsafe_f1",
+          "no_kg": 0.3333333333333333,
+          "n": 18,
+          "text_kg": 0.2222222222222222,
+          "multimodal_kg": 0.6111111111111112
+        },
+        {
+          "dataset": "longtail",
+          "subset": "text_only",
+          "grader": "yearsafe_f1",
+          "no_kg": 0.45,
+          "n": 20,
+          "text_kg": 1.0,
+          "multimodal_kg": 1.0
+        }
+      ],
+      "contrasts": [
+        {
+          "label": "Famous, image | multimodal vs text",
+          "n": 18,
+          "b": 3,
+          "c": 3,
+          "m": 6,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 5,
+            "arm_only": 3,
+            "ref_only": 3,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.4444444444444444,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 1,
+          "m": 2,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.5,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 7,
+            "arm_only": 1,
+            "ref_only": 1,
+            "neither": 9
+          },
+          "capable": false,
+          "acc_arm": 0.4444444444444444,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, image | multimodal vs none",
+          "n": 18,
+          "b": 4,
+          "c": 4,
+          "m": 8,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 4,
+            "ref_only": 4,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.4444444444444444,
+          "acc_ref": 0.4444444444444444
+        },
+        {
+          "label": "Famous, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 1.0
+        },
+        {
+          "label": "Famous, text | text vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 0.8
+        },
+        {
+          "label": "Famous, text | multimodal vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 0.8
+        },
+        {
+          "label": "Famous, all | multimodal vs text",
+          "n": 38,
+          "b": 3,
+          "c": 3,
+          "m": 6,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 25,
+            "arm_only": 3,
+            "ref_only": 3,
+            "neither": 7
+          },
+          "capable": true,
+          "acc_arm": 0.7368421052631579,
+          "acc_ref": 0.7368421052631579
+        },
+        {
+          "label": "Famous, all | text vs none",
+          "n": 38,
+          "b": 5,
+          "c": 1,
+          "m": 6,
+          "diff_pt": 10.526315789473685,
+          "p": 0.21875,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 5,
+            "ref_only": 1,
+            "neither": 9
+          },
+          "capable": true,
+          "acc_arm": 0.7368421052631579,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Famous, all | multimodal vs none",
+          "n": 38,
+          "b": 8,
+          "c": 4,
+          "m": 12,
+          "diff_pt": 10.526315789473685,
+          "p": 0.3876953125,
+          "significant": false,
+          "floor": 0.00048828125,
+          "kappa_dir": 4,
+          "kappa_ver": 3,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 8,
+            "ref_only": 4,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.7368421052631579,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Long-tail, image | multimodal vs text",
+          "n": 18,
+          "b": 8,
+          "c": 1,
+          "m": 9,
+          "diff_pt": 38.888888888888886,
+          "p": 0.0390625,
+          "significant": true,
+          "floor": 0.00390625,
+          "kappa_dir": 7,
+          "kappa_ver": 1,
+          "holm_18": 0.546875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 8,
+            "ref_only": 1,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.6111111111111112,
+          "acc_ref": 0.2222222222222222
+        },
+        {
+          "label": "Long-tail, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 3,
+          "m": 4,
+          "diff_pt": -11.11111111111111,
+          "p": 0.625,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 2,
+          "kappa_ver": 4,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 1,
+            "ref_only": 3,
+            "neither": 11
+          },
+          "capable": false,
+          "acc_arm": 0.2222222222222222,
+          "acc_ref": 0.3333333333333333
+        },
+        {
+          "label": "Long-tail, image | multimodal vs none",
+          "n": 18,
+          "b": 7,
+          "c": 2,
+          "m": 9,
+          "diff_pt": 27.77777777777778,
+          "p": 0.1796875,
+          "significant": false,
+          "floor": 0.00390625,
+          "kappa_dir": 5,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 7,
+            "ref_only": 2,
+            "neither": 5
+          },
+          "capable": true,
+          "acc_arm": 0.6111111111111112,
+          "acc_ref": 0.3333333333333333
+        },
+        {
+          "label": "Long-tail, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false,
+          "acc_arm": 1.0,
+          "acc_ref": 1.0
+        },
+        {
+          "label": "Long-tail, text | text vs none",
+          "n": 20,
+          "b": 11,
+          "c": 0,
+          "m": 11,
+          "diff_pt": 55.0,
+          "p": 0.0009765625,
+          "significant": true,
+          "floor": 0.0009765625,
+          "kappa_dir": 11,
+          "kappa_ver": 3,
+          "holm_18": 0.0166015625,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 9,
+            "arm_only": 11,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true,
+          "acc_arm": 1.0,
+          "acc_ref": 0.45
+        },
+        {
+          "label": "Long-tail, text | multimodal vs none",
+          "n": 20,
+          "b": 11,
+          "c": 0,
+          "m": 11,
+          "diff_pt": 55.0,
+          "p": 0.0009765625,
+          "significant": true,
+          "floor": 0.0009765625,
+          "kappa_dir": 11,
+          "kappa_ver": 3,
+          "holm_18": 0.0166015625,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 9,
+            "arm_only": 11,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true,
+          "acc_arm": 1.0,
+          "acc_ref": 0.45
+        },
+        {
+          "label": "Long-tail, all | multimodal vs text",
+          "n": 38,
+          "b": 8,
+          "c": 1,
+          "m": 9,
+          "diff_pt": 18.42105263157895,
+          "p": 0.0390625,
+          "significant": true,
+          "floor": 0.00390625,
+          "kappa_dir": 7,
+          "kappa_ver": 1,
+          "holm_18": 0.546875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 8,
+            "ref_only": 1,
+            "neither": 6
+          },
+          "capable": true,
+          "acc_arm": 0.8157894736842105,
+          "acc_ref": 0.631578947368421
+        },
+        {
+          "label": "Long-tail, all | text vs none",
+          "n": 38,
+          "b": 12,
+          "c": 3,
+          "m": 15,
+          "diff_pt": 23.68421052631579,
+          "p": 0.03515625,
+          "significant": true,
+          "floor": 6.103515625e-05,
+          "kappa_dir": 9,
+          "kappa_ver": 1,
+          "holm_18": 0.52734375,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 12,
+            "arm_only": 12,
+            "ref_only": 3,
+            "neither": 11
+          },
+          "capable": true,
+          "acc_arm": 0.631578947368421,
+          "acc_ref": 0.39473684210526316
+        },
+        {
+          "label": "Long-tail, all | multimodal vs none",
+          "n": 38,
+          "b": 18,
+          "c": 2,
+          "m": 20,
+          "diff_pt": 42.10526315789474,
+          "p": 0.0004024505615234375,
+          "significant": true,
+          "floor": 1.9073486328125e-06,
+          "kappa_dir": 16,
+          "kappa_ver": 6,
+          "holm_18": 0.007244110107421875,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 13,
+            "arm_only": 18,
+            "ref_only": 2,
+            "neither": 5
+          },
+          "capable": true,
+          "acc_arm": 0.8157894736842105,
+          "acc_ref": 0.39473684210526316
+        }
+      ],
+      "summary": {
+        "n_raw_significant": 6,
+        "raw_significant": [
+          "Long-tail, image | multimodal vs text",
+          "Long-tail, text | text vs none",
+          "Long-tail, text | multimodal vs none",
+          "Long-tail, all | multimodal vs text",
+          "Long-tail, all | text vs none",
+          "Long-tail, all | multimodal vs none"
+        ],
+        "n_survive_holm_18": 3,
+        "holm_18_survivors": [
+          {
+            "label": "Long-tail, text | text vs none",
+            "p": 0.0009765625,
+            "holm_18": 0.0166015625,
+            "kappa_dir": 11,
+            "kappa_ver": 3
+          },
+          {
+            "label": "Long-tail, text | multimodal vs none",
+            "p": 0.0009765625,
+            "holm_18": 0.0166015625,
+            "kappa_dir": 11,
+            "kappa_ver": 3
+          },
+          {
+            "label": "Long-tail, all | multimodal vs none",
+            "p": 0.0004024505615234375,
+            "holm_18": 0.007244110107421875,
+            "kappa_dir": 16,
+            "kappa_ver": 6
+          }
+        ],
+        "n_incapable": 6
+      },
+      "dedup_family": {
+        "n_non_overall": 12,
+        "n_distinct_tables": 10,
+        "n_informative_distinct": 8,
+        "distinct_tables": [
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 5,
+              "arm_only": 3,
+              "ref_only": 3,
+              "neither": 7
+            },
+            "m": 6,
+            "p": 1.0,
+            "members": [
+              "Famous, image | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 7,
+              "arm_only": 1,
+              "ref_only": 1,
+              "neither": 9
+            },
+            "m": 2,
+            "p": 1.0,
+            "members": [
+              "Famous, image | text vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 4,
+              "arm_only": 4,
+              "ref_only": 4,
+              "neither": 6
+            },
+            "m": 8,
+            "p": 1.0,
+            "members": [
+              "Famous, image | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "famous",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 20,
+              "arm_only": 0,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 0,
+            "p": 1.0,
+            "members": [
+              "Famous, text | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": true
+          },
+          {
+            "dataset": "famous",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 16,
+              "arm_only": 4,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 4,
+            "p": 0.125,
+            "members": [
+              "Famous, text | text vs none",
+              "Famous, text | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 3,
+              "arm_only": 8,
+              "ref_only": 1,
+              "neither": 6
+            },
+            "m": 9,
+            "p": 0.0390625,
+            "members": [
+              "Long-tail, image | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 3,
+              "arm_only": 1,
+              "ref_only": 3,
+              "neither": 11
+            },
+            "m": 4,
+            "p": 0.625,
+            "members": [
+              "Long-tail, image | text vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "image_load_bearing",
+            "n": 18,
+            "cells": {
+              "both": 4,
+              "arm_only": 7,
+              "ref_only": 2,
+              "neither": 5
+            },
+            "m": 9,
+            "p": 0.1796875,
+            "members": [
+              "Long-tail, image | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          },
+          {
+            "dataset": "longtail",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 20,
+              "arm_only": 0,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 0,
+            "p": 1.0,
+            "members": [
+              "Long-tail, text | multimodal vs text"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": true
+          },
+          {
+            "dataset": "longtail",
+            "subset": "text_only",
+            "n": 20,
+            "cells": {
+              "both": 9,
+              "arm_only": 11,
+              "ref_only": 0,
+              "neither": 0
+            },
+            "m": 11,
+            "p": 0.0009765625,
+            "members": [
+              "Long-tail, text | text vs none",
+              "Long-tail, text | multimodal vs none"
+            ],
+            "identical_per_question": true,
+            "self_comparison_m0": false
+          }
+        ],
+        "holm_over_12_non_overall": [
+          {
+            "label": "Famous, image | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0390625,
+            "holm": 0.390625,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.1796875,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none",
+            "p": 0.0009765625,
+            "holm": 0.01171875,
+            "survives": true
+          },
+          {
+            "label": "Long-tail, text | multimodal vs none",
+            "p": 0.0009765625,
+            "holm": 0.01171875,
+            "survives": true
+          }
+        ],
+        "holm_over_distinct": [
+          {
+            "label": "Famous, image | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none == Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0390625,
+            "holm": 0.3515625,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.1796875,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none == Long-tail, text | multimodal vs none",
+            "p": 0.0009765625,
+            "holm": 0.009765625,
+            "survives": true
+          }
+        ],
+        "holm_over_informative_distinct": [
+          {
+            "label": "Famous, image | multimodal vs text",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | text vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, image | multimodal vs none",
+            "p": 1.0,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Famous, text | text vs none == Famous, text | multimodal vs none",
+            "p": 0.125,
+            "holm": 0.75,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs text",
+            "p": 0.0390625,
+            "holm": 0.2734375,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | text vs none",
+            "p": 0.625,
+            "holm": 1.0,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, image | multimodal vs none",
+            "p": 0.1796875,
+            "holm": 0.8984375,
+            "survives": false
+          },
+          {
+            "label": "Long-tail, text | text vs none == Long-tail, text | multimodal vs none",
+            "p": 0.0009765625,
+            "holm": 0.0078125,
+            "survives": true
+          }
+        ]
+      }
+    }
+  },
+  "contrast_rows_that_change_vs_strict": [
+    {
+      "grader": "numeric",
+      "label": "Famous, image | multimodal vs text",
+      "strict": {
+        "b": 3,
+        "c": 4,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 1,
+        "kappa_ver": 5,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 3,
+        "c": 3,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 0,
+        "kappa_ver": 6,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "numeric",
+      "label": "Famous, image | multimodal vs none",
+      "strict": {
+        "b": 3,
+        "c": 4,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 1,
+        "kappa_ver": 5,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 4,
+        "c": 4,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 0,
+        "kappa_ver": 6,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "numeric",
+      "label": "Famous, all | multimodal vs text",
+      "strict": {
+        "b": 3,
+        "c": 4,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 1,
+        "kappa_ver": 5,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 3,
+        "c": 3,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 0,
+        "kappa_ver": 6,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "numeric",
+      "label": "Famous, all | multimodal vs none",
+      "strict": {
+        "b": 7,
+        "c": 4,
+        "p": 0.548828125,
+        "holm_18": 1.0,
+        "kappa_dir": 3,
+        "kappa_ver": 4,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 8,
+        "c": 4,
+        "p": 0.3876953125,
+        "holm_18": 1.0,
+        "kappa_dir": 4,
+        "kappa_ver": 3,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "numeric",
+      "label": "Long-tail, text | text vs none",
+      "strict": {
+        "b": 12,
+        "c": 0,
+        "p": 0.00048828125,
+        "holm_18": 0.00830078125,
+        "kappa_dir": 12,
+        "kappa_ver": 4,
+        "significant": true,
+        "survives_holm_18": true
+      },
+      "under_grader": {
+        "b": 9,
+        "c": 0,
+        "p": 0.00390625,
+        "holm_18": 0.06640625,
+        "kappa_dir": 9,
+        "kappa_ver": 2,
+        "significant": true,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "numeric",
+      "label": "Long-tail, text | multimodal vs none",
+      "strict": {
+        "b": 12,
+        "c": 0,
+        "p": 0.00048828125,
+        "holm_18": 0.00830078125,
+        "kappa_dir": 12,
+        "kappa_ver": 4,
+        "significant": true,
+        "survives_holm_18": true
+      },
+      "under_grader": {
+        "b": 9,
+        "c": 0,
+        "p": 0.00390625,
+        "holm_18": 0.06640625,
+        "kappa_dir": 9,
+        "kappa_ver": 2,
+        "significant": true,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "numeric",
+      "label": "Long-tail, all | text vs none",
+      "strict": {
+        "b": 13,
+        "c": 3,
+        "p": 0.021270751953125,
+        "holm_18": 0.319061279296875,
+        "kappa_dir": 10,
+        "kappa_ver": 2,
+        "significant": true,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 10,
+        "c": 3,
+        "p": 0.09228515625,
+        "holm_18": 1.0,
+        "kappa_dir": 7,
+        "kappa_ver": 1,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "numeric",
+      "label": "Long-tail, all | multimodal vs none",
+      "strict": {
+        "b": 18,
+        "c": 2,
+        "p": 0.0004024505615234375,
+        "holm_18": 0.007244110107421875,
+        "kappa_dir": 16,
+        "kappa_ver": 6,
+        "significant": true,
+        "survives_holm_18": true
+      },
+      "under_grader": {
+        "b": 15,
+        "c": 2,
+        "p": 0.002349853515625,
+        "holm_18": 0.04229736328125,
+        "kappa_dir": 13,
+        "kappa_ver": 4,
+        "significant": true,
+        "survives_holm_18": true
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Famous, image | multimodal vs text",
+      "strict": {
+        "b": 3,
+        "c": 4,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 1,
+        "kappa_ver": 5,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 3,
+        "c": 3,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 0,
+        "kappa_ver": 6,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Famous, image | multimodal vs none",
+      "strict": {
+        "b": 3,
+        "c": 4,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 1,
+        "kappa_ver": 5,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 4,
+        "c": 4,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 0,
+        "kappa_ver": 6,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Famous, all | multimodal vs text",
+      "strict": {
+        "b": 3,
+        "c": 4,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 1,
+        "kappa_ver": 5,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 3,
+        "c": 3,
+        "p": 1.0,
+        "holm_18": 1.0,
+        "kappa_dir": 0,
+        "kappa_ver": 6,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Famous, all | multimodal vs none",
+      "strict": {
+        "b": 7,
+        "c": 4,
+        "p": 0.548828125,
+        "holm_18": 1.0,
+        "kappa_dir": 3,
+        "kappa_ver": 4,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 8,
+        "c": 4,
+        "p": 0.3876953125,
+        "holm_18": 1.0,
+        "kappa_dir": 4,
+        "kappa_ver": 3,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Long-tail, image | multimodal vs text",
+      "strict": {
+        "b": 7,
+        "c": 1,
+        "p": 0.0703125,
+        "holm_18": 0.984375,
+        "kappa_dir": 6,
+        "kappa_ver": 1,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 8,
+        "c": 1,
+        "p": 0.0390625,
+        "holm_18": 0.546875,
+        "kappa_dir": 7,
+        "kappa_ver": 1,
+        "significant": true,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Long-tail, image | multimodal vs none",
+      "strict": {
+        "b": 6,
+        "c": 2,
+        "p": 0.2890625,
+        "holm_18": 1.0,
+        "kappa_dir": 4,
+        "kappa_ver": 2,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 7,
+        "c": 2,
+        "p": 0.1796875,
+        "holm_18": 1.0,
+        "kappa_dir": 5,
+        "kappa_ver": 2,
+        "significant": false,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Long-tail, text | text vs none",
+      "strict": {
+        "b": 12,
+        "c": 0,
+        "p": 0.00048828125,
+        "holm_18": 0.00830078125,
+        "kappa_dir": 12,
+        "kappa_ver": 4,
+        "significant": true,
+        "survives_holm_18": true
+      },
+      "under_grader": {
+        "b": 11,
+        "c": 0,
+        "p": 0.0009765625,
+        "holm_18": 0.0166015625,
+        "kappa_dir": 11,
+        "kappa_ver": 3,
+        "significant": true,
+        "survives_holm_18": true
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Long-tail, text | multimodal vs none",
+      "strict": {
+        "b": 12,
+        "c": 0,
+        "p": 0.00048828125,
+        "holm_18": 0.00830078125,
+        "kappa_dir": 12,
+        "kappa_ver": 4,
+        "significant": true,
+        "survives_holm_18": true
+      },
+      "under_grader": {
+        "b": 11,
+        "c": 0,
+        "p": 0.0009765625,
+        "holm_18": 0.0166015625,
+        "kappa_dir": 11,
+        "kappa_ver": 3,
+        "significant": true,
+        "survives_holm_18": true
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Long-tail, all | multimodal vs text",
+      "strict": {
+        "b": 7,
+        "c": 1,
+        "p": 0.0703125,
+        "holm_18": 0.984375,
+        "kappa_dir": 6,
+        "kappa_ver": 1,
+        "significant": false,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 8,
+        "c": 1,
+        "p": 0.0390625,
+        "holm_18": 0.546875,
+        "kappa_dir": 7,
+        "kappa_ver": 1,
+        "significant": true,
+        "survives_holm_18": false
+      }
+    },
+    {
+      "grader": "yearsafe_f1",
+      "label": "Long-tail, all | text vs none",
+      "strict": {
+        "b": 13,
+        "c": 3,
+        "p": 0.021270751953125,
+        "holm_18": 0.319061279296875,
+        "kappa_dir": 10,
+        "kappa_ver": 2,
+        "significant": true,
+        "survives_holm_18": false
+      },
+      "under_grader": {
+        "b": 12,
+        "c": 3,
+        "p": 0.03515625,
+        "holm_18": 0.52734375,
+        "kappa_dir": 9,
+        "kappa_ver": 1,
+        "significant": true,
+        "survives_holm_18": false
+      }
+    }
+  ],
+  "wall_clock_s": 0.047632455825805664
+}

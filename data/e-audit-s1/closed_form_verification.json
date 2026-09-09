@@ -1,0 +1,2114 @@
+{
+  "experiment": "S1 closed form + verification",
+  "written_utc": "2026-09-08T05:29:33Z",
+  "versions": {
+    "python": "3.13.5",
+    "python_full": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:09:02) [GCC 11.2.0]",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+    "numpy": "2.2.6",
+    "scipy": "1.16.3"
+  },
+  "alpha": 0.05,
+  "seeds": null,
+  "inputs": {
+    "famous_rows": {
+      "path": "data/e-famous/raw_responses.jsonl",
+      "sha256": "f83fef56548eb4ee6058c90d0d21d21b22fdc2c28db4c58b9f5d401c39ab2a77"
+    },
+    "longtail_rows": {
+      "path": "data/e-longtail/raw_responses.jsonl",
+      "sha256": "7bca93ed4e23e8a38d963dd84afc26bee7804be0b5c742fe69de72f0ecd27e8e"
+    },
+    "stored_inferential_stats": {
+      "path": "data/e-stats/inferential_stats.json",
+      "sha256": "2aedebd44d74f4c5dc09ff5d6bce2e0ac48dc65415c0c71cc1ca7600786aabde"
+    },
+    "generated_table_contrasts_tex": {
+      "path": "source-tree/006-flip-fragility-audit/tex/generated_table_contrasts.tex",
+      "sha256": "4843641b3d2124db032052e93f2a80969b277d38e24fa13d19eec4ad4b7d92ab"
+    },
+    "fragility_R": {
+      "path": "source-tree/006-flip-fragility-audit/figs/lib/fragility.R",
+      "sha256": "44dc02737cb48b1ce8e7fcbcd43eb6741aac0359ce8d38c09905f708c443773e"
+    },
+    "stats_R": {
+      "path": "source-tree/006-flip-fragility-audit/figs/lib/stats.R",
+      "sha256": "532c2bf1944e761cf98b1086ddf647a6fe0f29015ac2083954e1fd514eeb8a67"
+    }
+  },
+  "p_convention": {
+    "definition": "p(b,c) = min(1, 2*P[Bin(b+c,1/2) <= min(b,c)]), p(0,0) = 1; exact integer arithmetic",
+    "matches_R_binom_test": "R stats::binom.test(x, n, 0.5)$p.value reduces to this by symmetry of the p0 = 1/2 binomial (its 'sum of densities <= observed' rule picks exactly the mirror tail)",
+    "scipy_binomtest_two_sided_max_abs_diff": 1.7208456881689926e-15,
+    "scipy_pairs_checked_m_le_120": 7381,
+    "significance_rule": "significant iff p <= alpha (fragility.R verdict_fragility / make_figs.R use `<=`)"
+  },
+  "definitions": {
+    "kappa_dir": "|b - c| (fragility.R sign_distance; BFS sign_fragility agrees on every state)",
+    "kappa_ver_bfs": "fragility.R min_flips over four-cell states with the eight FLIP_MOVES, predicate = verdict flips (p<=alpha <-> p>alpha)",
+    "kappa_ver_closed_form_audit": "significant: min{i+j : p(l-i, t+j) > alpha, 0<=i<=l, 0<=j<=n-m+i}; non-significant: min{i+j : p(l+i, t-j) <= alpha, 0<=j<=t, 0<=i<=n-m+j}; l=max(b,c), t=min(b,c); inf if empty",
+    "kappa_ver_closed_form_R": "port of fragility.R verdict_distance() (Proposition 2 scan over m')"
+  },
+  "stored_contrasts": {
+    "statsmodels_version": "0.14.6",
+    "all_18_reproduce": true,
+    "n_raw_significant": 4,
+    "n_survive_holm_18": 3,
+    "holm_survivors": [
+      "Long-tail, text | text vs none",
+      "Long-tail, text | multimodal vs none",
+      "Long-tail, all | multimodal vs none"
+    ],
+    "n_incapable_floor_above_alpha": 6,
+    "rows": [
+      {
+        "label": "Famous, image | multimodal vs text",
+        "n": 18,
+        "cells": {
+          "both": 4,
+          "arm_only": 3,
+          "ref_only": 4,
+          "neither": 7
+        },
+        "b": 3,
+        "c": 4,
+        "m": 7,
+        "diff_pt": -5.555555555555555,
+        "p": 1.0,
+        "p_stored_json": 1.0,
+        "p_statsmodels": 1.0,
+        "significant": false,
+        "floor": 0.015625,
+        "kappa_dir": 1,
+        "kappa_ver": 5,
+        "kappa_dir_bfs": 1,
+        "kappa_ver_bfs": 5,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 1.0,
+          "floor": 0.016,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Famous, image | text vs none",
+        "n": 18,
+        "cells": {
+          "both": 7,
+          "arm_only": 1,
+          "ref_only": 1,
+          "neither": 9
+        },
+        "b": 1,
+        "c": 1,
+        "m": 2,
+        "diff_pt": 0.0,
+        "p": 1.0,
+        "p_stored_json": 1.0,
+        "p_statsmodels": 1.0,
+        "significant": false,
+        "floor": 0.5,
+        "kappa_dir": 0,
+        "kappa_ver": 6,
+        "kappa_dir_bfs": 0,
+        "kappa_ver_bfs": 6,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 1.0,
+          "floor": 0.5,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Famous, image | multimodal vs none",
+        "n": 18,
+        "cells": {
+          "both": 4,
+          "arm_only": 3,
+          "ref_only": 4,
+          "neither": 7
+        },
+        "b": 3,
+        "c": 4,
+        "m": 7,
+        "diff_pt": -5.555555555555555,
+        "p": 1.0,
+        "p_stored_json": 1.0,
+        "p_statsmodels": 1.0,
+        "significant": false,
+        "floor": 0.015625,
+        "kappa_dir": 1,
+        "kappa_ver": 5,
+        "kappa_dir_bfs": 1,
+        "kappa_ver_bfs": 5,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 1.0,
+          "floor": 0.016,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Famous, text | multimodal vs text",
+        "n": 20,
+        "cells": {
+          "both": 20,
+          "arm_only": 0,
+          "ref_only": 0,
+          "neither": 0
+        },
+        "b": 0,
+        "c": 0,
+        "m": 0,
+        "diff_pt": 0.0,
+        "p": 1.0,
+        "p_stored_json": 1.0,
+        "p_statsmodels": null,
+        "significant": false,
+        "floor": 1.0,
+        "kappa_dir": 0,
+        "kappa_ver": 6,
+        "kappa_dir_bfs": 0,
+        "kappa_ver_bfs": 6,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 1.0,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Famous, text | text vs none",
+        "n": 20,
+        "cells": {
+          "both": 16,
+          "arm_only": 4,
+          "ref_only": 0,
+          "neither": 0
+        },
+        "b": 4,
+        "c": 0,
+        "m": 4,
+        "diff_pt": 20.0,
+        "p": 0.125,
+        "p_stored_json": 0.125,
+        "p_statsmodels": 0.125,
+        "significant": false,
+        "floor": 0.125,
+        "kappa_dir": 4,
+        "kappa_ver": 2,
+        "kappa_dir_bfs": 4,
+        "kappa_ver_bfs": 2,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 0.125,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Famous, text | multimodal vs none",
+        "n": 20,
+        "cells": {
+          "both": 16,
+          "arm_only": 4,
+          "ref_only": 0,
+          "neither": 0
+        },
+        "b": 4,
+        "c": 0,
+        "m": 4,
+        "diff_pt": 20.0,
+        "p": 0.125,
+        "p_stored_json": 0.125,
+        "p_statsmodels": 0.125,
+        "significant": false,
+        "floor": 0.125,
+        "kappa_dir": 4,
+        "kappa_ver": 2,
+        "kappa_dir_bfs": 4,
+        "kappa_ver_bfs": 2,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 0.125,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Famous, all | multimodal vs text",
+        "n": 38,
+        "cells": {
+          "both": 24,
+          "arm_only": 3,
+          "ref_only": 4,
+          "neither": 7
+        },
+        "b": 3,
+        "c": 4,
+        "m": 7,
+        "diff_pt": -2.6315789473684212,
+        "p": 1.0,
+        "p_stored_json": 1.0,
+        "p_statsmodels": 1.0,
+        "significant": false,
+        "floor": 0.015625,
+        "kappa_dir": 1,
+        "kappa_ver": 5,
+        "kappa_dir_bfs": 1,
+        "kappa_ver_bfs": 5,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 1.0,
+          "floor": 0.016,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Famous, all | text vs none",
+        "n": 38,
+        "cells": {
+          "both": 23,
+          "arm_only": 5,
+          "ref_only": 1,
+          "neither": 9
+        },
+        "b": 5,
+        "c": 1,
+        "m": 6,
+        "diff_pt": 10.526315789473685,
+        "p": 0.21875,
+        "p_stored_json": 0.21875,
+        "p_statsmodels": 0.21875,
+        "significant": false,
+        "floor": 0.03125,
+        "kappa_dir": 4,
+        "kappa_ver": 2,
+        "kappa_dir_bfs": 4,
+        "kappa_ver_bfs": 2,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 0.219,
+          "floor": 0.031,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Famous, all | multimodal vs none",
+        "n": 38,
+        "cells": {
+          "both": 20,
+          "arm_only": 7,
+          "ref_only": 4,
+          "neither": 7
+        },
+        "b": 7,
+        "c": 4,
+        "m": 11,
+        "diff_pt": 7.894736842105263,
+        "p": 0.548828125,
+        "p_stored_json": 0.548828125,
+        "p_statsmodels": 0.548828125,
+        "significant": false,
+        "floor": 0.0009765625,
+        "kappa_dir": 3,
+        "kappa_ver": 4,
+        "kappa_dir_bfs": 3,
+        "kappa_ver_bfs": 4,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 0.549,
+          "floor": 0.0009800000000000002,
+          "kappa_dir": 3,
+          "kappa_ver": 4,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Long-tail, image | multimodal vs text",
+        "n": 18,
+        "cells": {
+          "both": 3,
+          "arm_only": 7,
+          "ref_only": 1,
+          "neither": 7
+        },
+        "b": 7,
+        "c": 1,
+        "m": 8,
+        "diff_pt": 33.333333333333336,
+        "p": 0.0703125,
+        "p_stored_json": 0.0703125,
+        "p_statsmodels": 0.0703125,
+        "significant": false,
+        "floor": 0.0078125,
+        "kappa_dir": 6,
+        "kappa_ver": 1,
+        "kappa_dir_bfs": 6,
+        "kappa_ver_bfs": 1,
+        "holm_18": 0.984375,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 0.07,
+          "floor": 0.008,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm": 0.984
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Long-tail, image | text vs none",
+        "n": 18,
+        "cells": {
+          "both": 3,
+          "arm_only": 1,
+          "ref_only": 3,
+          "neither": 11
+        },
+        "b": 1,
+        "c": 3,
+        "m": 4,
+        "diff_pt": -11.11111111111111,
+        "p": 0.625,
+        "p_stored_json": 0.625,
+        "p_statsmodels": 0.625,
+        "significant": false,
+        "floor": 0.125,
+        "kappa_dir": 2,
+        "kappa_ver": 4,
+        "kappa_dir_bfs": 2,
+        "kappa_ver_bfs": 4,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 0.625,
+          "floor": 0.125,
+          "kappa_dir": 2,
+          "kappa_ver": 4,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Long-tail, image | multimodal vs none",
+        "n": 18,
+        "cells": {
+          "both": 4,
+          "arm_only": 6,
+          "ref_only": 2,
+          "neither": 6
+        },
+        "b": 6,
+        "c": 2,
+        "m": 8,
+        "diff_pt": 22.22222222222222,
+        "p": 0.2890625,
+        "p_stored_json": 0.2890625,
+        "p_statsmodels": 0.2890625,
+        "significant": false,
+        "floor": 0.0078125,
+        "kappa_dir": 4,
+        "kappa_ver": 2,
+        "kappa_dir_bfs": 4,
+        "kappa_ver_bfs": 2,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 0.289,
+          "floor": 0.008,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Long-tail, text | multimodal vs text",
+        "n": 20,
+        "cells": {
+          "both": 20,
+          "arm_only": 0,
+          "ref_only": 0,
+          "neither": 0
+        },
+        "b": 0,
+        "c": 0,
+        "m": 0,
+        "diff_pt": 0.0,
+        "p": 1.0,
+        "p_stored_json": 1.0,
+        "p_statsmodels": null,
+        "significant": false,
+        "floor": 1.0,
+        "kappa_dir": 0,
+        "kappa_ver": 6,
+        "kappa_dir_bfs": 0,
+        "kappa_ver_bfs": 6,
+        "holm_18": 1.0,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 1.0,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm": 1.0
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Long-tail, text | text vs none",
+        "n": 20,
+        "cells": {
+          "both": 8,
+          "arm_only": 12,
+          "ref_only": 0,
+          "neither": 0
+        },
+        "b": 12,
+        "c": 0,
+        "m": 12,
+        "diff_pt": 60.0,
+        "p": 0.00048828125,
+        "p_stored_json": 0.00048828125,
+        "p_statsmodels": 0.00048828125,
+        "significant": true,
+        "floor": 0.00048828125,
+        "kappa_dir": 12,
+        "kappa_ver": 4,
+        "kappa_dir_bfs": 12,
+        "kappa_ver_bfs": 4,
+        "holm_18": 0.00830078125,
+        "survives_holm_18": true,
+        "printed_in_manuscript_table": {
+          "p": 0.0004900000000000001,
+          "floor": 0.0004900000000000001,
+          "kappa_dir": 12,
+          "kappa_ver": 4,
+          "holm": 0.008
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Long-tail, text | multimodal vs none",
+        "n": 20,
+        "cells": {
+          "both": 8,
+          "arm_only": 12,
+          "ref_only": 0,
+          "neither": 0
+        },
+        "b": 12,
+        "c": 0,
+        "m": 12,
+        "diff_pt": 60.0,
+        "p": 0.00048828125,
+        "p_stored_json": 0.00048828125,
+        "p_statsmodels": 0.00048828125,
+        "significant": true,
+        "floor": 0.00048828125,
+        "kappa_dir": 12,
+        "kappa_ver": 4,
+        "kappa_dir_bfs": 12,
+        "kappa_ver_bfs": 4,
+        "holm_18": 0.00830078125,
+        "survives_holm_18": true,
+        "printed_in_manuscript_table": {
+          "p": 0.0004900000000000001,
+          "floor": 0.0004900000000000001,
+          "kappa_dir": 12,
+          "kappa_ver": 4,
+          "holm": 0.008
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Long-tail, all | multimodal vs text",
+        "n": 38,
+        "cells": {
+          "both": 23,
+          "arm_only": 7,
+          "ref_only": 1,
+          "neither": 7
+        },
+        "b": 7,
+        "c": 1,
+        "m": 8,
+        "diff_pt": 15.789473684210526,
+        "p": 0.0703125,
+        "p_stored_json": 0.0703125,
+        "p_statsmodels": 0.0703125,
+        "significant": false,
+        "floor": 0.0078125,
+        "kappa_dir": 6,
+        "kappa_ver": 1,
+        "kappa_dir_bfs": 6,
+        "kappa_ver_bfs": 1,
+        "holm_18": 0.984375,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 0.07,
+          "floor": 0.008,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm": 0.984
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Long-tail, all | text vs none",
+        "n": 38,
+        "cells": {
+          "both": 11,
+          "arm_only": 13,
+          "ref_only": 3,
+          "neither": 11
+        },
+        "b": 13,
+        "c": 3,
+        "m": 16,
+        "diff_pt": 26.31578947368421,
+        "p": 0.021270751953125,
+        "p_stored_json": 0.021270751953125,
+        "p_statsmodels": 0.021270751953125,
+        "significant": true,
+        "floor": 3.0517578125e-05,
+        "kappa_dir": 10,
+        "kappa_ver": 2,
+        "kappa_dir_bfs": 10,
+        "kappa_ver_bfs": 2,
+        "holm_18": 0.319061279296875,
+        "survives_holm_18": false,
+        "printed_in_manuscript_table": {
+          "p": 0.021,
+          "floor": 3.1e-05,
+          "kappa_dir": 10,
+          "kappa_ver": 2,
+          "holm": 0.319
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      },
+      {
+        "label": "Long-tail, all | multimodal vs none",
+        "n": 38,
+        "cells": {
+          "both": 12,
+          "arm_only": 18,
+          "ref_only": 2,
+          "neither": 6
+        },
+        "b": 18,
+        "c": 2,
+        "m": 20,
+        "diff_pt": 42.10526315789474,
+        "p": 0.0004024505615234375,
+        "p_stored_json": 0.0004024505615234375,
+        "p_statsmodels": 0.0004024505615234375,
+        "significant": true,
+        "floor": 1.9073486328125e-06,
+        "kappa_dir": 16,
+        "kappa_ver": 6,
+        "kappa_dir_bfs": 16,
+        "kappa_ver_bfs": 6,
+        "holm_18": 0.007244110107421875,
+        "survives_holm_18": true,
+        "printed_in_manuscript_table": {
+          "p": 0.0004,
+          "floor": 1.8999999999999998e-06,
+          "kappa_dir": 16,
+          "kappa_ver": 6,
+          "holm": 0.007
+        },
+        "checks": {
+          "json_n": true,
+          "json_b": true,
+          "json_c": true,
+          "json_p_within_1e-9": true,
+          "json_significant": true,
+          "statsmodels_p_within_1e-12": true,
+          "tex_n": true,
+          "tex_m": true,
+          "tex_kappa_dir": true,
+          "tex_kappa_ver": true,
+          "tex_p_printed": true,
+          "tex_floor_printed": true,
+          "tex_holm_printed": true,
+          "bfs_kappa_dir": true,
+          "bfs_kappa_ver": true,
+          "R_closed_form_kappa_ver": true
+        },
+        "all_checks_pass": true
+      }
+    ]
+  },
+  "closed_form_verification": {
+    "n_values": [
+      18,
+      20,
+      38
+    ],
+    "total_discordant_pairs_checked": 1201,
+    "total_four_cell_states_checked": 13761,
+    "total_mismatches": 0,
+    "verdict": "BFS == audit closed form == R closed form on every four-cell state",
+    "per_n": {
+      "18": {
+        "n": 18,
+        "n_discordant_pairs_T_n": 190,
+        "n_four_cell_states": 1330,
+        "n_mismatches": 0,
+        "mismatches": [],
+        "max_finite_kappa_ver": 10,
+        "n_pairs_kappa_ver_infinite": 0,
+        "elapsed_s": 0.20128798484802246,
+        "monotonicity": {
+          "all_tables": {
+            "n_tables": 190,
+            "adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks": [
+              27,
+              30
+            ],
+            "n_distinct_p_exact": 80,
+            "n_distinct_p_shared_by_different_kappa_ver_exact": 3,
+            "n_tables_whose_p_is_shared_with_a_different_kappa_ver_exact": 36,
+            "if_p_is_rounded_first": {
+              "3_sig_figs": {
+                "n_distinct_p": 79,
+                "n_distinct_p_shared_by_different_kappa_ver": 3
+              },
+              "2_sig_figs": {
+                "n_distinct_p": 73,
+                "n_distinct_p_shared_by_different_kappa_ver": 7
+              },
+              "4_decimals": {
+                "n_distinct_p": 75,
+                "n_distinct_p_shared_by_different_kappa_ver": 6
+              },
+              "3_decimals": {
+                "n_distinct_p": 61,
+                "n_distinct_p_shared_by_different_kappa_ver": 10
+              }
+            }
+          },
+          "significant_tables": {
+            "n_tables": 72,
+            "adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks": [
+              17,
+              18
+            ],
+            "n_distinct_p_exact": 35,
+            "n_distinct_p_shared_by_different_kappa_ver_exact": 1,
+            "n_tables_whose_p_is_shared_with_a_different_kappa_ver_exact": 4,
+            "if_p_is_rounded_first": {
+              "3_sig_figs": {
+                "n_distinct_p": 35,
+                "n_distinct_p_shared_by_different_kappa_ver": 1
+              },
+              "2_sig_figs": {
+                "n_distinct_p": 31,
+                "n_distinct_p_shared_by_different_kappa_ver": 4
+              },
+              "4_decimals": {
+                "n_distinct_p": 30,
+                "n_distinct_p_shared_by_different_kappa_ver": 4
+              },
+              "3_decimals": {
+                "n_distinct_p": 17,
+                "n_distinct_p_shared_by_different_kappa_ver": 8
+              }
+            }
+          },
+          "non_significant_tables": {
+            "n_tables": 118,
+            "adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks": [
+              10,
+              12
+            ],
+            "n_distinct_p_exact": 45,
+            "n_distinct_p_shared_by_different_kappa_ver_exact": 2,
+            "n_tables_whose_p_is_shared_with_a_different_kappa_ver_exact": 32,
+            "if_p_is_rounded_first": {
+              "3_sig_figs": {
+                "n_distinct_p": 44,
+                "n_distinct_p_shared_by_different_kappa_ver": 2
+              },
+              "2_sig_figs": {
+                "n_distinct_p": 42,
+                "n_distinct_p_shared_by_different_kappa_ver": 3
+              },
+              "4_decimals": {
+                "n_distinct_p": 45,
+                "n_distinct_p_shared_by_different_kappa_ver": 2
+              },
+              "3_decimals": {
+                "n_distinct_p": 44,
+                "n_distinct_p_shared_by_different_kappa_ver": 2
+              }
+            }
+          }
+        },
+        "examples_same_p_different_kappa_ver": [
+          {
+            "tables": [
+              [
+                0,
+                11
+              ],
+              [
+                1,
+                14
+              ],
+              [
+                11,
+                0
+              ],
+              [
+                14,
+                1
+              ]
+            ],
+            "p": 0.0009765625,
+            "kappa_ver": [
+              3,
+              5,
+              3,
+              5
+            ]
+          },
+          {
+            "tables": [
+              [
+                0,
+                4
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                6,
+                1
+              ]
+            ],
+            "p": 0.125,
+            "kappa_ver": [
+              2,
+              1,
+              2,
+              1
+            ]
+          },
+          {
+            "tables": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                2
+              ],
+              [
+                3,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                3
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                4
+              ],
+              [
+                5,
+                5
+              ],
+              [
+                5,
+                6
+              ],
+              [
+                6,
+                5
+              ],
+              [
+                6,
+                6
+              ],
+              [
+                6,
+                7
+              ],
+              [
+                7,
+                6
+              ],
+              [
+                7,
+                7
+              ],
+              [
+                7,
+                8
+              ],
+              [
+                8,
+                7
+              ],
+              [
+                8,
+                8
+              ],
+              [
+                8,
+                9
+              ],
+              [
+                9,
+                8
+              ],
+              [
+                9,
+                9
+              ]
+            ],
+            "p": 1.0,
+            "kappa_ver": [
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              6,
+              6,
+              7,
+              6,
+              6,
+              7,
+              7,
+              7,
+              8
+            ]
+          }
+        ]
+      },
+      "20": {
+        "n": 20,
+        "n_discordant_pairs_T_n": 231,
+        "n_four_cell_states": 1771,
+        "n_mismatches": 0,
+        "mismatches": [],
+        "max_finite_kappa_ver": 11,
+        "n_pairs_kappa_ver_infinite": 0,
+        "elapsed_s": 0.3577256202697754,
+        "monotonicity": {
+          "all_tables": {
+            "n_tables": 231,
+            "adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks": [
+              29,
+              32
+            ],
+            "n_distinct_p_exact": 99,
+            "n_distinct_p_shared_by_different_kappa_ver_exact": 3,
+            "n_tables_whose_p_is_shared_with_a_different_kappa_ver_exact": 39,
+            "if_p_is_rounded_first": {
+              "3_sig_figs": {
+                "n_distinct_p": 98,
+                "n_distinct_p_shared_by_different_kappa_ver": 3
+              },
+              "2_sig_figs": {
+                "n_distinct_p": 89,
+                "n_distinct_p_shared_by_different_kappa_ver": 7
+              },
+              "4_decimals": {
+                "n_distinct_p": 90,
+                "n_distinct_p_shared_by_different_kappa_ver": 6
+              },
+              "3_decimals": {
+                "n_distinct_p": 71,
+                "n_distinct_p_shared_by_different_kappa_ver": 10
+              }
+            }
+          },
+          "significant_tables": {
+            "n_tables": 94,
+            "adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks": [
+              18,
+              19
+            ],
+            "n_distinct_p_exact": 46,
+            "n_distinct_p_shared_by_different_kappa_ver_exact": 1,
+            "n_tables_whose_p_is_shared_with_a_different_kappa_ver_exact": 4,
+            "if_p_is_rounded_first": {
+              "3_sig_figs": {
+                "n_distinct_p": 46,
+                "n_distinct_p_shared_by_different_kappa_ver": 1
+              },
+              "2_sig_figs": {
+                "n_distinct_p": 41,
+                "n_distinct_p_shared_by_different_kappa_ver": 3
+              },
+              "4_decimals": {
+                "n_distinct_p": 37,
+                "n_distinct_p_shared_by_different_kappa_ver": 4
+              },
+              "3_decimals": {
+                "n_distinct_p": 19,
+                "n_distinct_p_shared_by_different_kappa_ver": 8
+              }
+            }
+          },
+          "non_significant_tables": {
+            "n_tables": 137,
+            "adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks": [
+              11,
+              13
+            ],
+            "n_distinct_p_exact": 53,
+            "n_distinct_p_shared_by_different_kappa_ver_exact": 2,
+            "n_tables_whose_p_is_shared_with_a_different_kappa_ver_exact": 35,
+            "if_p_is_rounded_first": {
+              "3_sig_figs": {
+                "n_distinct_p": 52,
+                "n_distinct_p_shared_by_different_kappa_ver": 2
+              },
+              "2_sig_figs": {
+                "n_distinct_p": 48,
+                "n_distinct_p_shared_by_different_kappa_ver": 4
+              },
+              "4_decimals": {
+                "n_distinct_p": 53,
+                "n_distinct_p_shared_by_different_kappa_ver": 2
+              },
+              "3_decimals": {
+                "n_distinct_p": 52,
+                "n_distinct_p_shared_by_different_kappa_ver": 2
+              }
+            }
+          }
+        },
+        "examples_same_p_different_kappa_ver": [
+          {
+            "tables": [
+              [
+                0,
+                11
+              ],
+              [
+                1,
+                14
+              ],
+              [
+                11,
+                0
+              ],
+              [
+                14,
+                1
+              ]
+            ],
+            "p": 0.0009765625,
+            "kappa_ver": [
+              3,
+              4,
+              3,
+              4
+            ]
+          },
+          {
+            "tables": [
+              [
+                0,
+                4
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                6,
+                1
+              ]
+            ],
+            "p": 0.125,
+            "kappa_ver": [
+              2,
+              1,
+              2,
+              1
+            ]
+          },
+          {
+            "tables": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                2
+              ],
+              [
+                3,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                3
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                4
+              ],
+              [
+                5,
+                5
+              ],
+              [
+                5,
+                6
+              ],
+              [
+                6,
+                5
+              ],
+              [
+                6,
+                6
+              ],
+              [
+                6,
+                7
+              ],
+              [
+                7,
+                6
+              ],
+              [
+                7,
+                7
+              ],
+              [
+                7,
+                8
+              ],
+              [
+                8,
+                7
+              ],
+              [
+                8,
+                8
+              ],
+              [
+                8,
+                9
+              ],
+              [
+                9,
+                8
+              ],
+              [
+                9,
+                9
+              ],
+              [
+                9,
+                10
+              ],
+              [
+                10,
+                9
+              ],
+              [
+                10,
+                10
+              ]
+            ],
+            "p": 1.0,
+            "kappa_ver": [
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              6,
+              6,
+              7,
+              6,
+              6,
+              7,
+              7,
+              7,
+              8,
+              7,
+              7,
+              8
+            ]
+          }
+        ]
+      },
+      "38": {
+        "n": 38,
+        "n_discordant_pairs_T_n": 780,
+        "n_four_cell_states": 10660,
+        "n_mismatches": 0,
+        "mismatches": [],
+        "max_finite_kappa_ver": 26,
+        "n_pairs_kappa_ver_infinite": 0,
+        "elapsed_s": 16.440698385238647,
+        "monotonicity": {
+          "all_tables": {
+            "n_tables": 780,
+            "adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks": [
+              138,
+              147
+            ],
+            "n_distinct_p_exact": 358,
+            "n_distinct_p_shared_by_different_kappa_ver_exact": 5,
+            "n_tables_whose_p_is_shared_with_a_different_kappa_ver_exact": 74,
+            "if_p_is_rounded_first": {
+              "3_sig_figs": {
+                "n_distinct_p": 350,
+                "n_distinct_p_shared_by_different_kappa_ver": 10
+              },
+              "2_sig_figs": {
+                "n_distinct_p": 261,
+                "n_distinct_p_shared_by_different_kappa_ver": 60
+              },
+              "4_decimals": {
+                "n_distinct_p": 232,
+                "n_distinct_p_shared_by_different_kappa_ver": 15
+              },
+              "3_decimals": {
+                "n_distinct_p": 168,
+                "n_distinct_p_shared_by_different_kappa_ver": 24
+              }
+            }
+          },
+          "significant_tables": {
+            "n_tables": 434,
+            "adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks": [
+              95,
+              98
+            ],
+            "n_distinct_p_exact": 214,
+            "n_distinct_p_shared_by_different_kappa_ver_exact": 3,
+            "n_tables_whose_p_is_shared_with_a_different_kappa_ver_exact": 12,
+            "if_p_is_rounded_first": {
+              "3_sig_figs": {
+                "n_distinct_p": 212,
+                "n_distinct_p_shared_by_different_kappa_ver": 4
+              },
+              "2_sig_figs": {
+                "n_distinct_p": 171,
+                "n_distinct_p_shared_by_different_kappa_ver": 28
+              },
+              "4_decimals": {
+                "n_distinct_p": 89,
+                "n_distinct_p_shared_by_different_kappa_ver": 13
+              },
+              "3_decimals": {
+                "n_distinct_p": 34,
+                "n_distinct_p_shared_by_different_kappa_ver": 18
+              }
+            }
+          },
+          "non_significant_tables": {
+            "n_tables": 346,
+            "adjacent_inversions_of_kappa_ver_in_p_order_min_max_over_tie_breaks": [
+              43,
+              49
+            ],
+            "n_distinct_p_exact": 144,
+            "n_distinct_p_shared_by_different_kappa_ver_exact": 2,
+            "n_tables_whose_p_is_shared_with_a_different_kappa_ver_exact": 62,
+            "if_p_is_rounded_first": {
+              "3_sig_figs": {
+                "n_distinct_p": 138,
+                "n_distinct_p_shared_by_different_kappa_ver": 6
+              },
+              "2_sig_figs": {
+                "n_distinct_p": 90,
+                "n_distinct_p_shared_by_different_kappa_ver": 32
+              },
+              "4_decimals": {
+                "n_distinct_p": 143,
+                "n_distinct_p_shared_by_different_kappa_ver": 2
+              },
+              "3_decimals": {
+                "n_distinct_p": 134,
+                "n_distinct_p_shared_by_different_kappa_ver": 6
+              }
+            }
+          }
+        },
+        "examples_same_p_different_kappa_ver": [
+          {
+            "tables": [
+              [
+                0,
+                26
+              ],
+              [
+                1,
+                30
+              ],
+              [
+                26,
+                0
+              ],
+              [
+                30,
+                1
+              ]
+            ],
+            "p": 2.9802e-08,
+            "kappa_ver": [
+              14,
+              17,
+              14,
+              17
+            ]
+          },
+          {
+            "tables": [
+              [
+                0,
+                12
+              ],
+              [
+                3,
+                20
+              ],
+              [
+                12,
+                0
+              ],
+              [
+                20,
+                3
+              ]
+            ],
+            "p": 0.00048828125,
+            "kappa_ver": [
+              4,
+              6,
+              4,
+              6
+            ]
+          },
+          {
+            "tables": [
+              [
+                0,
+                11
+              ],
+              [
+                1,
+                14
+              ],
+              [
+                11,
+                0
+              ],
+              [
+                14,
+                1
+              ]
+            ],
+            "p": 0.0009765625,
+            "kappa_ver": [
+              3,
+              4,
+              3,
+              4
+            ]
+          },
+          {
+            "tables": [
+              [
+                0,
+                4
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                4,
+                0
+              ],
+              [
+                6,
+                1
+              ]
+            ],
+            "p": 0.125,
+            "kappa_ver": [
+              2,
+              1,
+              2,
+              1
+            ]
+          },
+          {
+            "tables": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                2
+              ],
+              [
+                3,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                3
+              ],
+              [
+                4,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                4
+              ],
+              [
+                5,
+                5
+              ],
+              [
+                5,
+                6
+              ],
+              [
+                6,
+                5
+              ],
+              [
+                6,
+                6
+              ],
+              [
+                6,
+                7
+              ],
+              [
+                7,
+                6
+              ],
+              [
+                7,
+                7
+              ],
+              [
+                7,
+                8
+              ],
+              [
+                8,
+                7
+              ],
+              [
+                8,
+                8
+              ],
+              [
+                8,
+                9
+              ],
+              [
+                9,
+                8
+              ],
+              [
+                9,
+                9
+              ],
+              [
+                9,
+                10
+              ],
+              [
+                10,
+                9
+              ],
+              [
+                10,
+                10
+              ],
+              [
+                10,
+                11
+              ],
+              [
+                11,
+                10
+              ],
+              [
+                11,
+                11
+              ],
+              [
+                11,
+                12
+              ],
+              [
+                12,
+                11
+              ],
+              [
+                12,
+                12
+              ],
+              [
+                12,
+                13
+              ],
+              [
+                13,
+                12
+              ],
+              [
+                13,
+                13
+              ],
+              [
+                13,
+                14
+              ],
+              [
+                14,
+                13
+              ],
+              [
+                14,
+                14
+              ],
+              [
+                14,
+                15
+              ],
+              [
+                15,
+                14
+              ],
+              [
+                15,
+                15
+              ],
+              [
+                15,
+                16
+              ],
+              [
+                16,
+                15
+              ],
+              [
+                16,
+                16
+              ],
+              [
+                16,
+                17
+              ],
+              [
+                17,
+                16
+              ],
+              [
+                17,
+                17
+              ],
+              [
+                17,
+                18
+              ],
+              [
+                18,
+                17
+              ],
+              [
+                18,
+                18
+              ],
+              [
+                18,
+                19
+              ],
+              [
+                19,
+                18
+              ],
+              [
+                19,
+                19
+              ]
+            ],
+            "p": 1.0,
+            "kappa_ver": [
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              5,
+              5,
+              6,
+              6,
+              6,
+              7,
+              6,
+              6,
+              7,
+              7,
+              7,
+              8,
+              7,
+              7,
+              8,
+              8,
+              8,
+              9,
+              8,
+              8,
+              9,
+              8,
+              8,
+              9,
+              9,
+              9,
+              10,
+              9,
+              9,
+              10,
+              10,
+              10,
+              11,
+              10,
+              10,
+              11,
+              10,
+              10,
+              11,
+              11,
+              11,
+              12
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "wall_clock_s": 18.57795810699463
+}

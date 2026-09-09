@@ -48,3 +48,6 @@ checks.
 | `data/e-naive/naive.json` | 1 | 0 | `18aaf726056bd651…` | `283ce11222a77f46…` |
 | `data/e-simple/simple.json` | 1 | 0 | `1d85e81ec46761bd…` | `33f67068f00a3e8c…` |
 | `data/e-primary/paper_primary.json` | 1 | 0 | `f9f6110a3dd5455a…` | `d6f6053440c0ce6b…` |
+| `data/e-audit-s1/closed_form_verification.json` | 6 | 0 | `cf81a7052742c061…` | `c9054a7ae3bc11a7…` |
+| `data/e-audit-s2/regrade_consequences.json` | 6 | 0 | `20cef283cc7c5253…` | `48a1b060a5d2a3e1…` |
+| `data/e-audit-s4/simulation_summary.json` | 1 | 1 | `fbebad1719462474…` | `7d0ff852cf53b094…` |

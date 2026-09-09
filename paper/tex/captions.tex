@@ -22,18 +22,45 @@ for multimodal/text/none retrieval.%
 }
 
 \newcommand{\CapRegrade}{%
-One answer, and the conclusion it carries. The same \RegradeAnswers{} answers of
-a question-answering evaluation were scored by \Graders{} graders, which agree
-on all but \RegradeContested{} of them. The single disagreement is reported only
-in aggregate; its question key, answer string, and gold value remain in the
-private evidence. Panel A gives the number of
-answers graded correct under each retrieval condition on the \SubsetN{}
-image-dependent questions of the widely-documented-entity set, under both
-graders; only the multimodal condition moves, and it moves by one answer. Panel
-B gives the contrast those counts produce. Under the stored grader the
-multimodal condition is behind the text-only one; under the numeric-tolerant
-grader the two are exactly level. Neither grader is endorsed here. The point is
-that the reported direction is decided by which one is used.%
+Of the \RegradeContested{} disagreements, \RegradeImageFlip{} carries the harm contrast. The same
+\RegradeAnswers{} answers of a question-answering evaluation were scored by
+\Graders{} nested string rules, which agree on all but \RegradeContested{} of
+them. The disagreements are reported only in aggregate; question keys, answer
+strings, and gold values remain in the private evidence. Panel A gives the
+number of answers graded correct under each retrieval condition on the
+\SubsetN{} image-dependent questions of the widely-documented-entity set, under
+the stored rule and the numeric-tolerant nested rule; only the multimodal
+condition moves, and it moves by \RegradeImageFlip{} answer. Panel B gives the contrast those
+counts produce. Under the stored rule the multimodal condition is behind the
+text-only one; under the numeric-tolerant rule the two are exactly level.
+Neither rule is endorsed here. The point is that the reported direction is
+decided by which one is used.%
+}
+
+\newcommand{\CapOperating}{%
+How often a significant verdict at these sizes rests on one grading. Each point
+is the share of simulated paired Bernoulli tables, among those with exact
+\(p\le\AlphaLevel{}\), whose verdict distance is one or at most two, plotted
+against the number of paired items. The underlying grid is \SimTables{} tables
+with \SimReps{} replicates per feasible cell. At the \(n\) of this evaluation
+the one-grading share is \FragileGivenSigNThirtyEight{}; at the image-subset
+size it is \FragileGivenSigNEighteen{}. Both fall as \(n\) grows. The distances
+are the closed form checked against exhaustive search, not a new search.%
+}
+
+\newcommand{\CapFlipSummary}{%
+The minimum gradings needed to overturn the three pre-registered claims, shown
+under the stored strict grader and the numeric-tolerant nested grader. The first
+two rows are direction distances for the widely-documented harm and
+less-documented help contrasts; the third is the verdict distance for the
+less-documented text-only contrast. Both columns are raw per-contrast distances;
+Holm survival is a separate family-level condition and is reported for the
+stored grader independently. The numeric-tolerant grader makes the harm contrast exactly level,
+so its direction distance changes to \SummaryHarmNumeric{}; the help direction
+remains \SummaryHelpNumeric{}, while the long-tail text verdict changes from
+\SummarySigStrict{} to \SummarySigNumeric{}.
+These are the same fixed paired tables and estimands as the main analysis,
+conditioned on grader rather than a new test.
 }
 
 \newcommand{\CapFloor}{%
@@ -177,17 +204,17 @@ binomial and can be read off by anyone comparing two systems on shared items.%
 }
 
 \newcommand{\CapGradersTable}{%
-The same answers under \Graders{} grading rules. Every answer of both question
-sets was scored against its gold string three ways --- exact match, substring
-match, and a rule tolerant of numeric formatting --- and the table gives the
-accuracy each rule produces for each retrieval condition, on the image-dependent
-and text-answerable splits of both sets. Eleven of the twelve rows are identical
-across the three rules. The exception is the multimodal condition on the
-image-dependent split of the widely-documented set, where the numeric-tolerant
-rule scores one more answer correct than the other two, and that single answer
-is the one the rest of this paper is about. The table is included so that claim
-can be checked rather than accepted: the disagreement between graders is visible
-here as the only place any number moves.%
+The same answers under \Graders{} nested string rules. Every answer of both
+question sets was scored against its gold string three ways --- exact match,
+substring match, and a rule tolerant of numeric formatting --- and the table
+gives the accuracy each rule produces for each retrieval condition, on the
+image-dependent and text-answerable splits of both sets. \RegradeIdenticalRows{}
+of the twelve rows are identical across the three rules. \RegradeMovingRows{}
+move: the multimodal condition on the image-dependent split of the
+widely-documented set, and the no-retrieval condition on the text split of the
+less-documented set. The table is included so that claim can be checked rather
+than accepted: the disagreement between nested rules is visible here as the
+only places any number moves.%
 }
 
 \newcommand{\CapCandidatesTable}{%

@@ -6,7 +6,7 @@ E-LONGTAIL	data/e-longtail/raw_responses.jsonl	per_record	the same rows for the 
 E-FAMOUS-SUMMARY	data/e-famous-summary/summary.json	derived_table	the accuracies the famous run recorded for itself, and the settings it ran under
 E-LONGTAIL-SUMMARY	data/e-longtail-summary/summary.json	derived_table	the same for the long-tail run
 E-STATS	data/e-stats/inferential_stats.json	derived_table	the six paired contrasts the project reported, with the exact test and the intervals it computed for each
-E-REGRADE	data/e-regrade/regrade_independent.json	derived_table	the same rows scored by three graders, and the single answer on which they disagree
+E-REGRADE	data/e-regrade/regrade_independent.json	derived_table	the same rows scored by three nested string rules; the stored file enumerates image-subset flips only
 E-MEASURE	data/e-measure/paper_measurement_caption_condition.json	recorded_state	the measurement table as the project fixed it, with its own statement of what it does not establish
 E-EXECUTED	data/e-executed/executed.json	recorded_state	the record of which caption source was used and which was declined, with the accuracy the declined one gave
 E-RETRIEVAL	data/e-retrieval/p006b_retrieval_38_38.json	derived_table	the retrieval footnote, recorded with the index state that keeps it a footnote
@@ -16,3 +16,7 @@ E-SIMPLE	data/e-simple/simple.json	recorded_state	the multimodal retrieval tier,
 E-PRIMARY	data/e-primary/paper_primary.json	recorded_state	the reference-comparison tier, recorded as partial with the reason and the instruction not to forge the missing part
 E-SOTA	data/e-sota/sota_copy.json	recorded_state	the full-replication tier, recorded as blocked on data that was never downloaded
 E-BLOCKER	data/e-blocker/llm_qa_blocker.json	recorded_state	the blocked question-answering component, recording the unreachable service and that no score was invented in its place
+E-AUDIT-S1	data/e-audit-s1/closed_form_verification.json	derived_table	exhaustive identity of BFS, the two-index closed form, and the paper's own scan on every four-cell state of the three designs
+E-AUDIT-S2	data/e-audit-s2/regrade_consequences.json	derived_table	the three nested string rules scored on all 228 answers, and the Holm family under each rule
+E-AUDIT-S3	data/e-audit-s3/judge_summary.json	derived_table	two local instruction-model judges on the same 228 strings; no new evaluation answers
+E-AUDIT-S4	data/e-audit-s4/simulation_summary.json	derived_table	operating characteristics of the verdict distance on 840000 paired Bernoulli tables

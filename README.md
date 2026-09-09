@@ -1,6 +1,6 @@
 # Count the gradings, not the questions: how far each conclusion of a small paired evaluation is from being overturned
 
-Per-answer question-answering records under three retrieval conditions, the recorded paired contrasts, an independent three-grader regrade, figure code and manuscript source for a study that computes, by exhaustive search, the smallest number of individual gradings that would overturn the direction and separately the verdict of every contrast the evaluation reported.
+Per-answer question-answering records under three retrieval conditions, paired contrasts, an independent three-grader regrade, minimum-flip and leave-one-out summaries, figure code and manuscript source for a fragility audit that computes the smallest number of individual gradings that would overturn each reported direction or verdict. Local KG results are not DocBench accuracy.
 
 Archived at [10.5281/zenodo.22647028](https://doi.org/10.5281/zenodo.22647028).
 
@@ -11,7 +11,7 @@ Repository: https://github.com/PeterPonyu/minimum-flip-set-audit
 - `paper/tex/` — manuscript source
 - `paper/figs/` — the R code that draws the figures and writes the printed numbers
 - `paper/evidence/` — a file list with SHA-256 hashes
-- `data/` — the 15 data files named in that list
+- `data/` — the 19 data files named in that list
 
 ## Not included
 

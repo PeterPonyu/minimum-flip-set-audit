@@ -53,7 +53,8 @@ bound_digest <- function(manifest, id) {
   row$sha256[[1]]
 }
 
-# The manifest, as an appendix table.
+# The manifest binding is retained for sidecar verification. It is not emitted
+# as a reader-facing appendix table; publication text uses evidence IDs.
 #
 # The methods section asserts that every artifact is digest-bound; this prints
 # the bindings so a reader can check the assertion instead of taking it. Two

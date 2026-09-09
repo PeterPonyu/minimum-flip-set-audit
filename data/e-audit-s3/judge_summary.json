@@ -1,0 +1,985 @@
+{
+  "experiment": "S3 LLM judge summary",
+  "written_utc": "2026-09-08T05:37:09Z",
+  "versions": {
+    "python": "3.13.5",
+    "python_full": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:09:02) [GCC 11.2.0]",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+    "numpy": "2.2.6",
+    "scipy": "1.16.3"
+  },
+  "seeds": {
+    "ollama_seed": 20260907
+  },
+  "server_started_by_this_script": true,
+  "server_stopped_by_this_script": true,
+  "wall_clock_s_total": 119.0607008934021,
+  "judges": [
+    {
+      "model": "qwen2.5:7b-instruct-q8_0",
+      "digest": "2d9500c948416525a044cc51a47a1ef93deb045aebf2f61e8d6b3ac3a3cf2290",
+      "file": "llm_judge_qwen2.5_7b-instruct-q8_0.json",
+      "n_unparsed": 0,
+      "cohen_kappa": {
+        "judge_vs_strict": 0.9713567839195979,
+        "judge_vs_substr": 0.9713567839195979,
+        "judge_vs_numeric": 0.9324415848289875,
+        "judge_vs_yearsafe_f1": 0.9614994934143869
+      },
+      "n_disagree": {
+        "judge_vs_strict": 3,
+        "judge_vs_substr": 3,
+        "judge_vs_numeric": 7,
+        "judge_vs_yearsafe_f1": 4
+      },
+      "summary_under_judge": {
+        "n_raw_significant": 4,
+        "raw_significant": [
+          "Long-tail, text | text vs none",
+          "Long-tail, text | multimodal vs none",
+          "Long-tail, all | text vs none",
+          "Long-tail, all | multimodal vs none"
+        ],
+        "n_survive_holm_18": 3,
+        "holm_18_survivors": [
+          "Long-tail, text | text vs none",
+          "Long-tail, text | multimodal vs none",
+          "Long-tail, all | multimodal vs none"
+        ]
+      },
+      "contrasts_under_judge": [
+        {
+          "label": "Famous, image | multimodal vs text",
+          "n": 18,
+          "b": 3,
+          "c": 3,
+          "m": 6,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 3,
+            "ref_only": 3,
+            "neither": 8
+          },
+          "capable": true
+        },
+        {
+          "label": "Famous, image | text vs none",
+          "n": 18,
+          "b": 0,
+          "c": 1,
+          "m": 1,
+          "diff_pt": -5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 7,
+            "arm_only": 0,
+            "ref_only": 1,
+            "neither": 10
+          },
+          "capable": false
+        },
+        {
+          "label": "Famous, image | multimodal vs none",
+          "n": 18,
+          "b": 3,
+          "c": 4,
+          "m": 7,
+          "diff_pt": -5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.015625,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 3,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true
+        },
+        {
+          "label": "Famous, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false
+        },
+        {
+          "label": "Famous, text | text vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false
+        },
+        {
+          "label": "Famous, text | multimodal vs none",
+          "n": 20,
+          "b": 4,
+          "c": 0,
+          "m": 4,
+          "diff_pt": 20.0,
+          "p": 0.125,
+          "significant": false,
+          "floor": 0.125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 16,
+            "arm_only": 4,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false
+        },
+        {
+          "label": "Famous, all | multimodal vs text",
+          "n": 38,
+          "b": 3,
+          "c": 3,
+          "m": 6,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 24,
+            "arm_only": 3,
+            "ref_only": 3,
+            "neither": 8
+          },
+          "capable": true
+        },
+        {
+          "label": "Famous, all | text vs none",
+          "n": 38,
+          "b": 4,
+          "c": 1,
+          "m": 5,
+          "diff_pt": 7.894736842105263,
+          "p": 0.375,
+          "significant": false,
+          "floor": 0.0625,
+          "kappa_dir": 3,
+          "kappa_ver": 3,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 4,
+            "ref_only": 1,
+            "neither": 10
+          },
+          "capable": false
+        },
+        {
+          "label": "Famous, all | multimodal vs none",
+          "n": 38,
+          "b": 7,
+          "c": 4,
+          "m": 11,
+          "diff_pt": 7.894736842105263,
+          "p": 0.548828125,
+          "significant": false,
+          "floor": 0.0009765625,
+          "kappa_dir": 3,
+          "kappa_ver": 4,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 7,
+            "ref_only": 4,
+            "neither": 7
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, image | multimodal vs text",
+          "n": 18,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 33.333333333333336,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 0.984375,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 7
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 2,
+          "m": 3,
+          "diff_pt": -5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.25,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 1,
+            "ref_only": 2,
+            "neither": 12
+          },
+          "capable": false
+        },
+        {
+          "label": "Long-tail, image | multimodal vs none",
+          "n": 18,
+          "b": 7,
+          "c": 2,
+          "m": 9,
+          "diff_pt": 27.77777777777778,
+          "p": 0.1796875,
+          "significant": false,
+          "floor": 0.00390625,
+          "kappa_dir": 5,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 3,
+            "arm_only": 7,
+            "ref_only": 2,
+            "neither": 6
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false
+        },
+        {
+          "label": "Long-tail, text | text vs none",
+          "n": 20,
+          "b": 11,
+          "c": 0,
+          "m": 11,
+          "diff_pt": 55.0,
+          "p": 0.0009765625,
+          "significant": true,
+          "floor": 0.0009765625,
+          "kappa_dir": 11,
+          "kappa_ver": 3,
+          "holm_18": 0.0166015625,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 9,
+            "arm_only": 11,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, text | multimodal vs none",
+          "n": 20,
+          "b": 11,
+          "c": 0,
+          "m": 11,
+          "diff_pt": 55.0,
+          "p": 0.0009765625,
+          "significant": true,
+          "floor": 0.0009765625,
+          "kappa_dir": 11,
+          "kappa_ver": 3,
+          "holm_18": 0.0166015625,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 9,
+            "arm_only": 11,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, all | multimodal vs text",
+          "n": 38,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 15.789473684210526,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 0.984375,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 23,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 7
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, all | text vs none",
+          "n": 38,
+          "b": 12,
+          "c": 2,
+          "m": 14,
+          "diff_pt": 26.31578947368421,
+          "p": 0.012939453125,
+          "significant": true,
+          "floor": 0.0001220703125,
+          "kappa_dir": 10,
+          "kappa_ver": 2,
+          "holm_18": 0.194091796875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 12,
+            "arm_only": 12,
+            "ref_only": 2,
+            "neither": 12
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, all | multimodal vs none",
+          "n": 38,
+          "b": 18,
+          "c": 2,
+          "m": 20,
+          "diff_pt": 42.10526315789474,
+          "p": 0.0004024505615234375,
+          "significant": true,
+          "floor": 1.9073486328125e-06,
+          "kappa_dir": 16,
+          "kappa_ver": 6,
+          "holm_18": 0.007244110107421875,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 12,
+            "arm_only": 18,
+            "ref_only": 2,
+            "neither": 6
+          },
+          "capable": true
+        }
+      ],
+      "timing": {
+        "wall_clock_s_incl_warmup": 39.31853270530701,
+        "mean_call_s": 0.1622556678035803,
+        "gpu_before": "1821 MiB, 24463 MiB, 49 %",
+        "gpu_during": "9733 MiB, 24463 MiB, 83 %"
+      }
+    },
+    {
+      "model": "llama3.1:8b-instruct-q8_0",
+      "digest": "b158ded76fa05be6bce8a682099ce5df8c5571340a04cf63a2923464679db576",
+      "file": "llm_judge_llama3.1_8b-instruct-q8_0.json",
+      "n_unparsed": 0,
+      "cohen_kappa": {
+        "judge_vs_strict": 0.9145427286356821,
+        "judge_vs_substr": 0.9145427286356821,
+        "judge_vs_numeric": 0.8944977284199899,
+        "judge_vs_yearsafe_f1": 0.9234642497482377
+      },
+      "n_disagree": {
+        "judge_vs_strict": 9,
+        "judge_vs_substr": 9,
+        "judge_vs_numeric": 11,
+        "judge_vs_yearsafe_f1": 8
+      },
+      "summary_under_judge": {
+        "n_raw_significant": 4,
+        "raw_significant": [
+          "Long-tail, text | text vs none",
+          "Long-tail, text | multimodal vs none",
+          "Long-tail, all | text vs none",
+          "Long-tail, all | multimodal vs none"
+        ],
+        "n_survive_holm_18": 3,
+        "holm_18_survivors": [
+          "Long-tail, text | text vs none",
+          "Long-tail, text | multimodal vs none",
+          "Long-tail, all | multimodal vs none"
+        ]
+      },
+      "contrasts_under_judge": [
+        {
+          "label": "Famous, image | multimodal vs text",
+          "n": 18,
+          "b": 5,
+          "c": 3,
+          "m": 8,
+          "diff_pt": 11.11111111111111,
+          "p": 0.7265625,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 2,
+          "kappa_ver": 4,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 5,
+            "ref_only": 3,
+            "neither": 6
+          },
+          "capable": true
+        },
+        {
+          "label": "Famous, image | text vs none",
+          "n": 18,
+          "b": 0,
+          "c": 1,
+          "m": 1,
+          "diff_pt": -5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 7,
+            "arm_only": 0,
+            "ref_only": 1,
+            "neither": 10
+          },
+          "capable": false
+        },
+        {
+          "label": "Famous, image | multimodal vs none",
+          "n": 18,
+          "b": 5,
+          "c": 4,
+          "m": 9,
+          "diff_pt": 5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.00390625,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 4,
+            "arm_only": 5,
+            "ref_only": 4,
+            "neither": 5
+          },
+          "capable": true
+        },
+        {
+          "label": "Famous, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false
+        },
+        {
+          "label": "Famous, text | text vs none",
+          "n": 20,
+          "b": 5,
+          "c": 0,
+          "m": 5,
+          "diff_pt": 25.0,
+          "p": 0.0625,
+          "significant": false,
+          "floor": 0.0625,
+          "kappa_dir": 5,
+          "kappa_ver": 1,
+          "holm_18": 0.875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 15,
+            "arm_only": 5,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false
+        },
+        {
+          "label": "Famous, text | multimodal vs none",
+          "n": 20,
+          "b": 5,
+          "c": 0,
+          "m": 5,
+          "diff_pt": 25.0,
+          "p": 0.0625,
+          "significant": false,
+          "floor": 0.0625,
+          "kappa_dir": 5,
+          "kappa_ver": 1,
+          "holm_18": 0.875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 15,
+            "arm_only": 5,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false
+        },
+        {
+          "label": "Famous, all | multimodal vs text",
+          "n": 38,
+          "b": 5,
+          "c": 3,
+          "m": 8,
+          "diff_pt": 5.2631578947368425,
+          "p": 0.7265625,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 2,
+          "kappa_ver": 4,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 24,
+            "arm_only": 5,
+            "ref_only": 3,
+            "neither": 6
+          },
+          "capable": true
+        },
+        {
+          "label": "Famous, all | text vs none",
+          "n": 38,
+          "b": 5,
+          "c": 1,
+          "m": 6,
+          "diff_pt": 10.526315789473685,
+          "p": 0.21875,
+          "significant": false,
+          "floor": 0.03125,
+          "kappa_dir": 4,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 22,
+            "arm_only": 5,
+            "ref_only": 1,
+            "neither": 10
+          },
+          "capable": true
+        },
+        {
+          "label": "Famous, all | multimodal vs none",
+          "n": 38,
+          "b": 10,
+          "c": 4,
+          "m": 14,
+          "diff_pt": 15.789473684210526,
+          "p": 0.1795654296875,
+          "significant": false,
+          "floor": 0.0001220703125,
+          "kappa_dir": 6,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 19,
+            "arm_only": 10,
+            "ref_only": 4,
+            "neither": 5
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, image | multimodal vs text",
+          "n": 18,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 33.333333333333336,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 0.875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 2,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 8
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, image | text vs none",
+          "n": 18,
+          "b": 1,
+          "c": 2,
+          "m": 3,
+          "diff_pt": -5.555555555555555,
+          "p": 1.0,
+          "significant": false,
+          "floor": 0.25,
+          "kappa_dir": 1,
+          "kappa_ver": 5,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 2,
+            "arm_only": 1,
+            "ref_only": 2,
+            "neither": 13
+          },
+          "capable": false
+        },
+        {
+          "label": "Long-tail, image | multimodal vs none",
+          "n": 18,
+          "b": 7,
+          "c": 2,
+          "m": 9,
+          "diff_pt": 27.77777777777778,
+          "p": 0.1796875,
+          "significant": false,
+          "floor": 0.00390625,
+          "kappa_dir": 5,
+          "kappa_ver": 2,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 2,
+            "arm_only": 7,
+            "ref_only": 2,
+            "neither": 7
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, text | multimodal vs text",
+          "n": 20,
+          "b": 0,
+          "c": 0,
+          "m": 0,
+          "diff_pt": 0.0,
+          "p": 1.0,
+          "significant": false,
+          "floor": 1.0,
+          "kappa_dir": 0,
+          "kappa_ver": 6,
+          "holm_18": 1.0,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 20,
+            "arm_only": 0,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": false
+        },
+        {
+          "label": "Long-tail, text | text vs none",
+          "n": 20,
+          "b": 11,
+          "c": 0,
+          "m": 11,
+          "diff_pt": 55.0,
+          "p": 0.0009765625,
+          "significant": true,
+          "floor": 0.0009765625,
+          "kappa_dir": 11,
+          "kappa_ver": 3,
+          "holm_18": 0.0166015625,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 9,
+            "arm_only": 11,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, text | multimodal vs none",
+          "n": 20,
+          "b": 11,
+          "c": 0,
+          "m": 11,
+          "diff_pt": 55.0,
+          "p": 0.0009765625,
+          "significant": true,
+          "floor": 0.0009765625,
+          "kappa_dir": 11,
+          "kappa_ver": 3,
+          "holm_18": 0.0166015625,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 9,
+            "arm_only": 11,
+            "ref_only": 0,
+            "neither": 0
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, all | multimodal vs text",
+          "n": 38,
+          "b": 7,
+          "c": 1,
+          "m": 8,
+          "diff_pt": 15.789473684210526,
+          "p": 0.0703125,
+          "significant": false,
+          "floor": 0.0078125,
+          "kappa_dir": 6,
+          "kappa_ver": 1,
+          "holm_18": 0.875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 22,
+            "arm_only": 7,
+            "ref_only": 1,
+            "neither": 8
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, all | text vs none",
+          "n": 38,
+          "b": 12,
+          "c": 2,
+          "m": 14,
+          "diff_pt": 26.31578947368421,
+          "p": 0.012939453125,
+          "significant": true,
+          "floor": 0.0001220703125,
+          "kappa_dir": 10,
+          "kappa_ver": 2,
+          "holm_18": 0.194091796875,
+          "survives_holm_18": false,
+          "cells": {
+            "both": 11,
+            "arm_only": 12,
+            "ref_only": 2,
+            "neither": 13
+          },
+          "capable": true
+        },
+        {
+          "label": "Long-tail, all | multimodal vs none",
+          "n": 38,
+          "b": 18,
+          "c": 2,
+          "m": 20,
+          "diff_pt": 42.10526315789474,
+          "p": 0.0004024505615234375,
+          "significant": true,
+          "floor": 1.9073486328125e-06,
+          "kappa_dir": 16,
+          "kappa_ver": 6,
+          "holm_18": 0.007244110107421875,
+          "survives_holm_18": true,
+          "cells": {
+            "both": 11,
+            "arm_only": 18,
+            "ref_only": 2,
+            "neither": 7
+          },
+          "capable": true
+        }
+      ],
+      "timing": {
+        "wall_clock_s_incl_warmup": 76.9278564453125,
+        "mean_call_s": 0.24866172096185518,
+        "gpu_before": "2016 MiB, 24463 MiB, 57 %",
+        "gpu_during": "10086 MiB, 24463 MiB, 80 %"
+      }
+    }
+  ],
+  "judge_vs_judge": {
+    "models": [
+      "qwen2.5:7b-instruct-q8_0",
+      "llama3.1:8b-instruct-q8_0"
+    ],
+    "cohen_kappa": {
+      "n": 228,
+      "agreement": 0.9736842105263158,
+      "n_disagree": 6,
+      "kappa": 0.9431704885343969,
+      "marginal_x": 0.6403508771929824,
+      "marginal_y": 0.631578947368421
+    },
+    "disagreements": [
+      {
+        "dataset": "famous",
+        "question_id": "T9",
+        "condition": "no_kg",
+        "response": "146. 5",
+        "gold": [
+          "146"
+        ],
+        "stored_correct": true,
+        "judge_1": "CORRECT",
+        "judge_2": "INCORRECT"
+      },
+      {
+        "dataset": "famous",
+        "question_id": "I1",
+        "condition": "multimodal_kg",
+        "response": "Gold",
+        "gold": [
+          "colorful",
+          "multicolor",
+          "multi-color",
+          "rainbow"
+        ],
+        "stored_correct": false,
+        "judge_1": "INCORRECT",
+        "judge_2": "CORRECT"
+      },
+      {
+        "dataset": "famous",
+        "question_id": "I17",
+        "condition": "multimodal_kg",
+        "response": "3.9",
+        "gold": [
+          "4",
+          "four"
+        ],
+        "stored_correct": false,
+        "judge_1": "INCORRECT",
+        "judge_2": "CORRECT"
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LI16",
+        "condition": "no_kg",
+        "response": "Glass",
+        "gold": [
+          "glass"
+        ],
+        "stored_correct": true,
+        "judge_1": "CORRECT",
+        "judge_2": "INCORRECT"
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LI16",
+        "condition": "text_kg",
+        "response": "Glass",
+        "gold": [
+          "glass"
+        ],
+        "stored_correct": true,
+        "judge_1": "CORRECT",
+        "judge_2": "INCORRECT"
+      },
+      {
+        "dataset": "longtail",
+        "question_id": "LI16",
+        "condition": "multimodal_kg",
+        "response": "Glass",
+        "gold": [
+          "glass"
+        ],
+        "stored_correct": true,
+        "judge_1": "CORRECT",
+        "judge_2": "INCORRECT"
+      }
+    ]
+  }
+}
