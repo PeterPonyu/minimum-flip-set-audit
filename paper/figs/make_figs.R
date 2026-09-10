@@ -39,6 +39,12 @@ audit_s1 <- read_bound$json("E-AUDIT-S1")
 audit_s2 <- read_bound$json("E-AUDIT-S2")
 audit_s3 <- read_bound$json("E-AUDIT-S3")
 audit_s4 <- read_bound$json("E-AUDIT-S4")
+s4_p_one <- unlist(audit_s4$headline$P_kappa_ver_eq_1_given_sig_by_n)
+s4_n_grid <- as.integer(audit_s4$design$n_grid)
+if (!all(c(200L, 500L) %in% s4_n_grid) ||
+    is.null(s4_p_one[["200"]]) || is.null(s4_p_one[["500"]])) {
+  stop("the bound S4 grid no longer records the leftover n=200/500 operating-characteristic cells")
+}
 second_predecl <- read_bound$json("E-SECOND-EVAL-PREDECL")
 second_eval <- read_bound$json("E-SECOND-EVAL")
 second_receipt <- read_bound$json("E-SECOND-EVAL-RECEIPT")
@@ -741,6 +747,10 @@ write_generated(c(
         fmt(unlist(audit_s4$headline$P_kappa_ver_eq_1_given_sig_by_n)[["18"]], 2)),
   macro("FragileGivenSigNThirtyEight",
         fmt(unlist(audit_s4$headline$P_kappa_ver_eq_1_given_sig_by_n)[["38"]], 2)),
+  macro("SimNTwoHundred", s4_n_grid[s4_n_grid == 200L]),
+  macro("SimNFiveHundred", s4_n_grid[s4_n_grid == 500L]),
+  macro("FragileGivenSigNTwoHundred", fmt(s4_p_one[["200"]], 3)),
+  macro("FragileGivenSigNFiveHundred", fmt(s4_p_one[["500"]], 3)),
   macro("SpearmanSigNThirtyEight",
         fmt(unlist(audit_s4$headline$spearman_pooled_significant_only_by_n)[["38"]], 2)),
   macro("NumericHolmLT", pval(numeric_lt$under_grader$holm_18[[1]])),
