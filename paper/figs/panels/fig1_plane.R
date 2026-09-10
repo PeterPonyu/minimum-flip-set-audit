@@ -65,8 +65,11 @@ plane_panel <- function(cells, n, kind, alpha, subject) {
   # Keep the observed table legible without asking a reader to infer its
   # coordinates from the open circle or its status from the colour legend.
   # These are labels for quantities already carried by the four-cell table:
-  # (b, c), whether the named conclusion holds there, and the existing minimum
-  # grading distance k. No new state or statistic is introduced.
+  # (b, c) and whether the named conclusion holds there; the distance is in the
+  # strip above the facet. No new state or statistic is introduced.  The text
+  # is printed in the corner above the hypotenuse, where no table exists,
+  # rather than beside the open circle, where it would cover the lattice it
+  # describes.
   observed_fails <- grid$fails[grid$b == b0 & grid$c == c0]
   if (length(observed_fails) != 1L) {
     stop("the observed table is not represented exactly once on the plane")
@@ -74,8 +77,8 @@ plane_panel <- function(cells, n, kind, alpha, subject) {
   observed_state <- if (observed_fails) "fails" else "holds"
   observed <- data.frame(
     b = b0, c = c0, panel = panel,
-    label = sprintf("observed (b,c) = (%d,%d)\n%s; distance = %d",
-                    b0, c0, observed_state, k),
+    label = sprintf("observed (b, c) = (%d, %d)\nconclusion %s here",
+                    b0, c0, observed_state),
     stringsAsFactors = FALSE
   )
 
@@ -113,18 +116,19 @@ plane_part <- function(name) {
 
 PLANE_SPAN <- max(plane_part("grid")$b, plane_part("grid")$c) + 0.7
 
+# The annotation is anchored to the top-right corner of every facet, which is
+# the same empty region in all three because they share one lattice.
+corner <- transform(plane_part("observed"), x = PLANE_SPAN - 0.4, y = PLANE_SPAN - 0.4)
+
 p <- ggplot(plane_part("grid"), aes(x = b, y = c)) +
   geom_point(aes(colour = state), size = 0.8) +
   geom_polygon(data = plane_part("ball"), fill = NA, colour = "black",
                linewidth = 0.45, linetype = "22") +
   geom_point(data = plane_part("observed"), size = 2.2, shape = 21,
              fill = "white", colour = "black", stroke = 0.7) +
-  geom_label(data = plane_part("observed"),
-             aes(x = b, y = c, label = label),
-             inherit.aes = FALSE, nudge_x = 0.75, nudge_y = 0.75,
-             hjust = 0, vjust = 0, size = 2.05, lineheight = 0.92,
-             colour = "grey20", fill = "white", alpha = 0.92,
-             linewidth = 0.15, label.padding = unit(0.11, "lines")) +
+  geom_text(data = corner, aes(x = x, y = y, label = label),
+            inherit.aes = FALSE, hjust = 1, vjust = 1,
+            size = FIGURE_ANNOTATION_SIZE, lineheight = 0.95, colour = "grey20") +
   facet_wrap(~ panel, nrow = 1) +
   scale_colour_manual(values = c("conclusion still holds" = "grey74",
                                  "conclusion fails here" = "grey20"), name = NULL) +
@@ -134,8 +138,7 @@ p <- ggplot(plane_part("grid"), aes(x = b, y = c)) +
   labs(x = "Questions the arm alone answered correctly",
        y = "Questions the reference alone answered correctly") +
   rtx_theme() +
-  theme(legend.position = "bottom", legend.text = element_text(size = 7),
-        legend.key.size = unit(9, "pt"), legend.margin = margin(t = -4),
-        strip.text = element_text(size = 8))
+  legend_bottom(legend.margin = margin(t = -1)) +
+  theme(panel.spacing.x = unit(8, "pt"))
 
-save_fig(p, "fig1_plane", width = FIGURE_TEXT_WIDTH_IN, height = 3.1)
+save_fig(p, "fig1_plane", width = FIGURE_TEXT_WIDTH_IN, height = 2.85)

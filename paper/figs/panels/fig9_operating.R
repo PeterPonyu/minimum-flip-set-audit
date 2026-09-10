@@ -22,27 +22,36 @@ if (nrow(op) != length(audit_s4$design$n_grid) ||
   stop("the simulation headline n grid does not match the recorded design")
 }
 
+EVENT_LEVELS <- c("verdict distance = 1", "verdict distance \u2264 2")
 long <- rbind(
   data.frame(n = op$n, probability = op$p_one,
-             event = "one grading", stringsAsFactors = FALSE),
+             event = EVENT_LEVELS[[1]], stringsAsFactors = FALSE),
   data.frame(n = op$n, probability = op$p_two,
-             event = "at most two", stringsAsFactors = FALSE))
-long$event <- factor(long$event, levels = c("one grading", "at most two"))
+             event = EVENT_LEVELS[[2]], stringsAsFactors = FALSE))
+long$event <- factor(long$event, levels = EVENT_LEVELS)
 
+# The two design sizes of the evaluation being audited, so the curve can be read
+# at the points where the manuscript quotes it. Both are sizes the study already
+# carries, not new quantities.
+design_sizes <- data.frame(n = c(harm$n, nrow(WIDE$famous)))
+if (!all(design_sizes$n %in% op$n)) {
+  stop("the simulation grid does not contain the evaluation's own design sizes")
+}
+
+# An operating characteristic in a single column: the curve is the object, so
+# it is drawn in grey with the two design sizes marked by thin rules.
 p <- ggplot(long, aes(x = n, y = probability, shape = event, linetype = event)) +
+  geom_vline(data = design_sizes, aes(xintercept = n), linewidth = 0.35,
+             colour = "grey35", linetype = "22", inherit.aes = FALSE) +
   geom_line(linewidth = 0.4, colour = "grey25") +
-  geom_point(size = 2.1, colour = "grey15") +
+  geom_point(size = 2, colour = "grey15", fill = "white") +
   scale_x_log10(breaks = op$n) +
   scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.25)) +
-  scale_shape_manual(values = c(16, 1), name = NULL) +
+  scale_shape_manual(values = c(16, 21), name = NULL) +
   scale_linetype_manual(values = c("solid", "22"), name = NULL) +
-  labs(x = "Paired items, n",
-       y = "Share of significant tables") +
+  labs(x = "Paired items, n", y = "Share of significant tables") +
   rtx_theme() +
-  theme(legend.position = "bottom",
-        legend.text = element_text(size = FIGURE_LEGEND_TEXT_SIZE),
-        legend.key.width = unit(18, "pt"),
-        legend.margin = margin(t = -2),
-        axis.text.x = element_text(size = 7.2, angle = 45, hjust = 1))
+  legend_bottom(legend.key.width = unit(18, "pt"), legend.margin = margin(t = -2)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-save_fig(p, "fig9_operating", width = 0.72 * FIGURE_TEXT_WIDTH_IN, height = 2.85)
+save_fig(p, "fig9_operating", width = FIGURE_SINGLE_COLUMN_WIDTH_IN, height = 2.55)

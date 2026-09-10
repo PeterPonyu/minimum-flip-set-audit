@@ -1,10 +1,11 @@
 # Figure 10. Three pre-registered minimum-flip claims under two graders.
 
+# The row labels use the same W/L, I/T/A and M/T/N key as the ladders.
 summary_specs <- data.frame(
   key = c("Harm", "Help", "Sig"),
-  label = c("Harm direction\n(W/I M vs T)",
-            "Help direction\n(L/I M vs T)",
-            "Long-tail text verdict\n(L/T T vs N)"),
+  label = c("Harm direction\nW/I M-T",
+            "Help direction\nL/I M-T",
+            "Long-tail text verdict\nL/T T-N"),
   estimand = c("direction", "direction", "verdict"),
   stringsAsFactors = FALSE
 )
@@ -25,30 +26,30 @@ grader_values <- function(grader, spec) {
 summary_rows <- do.call(rbind, lapply(seq_len(nrow(summary_specs)), function(i) {
   spec <- summary_specs[i, ]
   data.frame(label = spec$label,
-             grader = c("Stored strict", "Numeric-tolerant"),
+             grader = FIGURE_GRADER_LEVELS,
              kappa = c(grader_values("strict", spec), grader_values("numeric", spec)),
              stringsAsFactors = FALSE)
 }))
-summary_rows$label <- factor(summary_rows$label, levels = summary_specs$label)
-summary_rows$grader <- factor(summary_rows$grader,
-                              levels = c("Stored strict", "Numeric-tolerant"))
+# Rows read top to bottom in the pre-registration order, and within a row the
+# stored grader is drawn above the numeric-tolerant one.
+summary_rows$label <- factor(summary_rows$label, levels = rev(summary_specs$label))
+summary_rows$grader <- factor(summary_rows$grader, levels = rev(FIGURE_GRADER_LEVELS))
 
-p <- ggplot(summary_rows, aes(x = label, y = kappa, fill = grader)) +
-  geom_col(position = position_dodge(width = 0.72), width = 0.62,
-           colour = "grey25", linewidth = 0.2) +
-  geom_text(aes(label = kappa), position = position_dodge(width = 0.72),
-            vjust = -0.35, size = 2.8, colour = "grey20") +
-  scale_fill_manual(values = c("Stored strict" = "#2166AC",
-                               "Numeric-tolerant" = "#B2182B"), name = NULL) +
-  scale_y_continuous(breaks = 0:8, limits = c(0, 8),
+# Six bars are a single-column figure. Gradings run along the horizontal axis,
+# as they do in the flip ladder, and the two graders are the two colours the
+# regrade figure uses for them. The framing is in the caption.
+p <- ggplot(summary_rows, aes(y = label, x = kappa, fill = grader)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.6,
+           colour = "grey25", linewidth = FIGURE_HAIRLINE) +
+  geom_text(aes(label = kappa), position = position_dodge(width = 0.7),
+            hjust = -0.4, size = FIGURE_ANNOTATION_SIZE, colour = "grey20") +
+  scale_fill_manual(values = FIGURE_GRADER_COLOURS, name = NULL,
+                    breaks = FIGURE_GRADER_LEVELS) +
+  scale_x_continuous(breaks = 0:8, limits = c(0, 8),
                      expand = expansion(mult = c(0, 0.02))) +
-  labs(x = NULL, y = "Minimum gradings to overturn",
-       subtitle = "Three pre-registered claims; raw per-contrast distances (Holm survival is a separate stored condition)") +
+  labs(y = NULL, x = "Minimum gradings to overturn") +
   rtx_theme() +
-  theme(axis.text.x = element_text(size = 7.2),
-        axis.text.y = element_text(size = 7.4),
-        legend.position = "bottom", legend.text = element_text(size = 7),
-        legend.key.size = unit(9, "pt"), legend.margin = margin(t = -4),
-        plot.subtitle = element_text(size = 7.1, colour = "grey25"))
+  legend_bottom(legend.margin = margin(t = -2)) +
+  theme(panel.grid.major.y = element_blank())
 
-save_fig(p, "fig10_flip_regrade_summary", FIGURE_TEXT_WIDTH_IN, 3.4)
+save_fig(p, "fig10_flip_regrade_summary", FIGURE_SINGLE_COLUMN_WIDTH_IN, 2.35)

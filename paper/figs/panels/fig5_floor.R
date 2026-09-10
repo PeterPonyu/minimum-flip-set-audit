@@ -33,6 +33,10 @@ LIMITS <- 10^(log10(span) + c(-0.3, 0.3))
 DECADES <- 10^seq(-6, 0)
 DECADE_LABELS <- c("1e-6", "1e-5", "1e-4", "1e-3", "1e-2", "1e-1", "1")
 
+# A single-column figure, matched to the decoupling figure so the two read as a
+# pair. The shaded region, the diagonal and the threshold rules are decoded in
+# the caption; the size key omits zero because a contrast with no discordant
+# pair is the cross, not a small dot.
 p <- ggplot(floors, aes(x = floor, y = p)) +
   annotate("rect", xmin = ALPHA, xmax = LIMITS[2], ymin = LIMITS[1], ymax = LIMITS[2],
            fill = "grey88") +
@@ -42,25 +46,20 @@ p <- ggplot(floors, aes(x = floor, y = p)) +
   geom_point(aes(shape = attained, size = discordant), stroke = 0.5, alpha = 0.9) +
   scale_shape_manual(values = c(19, 1, 4), name = NULL, drop = FALSE) +
   scale_size_continuous(range = c(1.1, 3.4), name = "Discordant pairs",
-                        breaks = c(0, 4, 8, 12, 20)) +
+                        breaks = c(4, 8, 12, 20)) +
   scale_x_log10(limits = LIMITS, breaks = DECADES, labels = DECADE_LABELS,
                 expand = c(0, 0)) +
   scale_y_log10(limits = LIMITS, breaks = DECADES, labels = DECADE_LABELS,
                 expand = c(0, 0)) +
-  annotation_logticks(sides = "bl", linewidth = 0.25,
+  annotation_logticks(sides = "bl", linewidth = FIGURE_HAIRLINE,
                       short = unit(2, "pt"), mid = unit(3, "pt"), long = unit(4, "pt")) +
   coord_fixed() +
-  labs(x = "Smallest attainable p-value, fixed by the discordant count",
-       y = "p-value returned",
-       subtitle = sprintf("shaded: %d of %d could not have reached %.2f either way",
-                          sum(!floors$capable), nrow(floors), ALPHA)) +
-  guides(shape = guide_legend(order = 1, nrow = 3), size = guide_legend(order = 2, nrow = 1)) +
+  labs(x = "Smallest attainable p-value", y = "p-value returned") +
+  guides(shape = guide_legend(order = 1, ncol = 1),
+         size = guide_legend(order = 2, nrow = 1)) +
   rtx_theme() +
-  theme(plot.subtitle = element_text(size = 7, colour = "grey25"),
-        legend.position = "bottom", legend.box = "vertical",
-        legend.box.just = "left", legend.justification = "left",
-        legend.title = element_text(size = 7), legend.text = element_text(size = 7),
-        legend.key.size = unit(9, "pt"), legend.spacing.y = unit(2, "pt"),
-        legend.margin = margin(t = -2, b = 0))
+  legend_bottom(legend.box = "vertical", legend.box.just = "left",
+                legend.justification = "left", legend.spacing.y = unit(3, "pt"),
+                legend.margin = margin(t = -2))
 
-save_fig(p, "fig5_floor", width = 0.62 * FIGURE_TEXT_WIDTH_IN, height = 4.6)
+save_fig(p, "fig5_floor", width = FIGURE_SINGLE_COLUMN_WIDTH_IN, height = 3.95)

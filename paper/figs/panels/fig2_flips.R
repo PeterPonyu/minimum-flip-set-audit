@@ -33,6 +33,8 @@ long <- rbind(
   data.frame(pos = flips$pos, k = flips$k_verdict,
              which = "Verdict crosses the threshold", stringsAsFactors = FALSE))
 
+# The row key, the shaded threshold and the cross are all decoded in the
+# caption, which is the one place the figure is explained.
 p <- ggplot() +
   annotate("rect", xmin = -Inf, xmax = KILL_THRESHOLD - 0.5, ymin = -Inf, ymax = Inf,
            fill = "grey88") +
@@ -45,14 +47,9 @@ p <- ggplot() +
   scale_y_continuous(breaks = flips$pos, labels = flips$row_label, expand = c(0, 0.7)) +
   scale_x_continuous(breaks = seq(0, max(long$k), by = 2),
                      limits = c(-0.4, max(long$k) + 0.4), expand = c(0, 0)) +
-  labs(x = "Gradings that would have to have come out otherwise", y = NULL,
-       subtitle = sprintf("W/L = dataset; I/T/A = image/text/all; M/T/N = multimodal/text/none. Shaded: fewer than %d; cross: no direction.",
-                          KILL_THRESHOLD)) +
+  labs(x = "Gradings that would have to have come out otherwise", y = NULL) +
   rtx_theme() +
-  theme(plot.subtitle = element_text(size = 6.6, colour = "grey25"),
-        axis.text.y = element_text(size = 6.4),
-        panel.grid.major.y = element_blank(),
-        legend.position = "bottom", legend.text = element_text(size = 7),
-        legend.key.size = unit(9, "pt"), legend.margin = margin(t = -4))
+  legend_bottom(legend.margin = margin(t = -1)) +
+  theme(panel.grid.major.y = element_blank())
 
-save_fig(p, "fig2_flips", width = FIGURE_TEXT_WIDTH_IN, height = 4.1)
+save_fig(p, "fig2_flips", width = FIGURE_TEXT_WIDTH_IN, height = 3.6)

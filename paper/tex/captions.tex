@@ -35,8 +35,9 @@ them. The disagreements are reported only in aggregate; question keys, answer
 strings, and gold values remain in the private evidence. Panel A gives the
 number of answers graded correct under each retrieval condition on the
 \SubsetN{} image-dependent questions of the widely-documented-entity set, under
-the stored rule and the numeric-tolerant nested rule; only the multimodal
-condition moves, and it moves by \RegradeImageFlip{} answer. Panel B gives the contrast those
+the stored rule (filled marker) and the numeric-tolerant nested rule (open
+ring); where the two agree the ring sits on the dot, and only the multimodal
+condition moves, by \RegradeImageFlip{} answer. Panel B gives the contrast those
 counts produce. Under the stored rule the multimodal condition is behind the
 text-only one; under the numeric-tolerant rule the two are exactly level.
 The choice between the rules is left open; the point is that the reported
@@ -48,7 +49,9 @@ How often a significant verdict at these sizes rests on one grading. Each point
 is the share of simulated paired Bernoulli tables, among those with exact
 \(p\le\AlphaLevel{}\), whose verdict distance is one or at most two, plotted
 against the number of paired items. The underlying grid is \SimTables{} tables
-with \SimReps{} replicates per feasible cell. At the \(n\) of this evaluation
+with \SimReps{} replicates per feasible cell. The thin vertical rules mark the
+two design sizes of the evaluation audited here, \SubsetN{} image-dependent
+questions and \Questions{} questions. At the \(n\) of this evaluation
 the one-grading share is \FragileGivenSigNThirtyEight{}; at the image-subset
 size it is \FragileGivenSigNEighteen{}. Both fall as \(n\) grows. The distances
 come from the closed form, which exhaustive search confirms on every reachable
@@ -60,14 +63,15 @@ The minimum gradings needed to overturn the three pre-registered claims, shown
 under the stored strict grader and the numeric-tolerant nested grader. The first
 two rows are direction distances for the widely-documented harm and
 less-documented help contrasts; the third is the verdict distance for the
-less-documented text-only contrast. Both columns are raw per-contrast distances;
-Holm survival is a separate family-level condition and is reported for the
-stored grader independently. The numeric-tolerant grader makes the harm contrast exactly level,
-so its direction distance changes to \SummaryHarmNumeric{}; the help direction
-remains \SummaryHelpNumeric{}, while the long-tail text verdict changes from
-\SummarySigStrict{} to \SummarySigNumeric{}.
-These are the same fixed paired tables and estimands as the main analysis,
-conditioned on grader rather than a new test.
+less-documented text-only contrast, and each row carries the same W/L, I/T/A
+and M/T/N key as the contrast ladder. The bars of both graders are raw
+per-contrast distances; Holm survival is a separate family-level condition and
+is reported for the stored grader independently. The numeric-tolerant grader
+makes the harm contrast exactly level, so its direction distance changes to
+\SummaryHarmNumeric{}; the help direction remains \SummaryHelpNumeric{}, while
+the long-tail text verdict changes from \SummarySigStrict{} to
+\SummarySigNumeric{}. These are the same fixed paired tables and estimands as
+the main analysis, conditioned on grader rather than a new test.%
 }
 
 \newcommand{\CapFloor}{%
@@ -135,10 +139,11 @@ at which the conclusion named above the panel no longer holds. The open circle
 is the table the evaluation actually produced, and the dashed outline is the set
 of tables exactly as many gradings away as the nearest dark dot, cut back to the
 tables that exist, so it touches the failure region without entering it. All
-three panels are the same lattice over \SubsetN{} questions. The white annotation
-next to each open circle prints the observed discordant counts (b,c), whether
-the named conclusion holds at that table, and its existing minimum distance; it
-is a label for the observed record, not an additional state. The panel for the
+three panels are the same lattice over \SubsetN{} questions. The text in the
+empty corner of each panel prints the observed discordant counts (b,c) and
+whether the named conclusion holds at that table, and the strip above it gives
+the minimum distance; both are labels for the observed record, not an
+additional state. The panel for the
 less-documented direction and the verdict panel that reads the same table are
 the same contrast, the same four counts and the same observed point, read as
 two different claims: the direction survives \HelpK{} gradings and the

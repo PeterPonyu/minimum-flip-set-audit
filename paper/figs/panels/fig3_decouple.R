@@ -26,6 +26,8 @@ stacked <- aggregate(list(count = decoupled$n),
                      FUN = length)
 stacked <- stacked[stacked$count > 1L, ]
 
+# A single-column figure: the plane is square, so the width fixes the panel and
+# the height is the panel plus one axis and a three-line legend.
 p <- ggplot(decoupled, aes(x = k_verdict, y = k_sign)) +
   annotate("polygon", x = c(SPAN[1], SPAN[2], SPAN[2]),
            y = c(SPAN[1], SPAN[2], SPAN[1]), fill = "grey93") +
@@ -33,22 +35,16 @@ p <- ggplot(decoupled, aes(x = k_verdict, y = k_sign)) +
   geom_abline(slope = 1, intercept = c(-DECOUPLE_GAP, DECOUPLE_GAP),
               linewidth = 0.3, colour = "grey60") +
   geom_point(aes(shape = family), size = 2, stroke = 0.55, fill = "white") +
-  geom_text(data = stacked, aes(label = count), size = 2.1, colour = "grey20",
-            nudge_x = 0.55, nudge_y = 0.35) +
+  geom_text(data = stacked, aes(label = count), size = FIGURE_ANNOTATION_SIZE,
+            colour = "grey20", nudge_x = 0.6, nudge_y = 0.45) +
   scale_shape_manual(values = c(19, 21, 4), name = NULL, drop = FALSE,
-                     guide = guide_legend(nrow = 2)) +
+                     guide = guide_legend(ncol = 1)) +
   scale_x_continuous(breaks = seq(0, 20, 2)) +
   scale_y_continuous(breaks = seq(0, 20, 2)) +
   coord_fixed(xlim = SPAN, ylim = SPAN, expand = FALSE) +
   labs(x = "Gradings that would move the verdict",
-       y = "Gradings that would reverse the direction",
-       subtitle = sprintf("below the diagonal: the verdict is the sturdier claim (%d of %d)",
-                          sum(!decoupled$degenerate & decoupled$k_sign < decoupled$k_verdict),
-                          sum(!decoupled$degenerate))) +
+       y = "Gradings that would reverse the direction") +
   rtx_theme() +
-  theme(plot.subtitle = element_text(size = 7, colour = "grey25"),
-        legend.position = "bottom", legend.text = element_text(size = 7),
-        legend.key.size = unit(9, "pt"), legend.margin = margin(t = -4),
-        legend.justification = "left")
+  legend_bottom(legend.justification = "left", legend.margin = margin(t = -2))
 
-save_fig(p, "fig3_decouple", width = 0.62 * FIGURE_TEXT_WIDTH_IN, height = 4.6)
+save_fig(p, "fig3_decouple", width = FIGURE_SINGLE_COLUMN_WIDTH_IN, height = 3.75)

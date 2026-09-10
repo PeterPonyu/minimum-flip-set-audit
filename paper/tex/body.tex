@@ -50,8 +50,8 @@ conclusions turn on individual records; it \KillState{}, and the smallest is
 Two things make this more than an arithmetic exercise. The first is that the
 single grading is a disagreement already present in the record rather than a
 hypothetical one. An independent regrade of the same answers by three nested
-string rules finds \RegradeContested{} answers they disagree about. One of
-those \RegradeContested{} is among the \HarmCandidates{} that carry the harm
+string rules finds \RegradeContested{} answers they disagree about. Of
+those \RegradeContested{}, \RegradeImageFlip{} is among the \HarmCandidates{} that carry the harm
 contrast: applied as the record states it, the reported difference moves from
 \HarmDiff{} to \RegradedDiff{} percentage points. The conclusion and its
 negation are separated by one adjudication of one string. The other three sit
@@ -269,6 +269,13 @@ follows is a re-reading of the project's own numbers. Both distances were
 additionally recomputed from Propositions~\ref{prop:direction}
 and~\ref{prop:verdict} and agreed with the search on every contrast.
 
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{fig2_flips.pdf}
+\caption{\CapFlips}
+\label{fig:flips}
+\end{figure}
+
 \begin{table}[tbp]
 \centering
 \caption{\CapContrastsTable}
@@ -290,6 +297,14 @@ and~\ref{prop:verdict} and agreed with the search on every contrast.
 
 The three prespecified conclusions are in Table~\ref{tab:prereg}, and they are
 taken in turn.
+
+\begin{table}[tbp]
+\centering
+\caption{\CapPreregTable}
+\label{tab:prereg}
+\small
+\input{generated_table_prereg}
+\end{table}
 
 The first is that on the image-dependent questions of the widely-documented set,
 the multimodal condition is behind the text-only one: \HarmMM{} against
@@ -326,21 +341,6 @@ questions is a lead of one question in the discordant cells, and the proposition
 says the distance to its reversal is that lead. A reader shown the percentage
 and the sample size has been shown the count already, in a form that requires
 division to recover; a reader shown the count needs nothing.
-
-\begin{table}[tbp]
-\centering
-\caption{\CapPreregTable}
-\label{tab:prereg}
-\small
-\input{generated_table_prereg}
-\end{table}
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\linewidth]{fig2_flips.pdf}
-\caption{\CapFlips}
-\label{fig:flips}
-\end{figure}
 
 The flip ladder of Fig.~\ref{fig:flips} counts how many individual gradings
 could alter a conclusion; the same contrasts can also be read on their accuracy
@@ -388,6 +388,13 @@ Points fall on both sides of the diagonal. There is no general rule that one is
 sturdier. There is only the fact that they are different questions, and that
 reporting one number for both loses the distinction.
 
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.51\linewidth]{fig3_decouple.pdf}
+\caption{\CapDecouple}
+\label{fig:decouple}
+\end{figure}
+
 The reason the two can separate at all is structural rather than accidental, and
 Fig.~\ref{fig:plane} shows it. The direction fails on a half-plane, so its
 distance is the lead in discordant pairs and nothing else. The verdict fails on
@@ -397,13 +404,6 @@ a flip that removes a pair altogether are worth different amounts to it. Two
 distances measured to two differently shaped regions from the same point have no
 reason to agree, and the finding here is that at this scale they routinely do
 not.
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=0.62\linewidth]{fig3_decouple.pdf}
-\caption{\CapDecouple}
-\label{fig:decouple}
-\end{figure}
 
 \subsection{The \RegradeContested{} answers on which the nested rules disagree}
 
@@ -418,6 +418,21 @@ other is the no-retrieval condition on the less-documented text split. Question
 keys, answer strings, and gold values remain in the evidence rather than in the
 manuscript. The image-subset disagreement is one of the \HarmCandidates{}
 gradings the search identified.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.51\linewidth]{fig4_regrade.pdf}
+\caption{\CapRegrade}
+\label{fig:regrade}
+\end{figure}
+
+\begin{table}[tbp]
+\centering
+\caption{\CapGradersTable}
+\label{tab:graders}
+\small
+\input{generated_table_graders}
+\end{table}
 
 Applying it as the record states moves the multimodal condition from
 \HarmMM{} to \RegradedMM{} on those \SubsetN{} questions and the contrast from
@@ -452,13 +467,6 @@ each other: one enumerated gradings that would change a conclusion, the other
 re-scored answers under different string-matching rules, and they met at the
 same answer.
 
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\linewidth]{fig4_regrade.pdf}
-\caption{\CapRegrade}
-\label{fig:regrade}
-\end{figure}
-
 Fig.~\ref{fig:flip-summary} collects the three pre-registered claims under
 both graders. The stored strict grader gives direction distances
 \SummaryHarmStrict{} and \SummaryHelpStrict{} for the harm and help contrasts
@@ -472,7 +480,7 @@ treating them as family-adjusted quantities.
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=\linewidth]{fig10_flip_regrade_summary.pdf}
+\includegraphics[width=0.51\linewidth]{fig10_flip_regrade_summary.pdf}
 \caption{\CapFlipSummary}
 \label{fig:flip-summary}
 \end{figure}
@@ -487,6 +495,14 @@ answer strings, and gold values out of the manuscript. A reader can audit the
 count from the redacted evidence release that accompanies it, and no row-level
 material is required to interpret the figure or the conclusion.
 
+\begin{table}[tbp]
+\centering
+\caption{\CapCandidatesTable}
+\label{tab:candidates}
+\small
+\input{generated_table_candidates}
+\end{table}
+
 The proportions are worth reading directly. The reported finding that the
 multimodal condition trails the text-only one on the image-dependent questions
 of the widely-documented set rests on \HarmGradings{} individual gradings, of
@@ -495,22 +511,6 @@ contrast has \HelpVerdictCandidates{} such answers. Each count is a count of
 adjudications rather than a confidence statement: it says how many distinct
 gradings could carry the conclusion, and the identity of each stays in the
 evidence.
-
-\begin{table}[tbp]
-\centering
-\caption{\CapGradersTable}
-\label{tab:graders}
-\small
-\input{generated_table_graders}
-\end{table}
-
-\begin{table}[tbp]
-\centering
-\caption{\CapCandidatesTable}
-\label{tab:candidates}
-\small
-\input{generated_table_candidates}
-\end{table}
 
 \subsection{What each test could have returned, and what survives correction}
 
@@ -521,6 +521,13 @@ how many questions the two conditions disagreed on. With three discordant pairs
 the most extreme result attainable is a two-sided p-value of one quarter, and no
 grading of those three answers can do better.
 
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.51\linewidth]{fig5_floor.pdf}
+\caption{\CapFloor}
+\label{fig:floor}
+\end{figure}
+
 Table~\ref{tab:design} makes that arithmetic a lookup. Its first three columns
 depend on nothing about this evaluation: they say what any paired comparison at
 this threshold can return given how many items the two systems disagreed on, and
@@ -529,6 +536,14 @@ they are the content of Corollary~\ref{cor:floor}. Below
 assignment of that many disagreements reaches \AlphaLevel{}. The last column is
 this evaluation's entry in the table: \Incapable{} of its \Contrasts{}
 contrasts sit in those rows.
+
+\begin{table}[tbp]
+\centering
+\caption{\CapDesignTable}
+\label{tab:design}
+\small
+\input{generated_table_design}
+\end{table}
 
 Those \Incapable{} contrasts were reported as non-significant, and they could
 not have been reported as anything else. For them the phrase carries no
@@ -558,21 +573,6 @@ the family of \Contrasts{} then remains. Survival is therefore a joint fact
 about the grading rule and the family definition rather than a property of the
 evaluation alone.
 
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=0.62\linewidth]{fig5_floor.pdf}
-\caption{\CapFloor}
-\label{fig:floor}
-\end{figure}
-
-\begin{table}[tbp]
-\centering
-\caption{\CapDesignTable}
-\label{tab:design}
-\small
-\input{generated_table_design}
-\end{table}
-
 \subsection{How often a significant verdict rests on one grading}
 
 The closed form makes a sampling experiment cheap. Fig.~\ref{fig:operating}
@@ -593,7 +593,7 @@ separately from the findings about the evaluation.
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=0.72\linewidth]{fig9_operating.pdf}
+\includegraphics[width=0.51\linewidth]{fig9_operating.pdf}
 \caption{\CapOperating}
 \label{fig:operating}
 \end{figure}
@@ -605,6 +605,13 @@ used, and a reader is entitled to ask how much of it is a fact about the
 evaluation and how much a fact about that number. Fig.~\ref{fig:alpha}
 recomputes the whole family at \SweepLevels{} thresholds between \SweepLow{} and
 \SweepHigh{}.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.51\linewidth]{fig6_alpha.pdf}
+\caption{\CapAlpha}
+\label{fig:alpha}
+\end{figure}
 
 The counts move as they must: a looser threshold admits more contrasts and
 leaves fewer incapable of reaching it. What does not move is the shape. Across
@@ -622,13 +629,6 @@ at \SweepLevels{} thresholds is one pass per contrast per level. The search
 remains the build's unit test at the recorded threshold, where it is checked
 against the closed form on every contrast.
 
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=0.64\linewidth]{fig6_alpha.pdf}
-\caption{\CapAlpha}
-\label{fig:alpha}
-\end{figure}
-
 \subsection{Deletion asks a different question from re-grading}
 
 Fig.~\ref{fig:loo} reports the leave-one-out count beside the flip distance,
@@ -637,6 +637,13 @@ deletion: the direction and the verdict are unchanged in all $n$ recomputations.
 Deletion is a blunt instrument here, because removing a concordant question
 changes neither the discordant split nor the sign, and most questions are
 concordant.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.51\linewidth]{fig7_loo.pdf}
+\caption{\CapLeaveOneOut}
+\label{fig:loo}
+\end{figure}
 
 The exceptions are the contrasts already identified. The direction of the first
 conclusion survives \HarmLooSign{} of \SubsetN{} deletions, so \HarmLooBreaks{}
@@ -651,13 +658,6 @@ different question set would have concluded, which is a question about sampling.
 An evaluation can be exposed on one and not the other, and reporting only the
 one that happens to look better is a degree of freedom worth closing in
 advance~\cite{simmons2011false}.
-
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\linewidth]{fig7_loo.pdf}
-\caption{\CapLeaveOneOut}
-\label{fig:loo}
-\end{figure}
 
 \section{Discussion}
 
@@ -787,7 +787,7 @@ The three conclusions named in advance came out at \HarmK{}, \HelpK{} and
 \SmallestK{}, belongs to the reported finding that the multimodal condition
 trails the text-only one: \HarmCandidates{} of the \HarmGradings{} gradings on
 that subset would each erase it alone, and an independent regrade of the same
-answers disagrees about \RegradeContested{} of them, one of which moves the
+answers disagrees about \RegradeContested{} of them, \RegradeImageFlip{} of which moves the
 harm difference from \HarmDiff{} to \RegradedDiff{} percentage points. The
 direction of the opposing
 \HelpDiff{}-point difference (exact \(p=\HelpP{}\), reported as not significant)

@@ -27,22 +27,22 @@ long <- rbind(
 
 annotated <- long[long$share < 1, ]
 
+# Four of the eighteen rows carry information and the rest sit at 1.00, so the
+# figure is a single column: the row key and the axis are what a reader needs,
+# and a text-width canvas would be mostly empty. The count is printed to the
+# left of each marker that is not unanimous; the key is decoded in the caption.
 p <- ggplot(long, aes(x = share, y = pos, shape = which)) +
   geom_vline(xintercept = 1, linewidth = 0.4, colour = "grey25") +
   geom_point(size = 1.9, stroke = 0.5) +
   geom_text(data = annotated, aes(label = sprintf("%d of %d", kept, n)),
-            hjust = 1.25, size = 2.2, show.legend = FALSE) +
+            hjust = 1.3, size = FIGURE_ANNOTATION_SIZE, show.legend = FALSE) +
   scale_shape_manual(values = c(19, 1), name = NULL) +
   scale_y_continuous(breaks = loo$pos, labels = loo$row_label, expand = c(0, 0.7)) +
-  scale_x_continuous(limits = c(0.68, 1.02), expand = c(0, 0),
+  scale_x_continuous(limits = c(0.66, 1.03), breaks = seq(0.7, 1, 0.1), expand = c(0, 0),
                      labels = function(x) formatC(x, format = "f", digits = 2)) +
-  labs(x = "Share of single-question deletions leaving the conclusion in place", y = NULL,
-       subtitle = "1.00 means all deletions agree; rows use W/L, I/T/A and M/T/N codes") +
+  labs(x = "Share of single-question deletions\nleaving the conclusion in place", y = NULL) +
   rtx_theme() +
-  theme(plot.subtitle = element_text(size = 6.6, colour = "grey25"),
-        axis.text.y = element_text(size = 6.4),
-        panel.grid.major.y = element_blank(),
-        legend.position = "bottom", legend.text = element_text(size = 7),
-        legend.key.size = unit(9, "pt"), legend.margin = margin(t = -4))
+  legend_bottom(legend.margin = margin(t = -2)) +
+  theme(panel.grid.major.y = element_blank())
 
-save_fig(p, "fig7_loo", width = FIGURE_TEXT_WIDTH_IN, height = 4.1)
+save_fig(p, "fig7_loo", width = FIGURE_SINGLE_COLUMN_WIDTH_IN, height = 3.9)

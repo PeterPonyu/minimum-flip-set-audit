@@ -21,33 +21,33 @@ alpha_counts <- data.frame(
                   levels = c("Could not have reached it", "Reached the threshold",
                              "Survived the family correction")))
 
+# The two panels share the threshold axis, so the legend is collected once
+# under the pair rather than printed between them; the vertical rule is decoded
+# in the caption.
+THRESHOLD_BREAKS <- c(0.001, 0.01, 0.05, 0.2)
+THRESHOLD_LABELS <- c("0.001", "0.01", "0.05", "0.2")
+
 counts <- ggplot(alpha_counts, aes(x = alpha, y = count, linetype = series)) +
   geom_vline(xintercept = ALPHA, linewidth = 0.4, colour = "grey25") +
   geom_step(direction = "hv", linewidth = 0.45) +
   scale_linetype_manual(values = c("solid", "42", "12"), name = NULL,
-                        guide = guide_legend(nrow = 2)) +
-  scale_x_log10(breaks = c(0.001, 0.01, 0.05, 0.2),
-                labels = c("0.001", "0.01", "0.05", "0.2")) +
+                        guide = guide_legend(ncol = 1)) +
+  scale_x_log10(breaks = THRESHOLD_BREAKS, labels = THRESHOLD_LABELS) +
   scale_y_continuous(limits = c(0, nrow(inventory)), breaks = seq(0, 18, 6)) +
-  labs(x = NULL, y = sprintf("Contrasts, of %d", nrow(inventory)),
-       subtitle = sprintf("vertical rule: registered alpha = %.2f", ALPHA)) +
+  labs(x = NULL, y = sprintf("Contrasts, of %d", nrow(inventory))) +
   rtx_theme() +
-  theme(legend.position = "bottom", legend.text = element_text(size = 7),
-        legend.key.size = unit(11, "pt"), legend.margin = margin(t = -4),
-        legend.justification = "left")
+  theme(legend.key.width = unit(16, "pt"))
 
 distances <- ggplot(ALPHA_SWEEP, aes(x = alpha, y = median_k)) +
   geom_vline(xintercept = ALPHA, linewidth = 0.4, colour = "grey25") +
   geom_step(direction = "hv", linewidth = 0.45) +
-  scale_x_log10(breaks = c(0.001, 0.01, 0.05, 0.2),
-                labels = c("0.001", "0.01", "0.05", "0.2")) +
+  scale_x_log10(breaks = THRESHOLD_BREAKS, labels = THRESHOLD_LABELS) +
   labs(x = "Threshold the verdict is read against",
-       y = "Median gradings to\nmove the verdict",
-       subtitle = sprintf("vertical rule: registered alpha = %.2f", ALPHA)) +
+       y = "Median gradings to\nmove the verdict") +
   rtx_theme()
 
-p <- patchwork::wrap_plots(
-  panel_label(counts, "A", subtitle = sprintf("vertical rule: registered alpha = %.2f", ALPHA)),
-  panel_label(distances, "B", subtitle = sprintf("vertical rule: registered alpha = %.2f", ALPHA)),
-                           ncol = 1, heights = c(1.55, 1))
-save_fig(p, "fig6_alpha", width = 0.64 * FIGURE_TEXT_WIDTH_IN, height = 4.4)
+p <- patchwork::wrap_plots(panel_label(counts, "A"), panel_label(distances, "B"),
+                           ncol = 1, heights = c(1.45, 1), guides = "collect") &
+  legend_bottom(legend.justification = "left")
+
+save_fig(p, "fig6_alpha", width = FIGURE_SINGLE_COLUMN_WIDTH_IN, height = 4.1)
