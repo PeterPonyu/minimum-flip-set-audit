@@ -1,0 +1,275 @@
+{
+  "schema": "006-second-eval-20260909-summary/v1",
+  "written_utc": "2026-09-10T02:04:13Z",
+  "predeclaration_sha256": "1708a938d7b822aa967bd9bc1c3ab42182b7fd7712613838b5e5e9c2b067813a",
+  "minflip_sha256": "23c306f89edc56700adc7d6b62b890f3a8e48ad94ca29b51e11ad47dc0e52a9b",
+  "pair": {
+    "arm_a": "Qwen/Qwen-7B",
+    "arm_b": "meta-llama/Meta-Llama-3-8B-Instruct"
+  },
+  "contrasts": [
+    {
+      "task": "arc_challenge",
+      "dropped": false,
+      "n": 1170,
+      "n_arm_only": 1170,
+      "n_ref_only": 1170,
+      "n_overlap": 1170,
+      "overlap_frac": 1.0,
+      "cells": {
+        "both": 515,
+        "arm_only": 66,
+        "ref_only": 154,
+        "neither": 435
+      },
+      "b": 66,
+      "c": 154,
+      "m": 220,
+      "acc_arm": 0.4965811965811966,
+      "acc_ref": 0.5717948717948718,
+      "diff_pt": -7.521367521367521,
+      "p": 2.776117959897757e-09,
+      "significant": true,
+      "floor": 1.1869459682199748e-66,
+      "kappa_dir": 88,
+      "kappa_ver_closed": 55,
+      "kappa_ver_bfs": 55,
+      "closed_form_matches_bfs": true,
+      "distance_gap": 33,
+      "holm_p": 5.552235919795514e-09,
+      "survives_holm": true
+    },
+    {
+      "task": "gsm8k",
+      "dropped": false,
+      "n": 1319,
+      "n_arm_only": 1319,
+      "n_ref_only": 1319,
+      "n_overlap": 1319,
+      "overlap_frac": 1.0,
+      "cells": {
+        "both": 501,
+        "arm_only": 92,
+        "ref_only": 405,
+        "neither": 321
+      },
+      "b": 92,
+      "c": 405,
+      "m": 497,
+      "acc_arm": 0.4495830174374526,
+      "acc_ref": 0.6868840030326004,
+      "diff_pt": -23.730098559514783,
+      "p": 7.32227682688504e-48,
+      "significant": true,
+      "floor": 4.887898181599368e-150,
+      "kappa_dir": 313,
+      "kappa_ver_closed": 259,
+      "kappa_ver_bfs": 259,
+      "closed_form_matches_bfs": true,
+      "distance_gap": 54,
+      "holm_p": 2.196683048065512e-47,
+      "survives_holm": true
+    },
+    {
+      "task": "winogrande",
+      "dropped": false,
+      "n": 1267,
+      "n_arm_only": 1267,
+      "n_ref_only": 1267,
+      "n_overlap": 1267,
+      "overlap_frac": 1.0,
+      "cells": {
+        "both": 802,
+        "arm_only": 119,
+        "ref_only": 142,
+        "neither": 204
+      },
+      "b": 119,
+      "c": 142,
+      "m": 261,
+      "acc_arm": 0.7269139700078927,
+      "acc_ref": 0.745067087608524,
+      "diff_pt": -1.8153117600631412,
+      "p": 0.17315489006815712,
+      "significant": false,
+      "floor": 5.397605346934028e-79,
+      "kappa_dir": 23,
+      "kappa_ver_closed": 10,
+      "kappa_ver_bfs": 10,
+      "closed_form_matches_bfs": true,
+      "distance_gap": 13,
+      "holm_p": 0.17315489006815712,
+      "survives_holm": false
+    }
+  ],
+  "holm_family_size": 3,
+  "reading_rules_fired": {
+    "K1": true,
+    "K2": false,
+    "K3": true,
+    "cross_check_fail": false,
+    "n_retained": 3,
+    "n_dropped": 0
+  },
+  "load_meta": {
+    "arm_a_arc_challenge": {
+      "path": "source-tree/006-second-eval-20260909/inputs/arm_a_arc_challenge.parquet",
+      "n_rows": 1172,
+      "n_items": 1170,
+      "n_skipped": 2,
+      "columns": [
+        "acc",
+        "acc_norm",
+        "choices",
+        "cont_tokens",
+        "example",
+        "full_prompt",
+        "gold",
+        "hashes",
+        "input_tokens",
+        "instruction",
+        "num_asked_few_shots",
+        "num_effective_few_shots",
+        "padded",
+        "predictions",
+        "query",
+        "truncated"
+      ],
+      "id_prefix_counts": {
+        "texthash": 1170
+      }
+    },
+    "arm_b_arc_challenge": {
+      "path": "source-tree/006-second-eval-20260909/inputs/arm_b_arc_challenge.parquet",
+      "n_rows": 1172,
+      "n_items": 1170,
+      "n_skipped": 2,
+      "columns": [
+        "choices",
+        "cont_tokens",
+        "example",
+        "full_prompt",
+        "gold",
+        "gold_index",
+        "input_tokens",
+        "instruction",
+        "metrics",
+        "num_asked_few_shots",
+        "num_effective_few_shots",
+        "padded",
+        "pred_logits",
+        "predictions",
+        "truncated"
+      ],
+      "id_prefix_counts": {
+        "texthash": 1170
+      }
+    },
+    "arm_a_gsm8k": {
+      "path": "source-tree/006-second-eval-20260909/inputs/arm_a_gsm8k.parquet",
+      "n_rows": 1319,
+      "n_items": 1319,
+      "n_skipped": 0,
+      "columns": [
+        "choices",
+        "cont_tokens",
+        "example",
+        "full_prompt",
+        "gold",
+        "gold_index",
+        "input_tokens",
+        "instruction",
+        "metrics",
+        "non_lighteval_details",
+        "num_asked_few_shots",
+        "num_effective_few_shots",
+        "padded",
+        "pred_logits",
+        "predictions",
+        "truncated"
+      ],
+      "id_prefix_counts": {
+        "texthash": 1319
+      }
+    },
+    "arm_b_gsm8k": {
+      "path": "source-tree/006-second-eval-20260909/inputs/arm_b_gsm8k.parquet",
+      "n_rows": 1319,
+      "n_items": 1319,
+      "n_skipped": 0,
+      "columns": [
+        "choices",
+        "cont_tokens",
+        "example",
+        "full_prompt",
+        "gold",
+        "gold_index",
+        "input_tokens",
+        "instruction",
+        "metrics",
+        "num_asked_few_shots",
+        "num_effective_few_shots",
+        "padded",
+        "pred_logits",
+        "predictions",
+        "truncated"
+      ],
+      "id_prefix_counts": {
+        "texthash": 1319
+      }
+    },
+    "arm_a_winogrande": {
+      "path": "source-tree/006-second-eval-20260909/inputs/arm_a_winogrande.parquet",
+      "n_rows": 1267,
+      "n_items": 1267,
+      "n_skipped": 0,
+      "columns": [
+        "choices",
+        "cont_tokens",
+        "example",
+        "full_prompt",
+        "gold",
+        "gold_index",
+        "input_tokens",
+        "instruction",
+        "metrics",
+        "non_lighteval_details",
+        "num_asked_few_shots",
+        "num_effective_few_shots",
+        "padded",
+        "pred_logits",
+        "predictions",
+        "truncated"
+      ],
+      "id_prefix_counts": {
+        "texthash": 1267
+      }
+    },
+    "arm_b_winogrande": {
+      "path": "source-tree/006-second-eval-20260909/inputs/arm_b_winogrande.parquet",
+      "n_rows": 1267,
+      "n_items": 1267,
+      "n_skipped": 0,
+      "columns": [
+        "choices",
+        "cont_tokens",
+        "example",
+        "full_prompt",
+        "gold",
+        "gold_index",
+        "input_tokens",
+        "instruction",
+        "metrics",
+        "num_asked_few_shots",
+        "num_effective_few_shots",
+        "padded",
+        "pred_logits",
+        "predictions",
+        "truncated"
+      ],
+      "id_prefix_counts": {
+        "texthash": 1267
+      }
+    }
+  }
+}

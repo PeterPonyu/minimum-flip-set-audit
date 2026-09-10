@@ -28,6 +28,9 @@ the build instead of producing a stale number.
 | `data/e-audit-s2/regrade_consequences.json` | derived_table | 112036 | `48a1b060a5d2a3e1…` |
 | `data/e-audit-s3/judge_summary.json` | derived_table | 25331 | `2175c7b2d46594cc…` |
 | `data/e-audit-s4/simulation_summary.json` | derived_table | 125422 | `7d0ff852cf53b094…` |
+| `data/e-second-eval-predecl/PREDECLARATION.json` | derived_table | 7866 | `778b1d1366fcfb38…` |
+| `data/e-second-eval/summary.json` | derived_table | 6661 | `5809dfb34695a620…` |
+| `data/e-second-eval-receipt/RECEIPT.json` | derived_table | 15537 | `e572d474023b5ddd…` |
 
 Some of these files recorded the paths of the machine that produced them. Those path strings and source links were refreshed before deposit; `REDACTION.md` states the rules, lists every file touched with both digests, and describes the check that proves no number changed.
 

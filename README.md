@@ -11,7 +11,7 @@ Repository: https://github.com/PeterPonyu/minimum-flip-set-audit
 - `paper/tex/` — manuscript source
 - `paper/figs/` — the R code that draws the figures and writes the printed numbers
 - `paper/evidence/` — a file list with SHA-256 hashes
-- `data/` — the 19 data files named in that list
+- `data/` — the 22 data files named in that list
 
 ## Not included
 

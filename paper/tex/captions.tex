@@ -271,3 +271,21 @@ significant. The final row is the verdict on the same contrast as the second
 row, separated out because the direction of that difference and the verdict on
 it are not the same distance from being overturned.%
 }
+
+\newcommand{\CapSecondEvalTable}{%
+A labelled broader check, not a replacement for the
+\Contrasts{}-contrast evaluation. Each row is one public paired binary
+task on a pre-declared model pair (\SecondEvalArmA{} and
+\SecondEvalArmB{}), scored from stored item-level correctness rather
+than from a new grading. The two flip columns are the same distances
+used on the bound evaluation: the smallest number of individual
+gradings that would reverse the direction, and the smallest that would
+move an exact paired verdict across \AlphaLevel{}. The gap is the
+absolute difference of those two counts. Holm is the family adjustment
+over the \SecondEvalN{} retained contrasts. Accuracies are omitted on
+purpose: this table is not a model ranking. The prestated reading was
+that single-record fragility at $n=\SubsetN{}$ does not transport if
+every distance is at least \SecondEvalFragileMax{}, and that
+direction--verdict disagreement transports if any gap is at least
+\DecoupledGap{}.%
+}

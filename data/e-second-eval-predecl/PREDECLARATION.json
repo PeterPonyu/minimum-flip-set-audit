@@ -1,0 +1,102 @@
+{
+  "schema": "006-second-eval-20260909-predeclaration/v1",
+  "declared_utc": "2026-09-10T01:58:10Z",
+  "card": "006-flip-fragility-audit",
+  "cycle": "WRITE-IN-3 unpark of 006 broader / second evaluation. Owner: make the sciences. Scout docs/reports/2026-09-09-scout-002-003-006.md section 006. Spec docs/specs/2026-09-09-writein3-spec.md section 3.9 defaulted to PARK unless a cheap public pair existed; this file is the missing pre-registration.",
+  "status": "written before any Open LLM Leaderboard shard was downloaded or any 2x2 / min-flip number was computed. No result file exists in this directory at write time.",
+  "git_head": "b855b0ec028b9be1252d68e5e10c0f1cb5fa154c",
+  "git_branch": "writein/2026-09-08",
+  "ledger_state": {
+    "registered_second_eval_protocol": false,
+    "remaining_parked_md": "docs/reports/2026-09-09-remaining-parked.md does not exist",
+    "identity_file": "source-tree/006-flip-fragility-audit/ has claim-register.md and review-checklist.md; no IDENTITY file",
+    "bound_s1_s4": "source-tree/006-kg-llm-reasoning/audit20260907/ is bound E-AUDIT-S1..S4; this tree must not overwrite those receipts",
+    "rejected_on_disk_runs": "source-tree/006-kg-llm-reasoning/results/ and results_longtail/ are the 2026-07-13 handwritten-caption runs whose 0.944 multimodal cell is used=false (ledger F-02 / A-13). They are not a second evaluation."
+  },
+  "question": "Does Feinstein's minimum-flip count, applied to direction and to the exact-McNemar verdict separately, still find single-record or few-record fragility on a public paired binary evaluation whose n is tens of times larger than the paper's n=18 image-subset contrasts?",
+  "pair_selection_rule": {
+    "rule": "official-org closest-to-S3-judge-family, frozen before per-item scores are read",
+    "arm_a": {
+      "model": "Qwen/Qwen-7B",
+      "details_repo": "open-llm-leaderboard-old/details_Qwen__Qwen-7B",
+      "why": "Official Qwen 7B on the public old Open LLM Leaderboard. Qwen2.5-7B-Instruct details do not exist on that leaderboard (search empty). Closest official Qwen to the paper's S3 judge qwen2.5:7b-instruct-q8_0."
+    },
+    "arm_b": {
+      "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+      "details_repo": "open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct",
+      "why": "Official Meta Llama-3 8B Instruct. Closest official Llama instruct to the paper's S3 judge llama3.1:8b-instruct-q8_0."
+    },
+    "run_rule": "for each (model, task), use that model's latest dated folder that contains the task's details_harness parquet. Do not mix items across runs of the same model on the same task. Different tasks may come from different dated runs of the same model.",
+    "not_used_for_selection": "download counts, published aggregate accuracies, and the Qwen-7B README 'latest results' block that was visible on the dataset card during repo discovery"
+  },
+  "tasks": {
+    "family": [
+      {
+        "id": "arc_challenge",
+        "harness": "harness|arc:challenge|25",
+        "arm_a_relpath": "2023-10-13T06-37-24.832652/details_harness|arc:challenge|25_2023-10-13T06-37-24.832652.parquet",
+        "arm_b_relpath": "2024-04-19T09-19-13.454877/details_harness|arc:challenge|25_2024-04-19T09-19-13.454877.parquet",
+        "listed_size_hint_mb": [5.5, 5.1]
+      },
+      {
+        "id": "gsm8k",
+        "harness": "harness|gsm8k|5",
+        "arm_a_relpath": "2023-11-15T05-40-30.047401/details_harness|gsm8k|5_2023-11-15T05-40-30.047401.parquet",
+        "arm_b_relpath": "2024-04-19T09-19-13.454877/details_harness|gsm8k|5_2024-04-19T09-19-13.454877.parquet",
+        "listed_size_hint_mb": [7.4, 4.6]
+      },
+      {
+        "id": "winogrande",
+        "harness": "harness|winogrande|5",
+        "arm_a_relpath": "2023-11-15T05-40-30.047401/details_harness|winogrande|5_2023-11-15T05-40-30.047401.parquet",
+        "arm_b_relpath": "2024-04-19T09-19-13.454877/details_harness|winogrande|5_2024-04-19T09-19-13.454877.parquet",
+        "listed_size_hint_mb": [1.8, 0.98]
+      }
+    ],
+    "excluded": {
+      "hellaswag": "each shard listed >50 MB (Qwen 62.6, Llama 52.9); size gate, decided from filename listings before download, not from scores",
+      "mmlu_hendrycksTest": "57 subject shards; not needed for the smallest registered family",
+      "drop": "Qwen-only on the 2023-11-15 run; no paired Llama shard in the intersection"
+    },
+    "note_on_scout_mmlu": "Scout named MMLU / GSM8K / ARC. ARC and GSM8K are in. MMLU replaced by Winogrande (both models have a <2 MB shard) to keep the family at 3 contrasts without 57 extra files."
+  },
+  "alignment": {
+    "id_priority": ["doc_id", "docid", "id", "example_id"],
+    "text_fallback_hash_fields": ["query", "question", "fullprompt", "statement", "example"],
+    "row_index_fallback": "only if both sides have identical n and no usable id/text key",
+    "overlap_kill": "if inner-join n < 0.95 * min(n_a, n_b), drop that contrast; do not impute"
+  },
+  "correctness_extraction": {
+    "priority": ["acc", "accuracy", "correct", "metrics.acc", "metrics.accuracy"],
+    "cast": "bool(value > 0.5) for numeric; bool(value) for bool/str CORRECT",
+    "no_new_labels": "use only the stored harness 0/1; do not re-grade, do not call a judge, do not write answers"
+  },
+  "endpoints": {
+    "per_contrast": "n, cells (a,b,c,d), acc_arm, acc_ref, exact two-sided McNemar p, kappa_dir=|b-c|, kappa_ver closed form, kappa_ver BFS, floor, Holm-adjusted p over the family of contrasts that survive alignment",
+    "primary_family": "the 3 tasks above after alignment filters; Holm over that family only",
+    "cross_check": "kappa_ver closed form must equal BFS on every retained table; mismatch => that contrast is not reported and the run is marked CROSS_CHECK_FAIL"
+  },
+  "alpha": 0.05,
+  "reading_rules_prestated": {
+    "K1": "if every retained contrast has kappa_ver >= 5 AND kappa_dir >= 5: the paper's 'single-record fragile at n=18' does not transport to these n~1000 public pairs. Report that. Do not weaken or restated the bound 18-contrast findings.",
+    "K2": "if any retained contrast has kappa_ver <= 2: the statistic still finds a verdict that rests on one or two gradings on at least one public pair. Report the count. This is a transport observation, not a ranking of the two models.",
+    "K3": "if any retained contrast has |kappa_dir - kappa_ver| >= 4 (and both finite): direction vs verdict disagreement transports. Same reporting rule as the paper's A-04/A-05 observation, on this family only.",
+    "priority": "K1, K2, K3 may all fire or none; they are not mutually exclusive. None of them authorises a model-better headline."
+  },
+  "forbidden": [
+    "headline that Qwen-7B or Llama-3-8B-Instruct is better",
+    "treat this family as a replacement for the bound 18-contrast evaluation",
+    "write to papers/ or release/",
+    "overwrite audit20260907/ S1-S4 receipts",
+    "use results/ or results_longtail/ handwritten-caption runs",
+    "re-grade or invent labels",
+    "assign os.environ http_proxy=7890"
+  ],
+  "compute": {
+    "cpu_only": true,
+    "minflip_import": "source-tree/006-kg-llm-reasoning/audit20260907/minflip.py (read-only; sha256 23c306f89edc56700adc7d6b62b890f3a8e48ad94ca29b51e11ad47dc0e52a9b)",
+    "download": "HEAD then GET of the six listed parquets via fetch_gate.py with SC_FETCH_PROXY=http://127.0.0.1:7890; abort a shard if Content-Length is missing or >1 GiB; per-file auto-allow if <=10 MiB",
+    "outputs_only_under": "source-tree/006-second-eval-20260909/ plus docs/reports/2026-09-09-writein3-006-second-eval.md"
+  },
+  "licence_note": "Open LLM Leaderboard details datasets are public leaderboard artefacts (old space). Underlying benchmarks: ARC (CC-BY-SA), GSM8K (MIT), Winogrande (CC-BY). This tree stores only the downloaded shards and derived 2x2 counts; it does not claim a new benchmark score."
+}

@@ -39,6 +39,9 @@ audit_s1 <- read_bound$json("E-AUDIT-S1")
 audit_s2 <- read_bound$json("E-AUDIT-S2")
 audit_s3 <- read_bound$json("E-AUDIT-S3")
 audit_s4 <- read_bound$json("E-AUDIT-S4")
+second_predecl <- read_bound$json("E-SECOND-EVAL-PREDECL")
+second_eval <- read_bound$json("E-SECOND-EVAL")
+second_receipt <- read_bound$json("E-SECOND-EVAL-RECEIPT")
 measure <- read_bound$json("E-MEASURE")
 executed <- read_bound$json("E-EXECUTED")
 retrieval <- read_bound$json("E-RETRIEVAL")
@@ -381,6 +384,126 @@ if (isTRUE(retrieval$import_pin$index_path_ready)) {
 }
 
 ## ---------------------------------------------------------------------------
+## Labelled broader check. Distinct from the bound 18-contrast family and from
+## E-AUDIT-S1..S4: same two distances, a later public pair, prestated rules.
+## ---------------------------------------------------------------------------
+
+SECOND_EVAL_FRAGILE_MAX <- 5L
+SECOND_EVAL_K2_MAX <- 2L
+SECOND_EVAL_DECOUPLE_GAP <- 4L
+SECOND_EVAL_OVERLAP_MIN <- 95L
+SECOND_EVAL_TASK_LABELS <- c(
+  arc_challenge = "ARC-Challenge",
+  gsm8k = "GSM8K",
+  winogrande = "Winogrande"
+)
+
+second_predecl_sha <- bound_digest(manifest, "E-SECOND-EVAL-PREDECL")
+if (!identical(as.character(second_eval$predeclaration_sha256), second_predecl_sha) ||
+    !identical(as.character(second_receipt$predeclaration_sha256), second_predecl_sha)) {
+  stop("the labelled broader check no longer hash-binds its own predeclaration")
+}
+if (!isTRUE(second_receipt$minflip_sha256_matches_predeclaration)) {
+  stop("the labelled broader check no longer uses the predeclared min-flip identity")
+}
+
+second_family <- second_predecl$tasks$family
+declared_tasks <- if (is.data.frame(second_family)) {
+  as.character(second_family$id)
+} else {
+  vapply(second_family, function(x) as.character(x$id), character(1))
+}
+
+second_contrasts_raw <- second_eval$contrasts
+if (is.data.frame(second_contrasts_raw)) {
+  second_contrasts <- data.frame(
+    task = as.character(second_contrasts_raw$task),
+    n = as.integer(second_contrasts_raw$n),
+    kappa_dir = as.integer(second_contrasts_raw$kappa_dir),
+    kappa_ver = as.integer(second_contrasts_raw$kappa_ver_closed),
+    kappa_ver_bfs = as.integer(second_contrasts_raw$kappa_ver_bfs),
+    distance_gap = as.integer(second_contrasts_raw$distance_gap),
+    survives_holm = as.logical(second_contrasts_raw$survives_holm),
+    closed_form_matches_bfs = as.logical(second_contrasts_raw$closed_form_matches_bfs),
+    stringsAsFactors = FALSE
+  )
+} else {
+  second_contrasts <- do.call(rbind, lapply(second_contrasts_raw, function(row) {
+    data.frame(
+      task = as.character(row$task),
+      n = as.integer(row$n),
+      kappa_dir = as.integer(row$kappa_dir),
+      kappa_ver = as.integer(row$kappa_ver_closed),
+      kappa_ver_bfs = as.integer(row$kappa_ver_bfs),
+      distance_gap = as.integer(row$distance_gap),
+      survives_holm = as.logical(row$survives_holm),
+      closed_form_matches_bfs = as.logical(row$closed_form_matches_bfs),
+      stringsAsFactors = FALSE)
+  }))
+}
+
+if (!identical(second_contrasts$task, declared_tasks)) {
+  stop("the labelled broader check no longer reports the predeclared family in order")
+}
+if (!identical(nrow(second_contrasts), 3L) ||
+    !identical(as.integer(second_eval$holm_family_size), 3L)) {
+  stop("the labelled broader check is no longer a family of three retained contrasts")
+}
+if (!all(second_contrasts$closed_form_matches_bfs) ||
+    !identical(second_contrasts$kappa_ver, second_contrasts$kappa_ver_bfs)) {
+  stop("the labelled broader check no longer matches closed form to search")
+}
+if (!identical(second_contrasts$distance_gap,
+               as.integer(abs(second_contrasts$kappa_dir - second_contrasts$kappa_ver)))) {
+  stop("the labelled broader check gaps are no longer |direction - verdict|")
+}
+
+second_rules <- second_eval$reading_rules_fired
+k1_holds <- all(second_contrasts$kappa_ver >= SECOND_EVAL_FRAGILE_MAX &
+                  second_contrasts$kappa_dir >= SECOND_EVAL_FRAGILE_MAX)
+k2_holds <- any(second_contrasts$kappa_ver <= SECOND_EVAL_K2_MAX)
+k3_holds <- any(second_contrasts$distance_gap >= SECOND_EVAL_DECOUPLE_GAP)
+if (!identical(isTRUE(second_rules$K1), k1_holds) ||
+    !identical(isTRUE(second_rules$K2), k2_holds) ||
+    !identical(isTRUE(second_rules$K3), k3_holds)) {
+  stop("the labelled broader check no longer restates its prestated reading rules")
+}
+if (!k1_holds || k2_holds || !k3_holds) {
+  stop("the labelled broader check no longer fires K1 yes / K2 no / K3 yes")
+}
+if (any(second_contrasts$n < 1000L)) {
+  stop("a labelled broader-check contrast is no longer n~1000")
+}
+if (!grepl("0\\.95", as.character(second_predecl$alignment$overlap_kill))) {
+  stop("the labelled broader check no longer states the 0.95 overlap kill")
+}
+
+second_by_task <- function(task, column) {
+  row <- second_contrasts[second_contrasts$task == task, ]
+  if (nrow(row) != 1L) stop("no unique labelled broader-check row for ", task)
+  row[[column]][[1]]
+}
+SECOND_EVAL_N_ARC <- second_by_task("arc_challenge", "n")
+SECOND_EVAL_N_GSM <- second_by_task("gsm8k", "n")
+SECOND_EVAL_N_WINO <- second_by_task("winogrande", "n")
+SECOND_EVAL_DIR_ARC <- second_by_task("arc_challenge", "kappa_dir")
+SECOND_EVAL_DIR_GSM <- second_by_task("gsm8k", "kappa_dir")
+SECOND_EVAL_DIR_WINO <- second_by_task("winogrande", "kappa_dir")
+SECOND_EVAL_VER_ARC <- second_by_task("arc_challenge", "kappa_ver")
+SECOND_EVAL_VER_GSM <- second_by_task("gsm8k", "kappa_ver")
+SECOND_EVAL_VER_WINO <- second_by_task("winogrande", "kappa_ver")
+SECOND_EVAL_GAP_ARC <- second_by_task("arc_challenge", "distance_gap")
+SECOND_EVAL_GAP_GSM <- second_by_task("gsm8k", "distance_gap")
+SECOND_EVAL_GAP_WINO <- second_by_task("winogrande", "distance_gap")
+SECOND_EVAL_HOLM_SURVIVORS <- sum(second_contrasts$survives_holm)
+SECOND_EVAL_KAPPA_DIR_MIN <- min(second_contrasts$kappa_dir)
+SECOND_EVAL_KAPPA_VER_MIN <- min(second_contrasts$kappa_ver)
+SECOND_EVAL_ARM_A <- sub("^.*/", "", as.character(second_eval$pair$arm_a))
+SECOND_EVAL_ARM_B <- sub("^.*Llama", "Llama",
+                         sub("^.*/", "", as.character(second_eval$pair$arm_b)))
+invisible(second_receipt)
+
+## ---------------------------------------------------------------------------
 ## The three conclusions the card names, each with the question it asks.
 ## ---------------------------------------------------------------------------
 
@@ -646,7 +769,31 @@ write_generated(c(
   macro("BlockedComponent", gsub("_", " ", blocker$component)),
   macro("ForgedState", if (isTRUE(blocker$forged_scores)) "were" else "were not"),
   macro("NEvidence", nrow(manifest$entries)),
-  macro("EvidenceBytes", format(sum(manifest$entries$bytes), big.mark = ","))
+  macro("EvidenceBytes", format(sum(manifest$entries$bytes), big.mark = ",")),
+
+  macro("SecondEvalN", count_word(nrow(second_contrasts))),
+  macro("SecondEvalFragileMax", count_word(SECOND_EVAL_FRAGILE_MAX)),
+  macro("SecondEvalArmA", SECOND_EVAL_ARM_A),
+  macro("SecondEvalArmB", SECOND_EVAL_ARM_B),
+  macro("SecondEvalNArc", format(SECOND_EVAL_N_ARC, big.mark = ",")),
+  macro("SecondEvalNGsm", format(SECOND_EVAL_N_GSM, big.mark = ",")),
+  macro("SecondEvalNWino", format(SECOND_EVAL_N_WINO, big.mark = ",")),
+  macro("SecondEvalKappaDirArc", SECOND_EVAL_DIR_ARC),
+  macro("SecondEvalKappaDirGsm", SECOND_EVAL_DIR_GSM),
+  macro("SecondEvalKappaDirWino", SECOND_EVAL_DIR_WINO),
+  macro("SecondEvalKappaVerArc", SECOND_EVAL_VER_ARC),
+  macro("SecondEvalKappaVerGsm", SECOND_EVAL_VER_GSM),
+  macro("SecondEvalKappaVerWino", SECOND_EVAL_VER_WINO),
+  macro("SecondEvalGapArc", SECOND_EVAL_GAP_ARC),
+  macro("SecondEvalGapGsm", SECOND_EVAL_GAP_GSM),
+  macro("SecondEvalGapWino", SECOND_EVAL_GAP_WINO),
+  macro("SecondEvalKappaDirMin", SECOND_EVAL_KAPPA_DIR_MIN),
+  macro("SecondEvalKappaVerMin", SECOND_EVAL_KAPPA_VER_MIN),
+  macro("SecondEvalHolmSurvivors", SECOND_EVAL_HOLM_SURVIVORS),
+  macro("SecondEvalTransportState", if (k1_holds) "fired" else "did not fire"),
+  macro("SecondEvalFewGradeState", if (k2_holds) "fired" else "did not fire"),
+  macro("SecondEvalDecoupleState", if (k3_holds) "fired" else "did not fire"),
+  macro("SecondEvalOverlapMin", SECOND_EVAL_OVERLAP_MIN)
 ), "generated_numbers.tex")
 
 ## The full inventory, one row per contrast.
@@ -794,8 +941,27 @@ write_generated(c(
   "\\end{tabular}"
 ), "generated_table_candidates.tex")
 
+## Labelled broader check. Separate table: not mixed into the 18-contrast inventory.
+
+second_contrasts$label <- SECOND_EVAL_TASK_LABELS[second_contrasts$task]
+write_generated(c(
+  "\\begin{tabular}{lrrrrr}",
+  "\\toprule",
+  "Task & $n$ & Dir. & Verd. & Gap & Holm \\\\",
+  "\\midrule",
+  paste0(second_contrasts$label, " & ",
+         format(second_contrasts$n, big.mark = ","), " & ",
+         second_contrasts$kappa_dir, " & ",
+         second_contrasts$kappa_ver, " & ",
+         second_contrasts$distance_gap, " & ",
+         ifelse(second_contrasts$survives_holm, "yes", "no"),
+         " \\\\"),
+  "\\bottomrule",
+  "\\end{tabular}"
+), "generated_table_second_eval.tex")
+
 ## The manifest itself, so the evidence discipline can be checked rather than believed.
 
-message(sprintf("wrote %d figures to figs/out and 6 generated tex files to tex/ (smallest flip set: %d)",
+message(sprintf("wrote %d figures to figs/out and 7 generated tex files to tex/ (smallest flip set: %d)",
                 length(FIGURES), SMALLEST_K))
 unlink(file.path("tex", "generated_table_evidence.tex"), force = TRUE)

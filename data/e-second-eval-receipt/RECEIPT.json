@@ -1,0 +1,167 @@
+{
+  "schema": "006-second-eval-20260909-receipt/v1",
+  "written_utc": "2026-09-10T02:04:13Z",
+  "git_head": "b855b0ec028b9be1252d68e5e10c0f1cb5fa154c",
+  "predeclaration_sha256": "1708a938d7b822aa967bd9bc1c3ab42182b7fd7712613838b5e5e9c2b067813a",
+  "compute_script_sha256": "80ae4b5b60d7e7575fe26721a043f41c52ec13ad3633e4acbdba3eefee64d496",
+  "minflip_sha256": "23c306f89edc56700adc7d6b62b890f3a8e48ad94ca29b51e11ad47dc0e52a9b",
+  "minflip_sha256_matches_predeclaration": true,
+  "heads": [
+    {
+      "task": "arc_challenge",
+      "arm": "arm_a",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_Qwen__Qwen-7B/resolve/main/2023-10-13T06-37-24.832652/details_harness%7Carc%3Achallenge%7C25_2023-10-13T06-37-24.832652.parquet",
+      "head": {
+        "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_Qwen__Qwen-7B/resolve/main/2023-10-13T06-37-24.832652/details_harness%7Carc%3Achallenge%7C25_2023-10-13T06-37-24.832652.parquet",
+        "ok": true,
+        "status": 200,
+        "content_length": 5474720,
+        "content_type": "application/octet-stream",
+        "error": null,
+        "final_url": "https://us.aws.cdn.hf.co/xet-bridge-us/6528e5b91ce90a09614aed85/629bc89fba2cb01e6a7de1b09041321f7c41cf0c79db9d5a22124ea4c5f5cd0e?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27details_harness%25257Carc%25253Achallenge%25257C25_2023-10-13T06-37-24.832652.parquet%3B+filename%3D%22details_harness%257Carc%253Achallenge%257C25_2023-10-13T06-37-24.832652.parquet%22%3B&X-Xet-Cas-Uid=public&user_id=public&Expires=1789009261&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly91cy5hd3MuY2RuLmhmLmNvL3hldC1icmlkZ2UtdXMvNjUyOGU1YjkxY2U5MGEwOTYxNGFlZDg1LzYyOWJjODlmYmEyY2IwMWU2YTdkZTFiMDkwNDEzMjFmN2M0MWNmMGM3OWRiOWQ1YTIyMTI0ZWE0YzVmNWNkMGVcXD9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWlubGluZSUzQitmaWxlbmFtZSUyQSUzRFVURi04JTI3JTI3ZGV0YWlsc19oYXJuZXNzJTI1MjU3Q2FyYyUyNTI1M0FjaGFsbGVuZ2UlMjUyNTdDMjVfMjAyMy0xMC0xM1QwNi0zNy0yNC44MzI2NTIucGFycXVldCUzQitmaWxlbmFtZSUzRCUyMmRldGFpbHNfaGFybmVzcyUyNTdDYXJjJTI1M0FjaGFsbGVuZ2UlMjU3QzI1XzIwMjMtMTAtMTNUMDYtMzctMjQuODMyNjUyLnBhcnF1ZXQlMjIlM0ImWC1YZXQtQ2FzLVVpZD1wdWJsaWMmdXNlcl9pZD1wdWJsaWMiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkVwb2NoVGltZSI6MTc4OTAwOTI2MX19fV19&Signature=MEYCIQCJlzXG3UQIpsAfFeqrN4n8u8eCatioamc32B2P5kWEnQIhANols9sklLA3Ke2FTgCxDSlvnmplEuRTMaINq0H-yrpK&Key-Pair-Id=01KXEF4KZ1B6FV465MAWR4M21F"
+      }
+    },
+    {
+      "task": "arc_challenge",
+      "arm": "arm_b",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct/resolve/main/2024-04-19T09-19-13.454877/details_harness%7Carc%3Achallenge%7C25_2024-04-19T09-19-13.454877.parquet",
+      "head": {
+        "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct/resolve/main/2024-04-19T09-19-13.454877/details_harness%7Carc%3Achallenge%7C25_2024-04-19T09-19-13.454877.parquet",
+        "ok": true,
+        "status": 200,
+        "content_length": 5064548,
+        "content_type": "application/octet-stream",
+        "error": null,
+        "final_url": "https://us.aws.cdn.hf.co/xet-bridge-us/6622385494f208a02b07f8fb/f041208b5af229954b779fe5e03cfca1670d85cee8d42438793e06320da0f4ca?user_id=public&response-content-disposition=inline%3B+filename*%3DUTF-8%27%27details_harness%25257Carc%25253Achallenge%25257C25_2024-04-19T09-19-13.454877.parquet%3B+filename%3D%22details_harness%257Carc%253Achallenge%257C25_2024-04-19T09-19-13.454877.parquet%22%3B&X-Xet-Cas-Uid=public&Expires=1789009285&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly91cy5hd3MuY2RuLmhmLmNvL3hldC1icmlkZ2UtdXMvNjYyMjM4NTQ5NGYyMDhhMDJiMDdmOGZiL2YwNDEyMDhiNWFmMjI5OTU0Yjc3OWZlNWUwM2NmY2ExNjcwZDg1Y2VlOGQ0MjQzODc5M2UwNjMyMGRhMGY0Y2FcXD91c2VyX2lkPXB1YmxpYyZyZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWlubGluZSUzQitmaWxlbmFtZSUyQSUzRFVURi04JTI3JTI3ZGV0YWlsc19oYXJuZXNzJTI1MjU3Q2FyYyUyNTI1M0FjaGFsbGVuZ2UlMjUyNTdDMjVfMjAyNC0wNC0xOVQwOS0xOS0xMy40NTQ4NzcucGFycXVldCUzQitmaWxlbmFtZSUzRCUyMmRldGFpbHNfaGFybmVzcyUyNTdDYXJjJTI1M0FjaGFsbGVuZ2UlMjU3QzI1XzIwMjQtMDQtMTlUMDktMTktMTMuNDU0ODc3LnBhcnF1ZXQlMjIlM0ImWC1YZXQtQ2FzLVVpZD1wdWJsaWMiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkVwb2NoVGltZSI6MTc4OTAwOTI4NX19fV19&Signature=MEQCICN5x2qlq2RU8mIG8QAwgE%7Emni%7E1SjD3V-t0%7EM715mhfAiAqSc5tRxEXEXzIyUo-5zONEEUkZqZx9HQYhdmmEmfjBQ__&Key-Pair-Id=01KXEF4KZ1B6FV465MAWR4M21F"
+      }
+    },
+    {
+      "task": "gsm8k",
+      "arm": "arm_a",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_Qwen__Qwen-7B/resolve/main/2023-11-15T05-40-30.047401/details_harness%7Cgsm8k%7C5_2023-11-15T05-40-30.047401.parquet",
+      "head": {
+        "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_Qwen__Qwen-7B/resolve/main/2023-11-15T05-40-30.047401/details_harness%7Cgsm8k%7C5_2023-11-15T05-40-30.047401.parquet",
+        "ok": true,
+        "status": 200,
+        "content_length": 7403224,
+        "content_type": "application/octet-stream",
+        "error": null,
+        "final_url": "https://us.aws.cdn.hf.co/xet-bridge-us/6528e5b91ce90a09614aed85/c0f7e9b87e3ab0917468509e9634f66aefde1c84eff70e9a68321b0567ea1cc7?user_id=public&response-content-disposition=inline%3B+filename*%3DUTF-8%27%27details_harness%25257Cgsm8k%25257C5_2023-11-15T05-40-30.047401.parquet%3B+filename%3D%22details_harness%257Cgsm8k%257C5_2023-11-15T05-40-30.047401.parquet%22%3B&X-Xet-Cas-Uid=public&Expires=1789009308&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly91cy5hd3MuY2RuLmhmLmNvL3hldC1icmlkZ2UtdXMvNjUyOGU1YjkxY2U5MGEwOTYxNGFlZDg1L2MwZjdlOWI4N2UzYWIwOTE3NDY4NTA5ZTk2MzRmNjZhZWZkZTFjODRlZmY3MGU5YTY4MzIxYjA1NjdlYTFjYzdcXD91c2VyX2lkPXB1YmxpYyZyZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWlubGluZSUzQitmaWxlbmFtZSUyQSUzRFVURi04JTI3JTI3ZGV0YWlsc19oYXJuZXNzJTI1MjU3Q2dzbThrJTI1MjU3QzVfMjAyMy0xMS0xNVQwNS00MC0zMC4wNDc0MDEucGFycXVldCUzQitmaWxlbmFtZSUzRCUyMmRldGFpbHNfaGFybmVzcyUyNTdDZ3NtOGslMjU3QzVfMjAyMy0xMS0xNVQwNS00MC0zMC4wNDc0MDEucGFycXVldCUyMiUzQiZYLVhldC1DYXMtVWlkPXB1YmxpYyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRXBvY2hUaW1lIjoxNzg5MDA5MzA4fX19XX0_&Signature=MEUCIQDWNtHGhubyNEPKbY-EQ7v0RaeeA2-z15iZkkMB14eEqQIgSD3QW5VmN-UrD1mjvXhtc%7Ey0HUNH%7EsfRppzNJGPBdpg_&Key-Pair-Id=01KXEF4KZ1B6FV465MAWR4M21F"
+      }
+    },
+    {
+      "task": "gsm8k",
+      "arm": "arm_b",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct/resolve/main/2024-04-19T09-19-13.454877/details_harness%7Cgsm8k%7C5_2024-04-19T09-19-13.454877.parquet",
+      "head": {
+        "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct/resolve/main/2024-04-19T09-19-13.454877/details_harness%7Cgsm8k%7C5_2024-04-19T09-19-13.454877.parquet",
+        "ok": true,
+        "status": 200,
+        "content_length": 4633927,
+        "content_type": "application/octet-stream",
+        "error": null,
+        "final_url": "https://us.aws.cdn.hf.co/xet-bridge-us/6622385494f208a02b07f8fb/3ec94d889c430ed2b4dcc7828503a6f08fa5c160e4a015ac7ed5ab336434ad32?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27details_harness%25257Cgsm8k%25257C5_2024-04-19T09-19-13.454877.parquet%3B+filename%3D%22details_harness%257Cgsm8k%257C5_2024-04-19T09-19-13.454877.parquet%22%3B&user_id=public&X-Xet-Cas-Uid=public&Expires=1789009338&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly91cy5hd3MuY2RuLmhmLmNvL3hldC1icmlkZ2UtdXMvNjYyMjM4NTQ5NGYyMDhhMDJiMDdmOGZiLzNlYzk0ZDg4OWM0MzBlZDJiNGRjYzc4Mjg1MDNhNmYwOGZhNWMxNjBlNGEwMTVhYzdlZDVhYjMzNjQzNGFkMzJcXD9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWlubGluZSUzQitmaWxlbmFtZSUyQSUzRFVURi04JTI3JTI3ZGV0YWlsc19oYXJuZXNzJTI1MjU3Q2dzbThrJTI1MjU3QzVfMjAyNC0wNC0xOVQwOS0xOS0xMy40NTQ4NzcucGFycXVldCUzQitmaWxlbmFtZSUzRCUyMmRldGFpbHNfaGFybmVzcyUyNTdDZ3NtOGslMjU3QzVfMjAyNC0wNC0xOVQwOS0xOS0xMy40NTQ4NzcucGFycXVldCUyMiUzQiZ1c2VyX2lkPXB1YmxpYyZYLVhldC1DYXMtVWlkPXB1YmxpYyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiRXBvY2hUaW1lIjoxNzg5MDA5MzM4fX19XX0_&Signature=MEUCIQDjK5Ll2jUnZQIMfOU9O2DTMgZbFiAwssSTtCrPIIGs-gIgeZ6TCid-4oeVBwNrfwrlrnFP-wPL7pwsQLsjSA79Us0_&Key-Pair-Id=01KXEF4KZ1B6FV465MAWR4M21F"
+      }
+    },
+    {
+      "task": "winogrande",
+      "arm": "arm_a",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_Qwen__Qwen-7B/resolve/main/2023-11-15T05-40-30.047401/details_harness%7Cwinogrande%7C5_2023-11-15T05-40-30.047401.parquet",
+      "head": {
+        "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_Qwen__Qwen-7B/resolve/main/2023-11-15T05-40-30.047401/details_harness%7Cwinogrande%7C5_2023-11-15T05-40-30.047401.parquet",
+        "ok": true,
+        "status": 200,
+        "content_length": 1827717,
+        "content_type": "application/octet-stream",
+        "error": null,
+        "final_url": "https://us.aws.cdn.hf.co/xet-bridge-us/6528e5b91ce90a09614aed85/84cde3973fb8f6756f3cb1c5e9f8b60f38515defbe9f02f078adf6b974507742?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27details_harness%25257Cwinogrande%25257C5_2023-11-15T05-40-30.047401.parquet%3B+filename%3D%22details_harness%257Cwinogrande%257C5_2023-11-15T05-40-30.047401.parquet%22%3B&user_id=public&X-Xet-Cas-Uid=public&Expires=1789009359&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly91cy5hd3MuY2RuLmhmLmNvL3hldC1icmlkZ2UtdXMvNjUyOGU1YjkxY2U5MGEwOTYxNGFlZDg1Lzg0Y2RlMzk3M2ZiOGY2NzU2ZjNjYjFjNWU5ZjhiNjBmMzg1MTVkZWZiZTlmMDJmMDc4YWRmNmI5NzQ1MDc3NDJcXD9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWlubGluZSUzQitmaWxlbmFtZSUyQSUzRFVURi04JTI3JTI3ZGV0YWlsc19oYXJuZXNzJTI1MjU3Q3dpbm9ncmFuZGUlMjUyNTdDNV8yMDIzLTExLTE1VDA1LTQwLTMwLjA0NzQwMS5wYXJxdWV0JTNCK2ZpbGVuYW1lJTNEJTIyZGV0YWlsc19oYXJuZXNzJTI1N0N3aW5vZ3JhbmRlJTI1N0M1XzIwMjMtMTEtMTVUMDUtNDAtMzAuMDQ3NDAxLnBhcnF1ZXQlMjIlM0ImdXNlcl9pZD1wdWJsaWMmWC1YZXQtQ2FzLVVpZD1wdWJsaWMiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkVwb2NoVGltZSI6MTc4OTAwOTM1OX19fV19&Signature=MEUCIQCokMApczQwiB3456F4db7Kj8FQN-puR2AuIUVisuO6sQIgUDTYG3lTn3nFx7qMF6GT6dg3uMJ6vTYxpTvn8uNaUfQ_&Key-Pair-Id=01KXEF4KZ1B6FV465MAWR4M21F"
+      }
+    },
+    {
+      "task": "winogrande",
+      "arm": "arm_b",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct/resolve/main/2024-04-19T09-19-13.454877/details_harness%7Cwinogrande%7C5_2024-04-19T09-19-13.454877.parquet",
+      "head": {
+        "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct/resolve/main/2024-04-19T09-19-13.454877/details_harness%7Cwinogrande%7C5_2024-04-19T09-19-13.454877.parquet",
+        "ok": true,
+        "status": 200,
+        "content_length": 980074,
+        "content_type": "application/octet-stream",
+        "error": null,
+        "final_url": "https://us.aws.cdn.hf.co/xet-bridge-us/6622385494f208a02b07f8fb/8b8032c1814ffba80697dd61f4148ab95c748285c4671f652757445b957c1bd7?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27details_harness%25257Cwinogrande%25257C5_2024-04-19T09-19-13.454877.parquet%3B+filename%3D%22details_harness%257Cwinogrande%257C5_2024-04-19T09-19-13.454877.parquet%22%3B&user_id=public&X-Xet-Cas-Uid=public&Expires=1789009371&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly91cy5hd3MuY2RuLmhmLmNvL3hldC1icmlkZ2UtdXMvNjYyMjM4NTQ5NGYyMDhhMDJiMDdmOGZiLzhiODAzMmMxODE0ZmZiYTgwNjk3ZGQ2MWY0MTQ4YWI5NWM3NDgyODVjNDY3MWY2NTI3NTc0NDViOTU3YzFiZDdcXD9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWlubGluZSUzQitmaWxlbmFtZSUyQSUzRFVURi04JTI3JTI3ZGV0YWlsc19oYXJuZXNzJTI1MjU3Q3dpbm9ncmFuZGUlMjUyNTdDNV8yMDI0LTA0LTE5VDA5LTE5LTEzLjQ1NDg3Ny5wYXJxdWV0JTNCK2ZpbGVuYW1lJTNEJTIyZGV0YWlsc19oYXJuZXNzJTI1N0N3aW5vZ3JhbmRlJTI1N0M1XzIwMjQtMDQtMTlUMDktMTktMTMuNDU0ODc3LnBhcnF1ZXQlMjIlM0ImdXNlcl9pZD1wdWJsaWMmWC1YZXQtQ2FzLVVpZD1wdWJsaWMiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkVwb2NoVGltZSI6MTc4OTAwOTM3MX19fV19&Signature=MEQCIE5-VxeXoF5QUxwLgTCgwmr-0uOpBoO9rBIW60u6w5JpAiBQaoKWxfQN7ZXdCT5xvYN5%7EF-RJzG6z4lqaihUf2253A__&Key-Pair-Id=01KXEF4KZ1B6FV465MAWR4M21F"
+      }
+    }
+  ],
+  "downloads": [
+    {
+      "task": "arc_challenge",
+      "arm": "arm_a",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_Qwen__Qwen-7B/resolve/main/2023-10-13T06-37-24.832652/details_harness%7Carc%3Achallenge%7C25_2023-10-13T06-37-24.832652.parquet",
+      "dest": "source-tree/006-second-eval-20260909/inputs/arm_a_arc_challenge.parquet",
+      "bytes": 5474720,
+      "sha256": "ef4df5437547b0199b8e5e2c20dc6a9d975ee0f390fb2d916389c73c0e0d3092",
+      "content_length": 5474720
+    },
+    {
+      "task": "arc_challenge",
+      "arm": "arm_b",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct/resolve/main/2024-04-19T09-19-13.454877/details_harness%7Carc%3Achallenge%7C25_2024-04-19T09-19-13.454877.parquet",
+      "dest": "source-tree/006-second-eval-20260909/inputs/arm_b_arc_challenge.parquet",
+      "bytes": 5064548,
+      "sha256": "3c7360c493c42a1946cc05342b82293538f4406932947bffc9b4f19a69d47366",
+      "content_length": 5064548
+    },
+    {
+      "task": "gsm8k",
+      "arm": "arm_a",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_Qwen__Qwen-7B/resolve/main/2023-11-15T05-40-30.047401/details_harness%7Cgsm8k%7C5_2023-11-15T05-40-30.047401.parquet",
+      "dest": "source-tree/006-second-eval-20260909/inputs/arm_a_gsm8k.parquet",
+      "bytes": 7403224,
+      "sha256": "1301e5a267fd0f6f9432282acf3de1d7f0242fe8a8dd5de80b05c57f47d010b3",
+      "content_length": 7403224
+    },
+    {
+      "task": "gsm8k",
+      "arm": "arm_b",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct/resolve/main/2024-04-19T09-19-13.454877/details_harness%7Cgsm8k%7C5_2024-04-19T09-19-13.454877.parquet",
+      "dest": "source-tree/006-second-eval-20260909/inputs/arm_b_gsm8k.parquet",
+      "bytes": 4633927,
+      "sha256": "8028b715c9f17e7c7e6b290ad7d01abcb29f30859cb136d2d7764fd938f86009",
+      "content_length": 4633927
+    },
+    {
+      "task": "winogrande",
+      "arm": "arm_a",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_Qwen__Qwen-7B/resolve/main/2023-11-15T05-40-30.047401/details_harness%7Cwinogrande%7C5_2023-11-15T05-40-30.047401.parquet",
+      "dest": "source-tree/006-second-eval-20260909/inputs/arm_a_winogrande.parquet",
+      "bytes": 1827717,
+      "sha256": "429c8ea3b399ce8fecdfae0d50992fd6209bb4458c586096fa22cf9120643ac6",
+      "content_length": 1827717
+    },
+    {
+      "task": "winogrande",
+      "arm": "arm_b",
+      "url": "https://huggingface.co/datasets/open-llm-leaderboard-old/details_meta-llama__Meta-Llama-3-8B-Instruct/resolve/main/2024-04-19T09-19-13.454877/details_harness%7Cwinogrande%7C5_2024-04-19T09-19-13.454877.parquet",
+      "dest": "source-tree/006-second-eval-20260909/inputs/arm_b_winogrande.parquet",
+      "bytes": 980074,
+      "sha256": "251a8140cfa49734df86ddb66d79871594fab61567ecc0b43cb1697f611ba54c",
+      "content_length": 980074
+    }
+  ],
+  "outputs": {
+    "summary.json": "7b0d4cec7538405db5c7d925a85f312fd651cd08b3d6af13c77c36a2cb920ce9",
+    "contrasts.json": "4e9c36d96c1a6748baa6edb102be55a2f96e7e9fdac4f9795048f4983141341f"
+  },
+  "proxy": "http://127.0.0.1:7890",
+  "http_proxy_7890_assigned": false,
+  "papers_untouched": true,
+  "s1_s4_untouched": true,
+  "reading_rules_fired": {
+    "K1": true,
+    "K2": false,
+    "K3": true,
+    "cross_check_fail": false,
+    "n_retained": 3,
+    "n_dropped": 0
+  }
+}

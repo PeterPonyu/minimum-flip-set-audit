@@ -659,6 +659,44 @@ An evaluation can be exposed on one and not the other, and reporting only the
 one that happens to look better is a degree of freedom worth closing in
 advance~\cite{simmons2011false}.
 
+\subsection{A labelled broader check on three public paired contrasts}
+
+The \Contrasts{} contrasts above are one evaluation. A later, pre-declared
+check applies the same two distances to a different family: \SecondEvalN{} public
+paired binary tasks (ARC-Challenge, GSM8K, and Winogrande; $n=$
+\SecondEvalNArc{}, \SecondEvalNGsm{}, and \SecondEvalNWino{}) on one
+fixed model pair (\SecondEvalArmA{} and \SecondEvalArmB{}), chosen
+before the per-item scores were read. The pair is not ranked here; the
+table margins are not a leaderboard result, and this family does not
+replace the \Contrasts{}-contrast reading.
+
+\begin{table}[tbp]
+\centering
+\caption{\CapSecondEvalTable}
+\label{tab:second-eval}
+\small
+\input{generated_table_second_eval}
+\end{table}
+
+Table~\ref{tab:second-eval} reports the two distances on each retained
+contrast. Every contrast has direction distance at least
+\SecondEvalKappaDirMin{} and verdict distance at least
+\SecondEvalKappaVerMin{}, both above the prestated threshold of
+\SecondEvalFragileMax{}. Single-record fragility at
+$n=\SubsetN{}$ therefore does not transport to these pairs. The bound
+\Contrasts{}-contrast findings are unchanged. The prestated
+one-or-two-grading rule \SecondEvalFewGradeState{}.
+
+The direction and the verdict still disagree. The \SecondEvalN{} gaps are
+\SecondEvalGapArc{}, \SecondEvalGapGsm{}, and \SecondEvalGapWino{},
+each at least the prestated gap of \DecoupledGap{}. That observation
+transports; it is the same split this paper already reports on the
+bound evaluation, now counted on this family only. Holm correction
+over the family of \SecondEvalN{} leaves
+\SecondEvalHolmSurvivors{} contrasts. The contrast that does not
+survive is still \SecondEvalKappaVerWino{} gradings from a change of
+verdict. Closed form and exhaustive search agree on all \SecondEvalN{} tables.
+
 \section{Discussion}
 
 The count is old and the target is new. Counting how many outcomes would have
@@ -741,12 +779,17 @@ count is also silent on whether the question set measures what it claims to
 measure, which at these sizes is the larger risk~\cite{raji2021everything}. Its
 value is specific: it is cheap, it is exact, it applies to records that already
 exist, and it prevents one particular error, publishing an arithmetic accident
-in the register of a finding.
+in the register of a finding. A labelled broader check on \SecondEvalN{} public pairs
+of size \SecondEvalNArc{}, \SecondEvalNGsm{} and \SecondEvalNWino{} found
+the same direction--verdict split (gaps \SecondEvalGapArc{},
+\SecondEvalGapGsm{} and \SecondEvalGapWino{}) while every verdict
+distance was at least \SecondEvalKappaVerMin{}; the
+\Contrasts{}-contrast findings stay as they are.
 
 \section{Scope of the conclusions}
 
 The conclusions of this paper are about how an evaluation is reported, and
-three boundaries fix their scope.
+four boundaries fix their scope.
 
 The first concerns the retrieval conditions. Whether adding image-derived
 attributes to retrieval helps or harms is a question these records do not
@@ -774,6 +817,12 @@ false. A true effect measured on \SubsetNWord{} questions can rest on one
 grading too; the count does not separate those cases, and what it establishes
 is what separating them would take, which is more questions.
 
+The fourth concerns a labelled broader check on \SecondEvalN{} public paired
+tasks. It is a transport observation on that family only. It does not
+enlarge, replace, or rank the \Contrasts{}-contrast findings, and it is
+not a comparison of the two models whose stored item scores supplied
+the tables.
+
 \section{Conclusion}
 
 One completed evaluation of \Questions{} questions under \ConditionsWord{} retrieval
@@ -799,6 +848,12 @@ that have a direction at all. No grading of the answers could have made
 joint fact about the grading rule and the family: \SurvivesHolm{} contrasts
 survive under the stored rule and \NumericHolmSurvivors{} under the
 numeric-tolerant one.
+A labelled broader check on \SecondEvalN{} public pairs of size
+\SecondEvalNArc{}, \SecondEvalNGsm{} and \SecondEvalNWino{} found
+direction--verdict gaps of \SecondEvalGapArc{}, \SecondEvalGapGsm{}
+and \SecondEvalGapWino{}, while every verdict distance was at least
+\SecondEvalKappaVerMin{}. The \Contrasts{}-contrast findings are
+unchanged.
 
 The recommendation is one column in a results table: beside each contrast, the
 number of gradings that would overturn its direction and the number that would

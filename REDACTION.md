@@ -51,3 +51,6 @@ checks.
 | `data/e-audit-s1/closed_form_verification.json` | 6 | 0 | `cf81a7052742c061…` | `c9054a7ae3bc11a7…` |
 | `data/e-audit-s2/regrade_consequences.json` | 6 | 0 | `20cef283cc7c5253…` | `48a1b060a5d2a3e1…` |
 | `data/e-audit-s4/simulation_summary.json` | 1 | 1 | `fbebad1719462474…` | `7d0ff852cf53b094…` |
+| `data/e-second-eval-predecl/PREDECLARATION.json` | 7 | 0 | `1708a938d7b822aa…` | `778b1d1366fcfb38…` |
+| `data/e-second-eval/summary.json` | 6 | 0 | `7b0d4cec7538405d…` | `5809dfb34695a620…` |
+| `data/e-second-eval-receipt/RECEIPT.json` | 6 | 0 | `ab6368e5d26299e9…` | `e572d474023b5ddd…` |
